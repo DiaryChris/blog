@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="所有代码均由Microsoft Visual Studio 2015编译通过       图的遍历DFS和BFS#include #include #define N 16using namespace std;class listNode{public:    int data;    listNode next;};class QueueNode{public:    int a;    Qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法（C++）代码练习（图）">
+<meta property="og:url" content="http://diarychris.info/blog/2017/11/27/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="所有代码均由Microsoft Visual Studio 2015编译通过       图的遍历DFS和BFS#include #include #define N 16using namespace std;class listNode{public:    int data;    listNode next;};class QueueNode{public:    int a;    Qu">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法（C++）代码练习（图）">
+<meta name="twitter:description" content="所有代码均由Microsoft Visual Studio 2015编译通过       图的遍历DFS和BFS#include #include #define N 16using namespace std;class listNode{public:    int data;    listNode next;};class QueueNode{public:    int a;    Qu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2017/11/27/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0/">
+
+
+
+
+
+  <title>数据结构与算法（C++）代码练习（图） | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2017/11/27/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法（C++）代码练习（图）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-27T23:30:21+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
+<h4 id="图的遍历DFS和BFS"><a href="#图的遍历DFS和BFS" class="headerlink" title="图的遍历DFS和BFS"></a>图的遍历DFS和BFS</h4><p>#include<iostream></iostream></p>
+<p>#include<iomanip></iomanip></p>
+<p>#define N 16<br>using namespace std;<br>class listNode<br>{<br>public:<br>    int data;<br>    listNode<em> next;<br>};<br>class QueueNode<br>{<br>public:<br>    int a;<br>    QueueNode</em> next;<br>};<br>void enqueue(int a, QueueNode<em>&amp; rear) {<br>    rear-&gt;a = a;<br>    rear-&gt;next = new QueueNode;<br>    rear = rear-&gt;next;<br>    rear-&gt;next = NULL;<br>}<br>int dequeue(QueueNode</em>&amp; front) {<br>    QueueNode<em> temp = front;<br>    front = front-&gt;next;<br>    temp-&gt;next = NULL;<br>    return temp-&gt;a;<br>}<br>void inputLesson(listNode</em> head[])<br>{<br>    head[0] = NULL;<br>    head[1] = new listNode;<br>    head[1]-&gt;data = 3;<br>    head[1]-&gt;next = NULL;<br>    head[2] = new listNode;<br>    head[2]-&gt;data = 3;<br>    head[2]-&gt;next = new listNode;<br>    head[2]-&gt;next-&gt;data = 13;<br>    head[2]-&gt;next-&gt;next = NULL;<br>    head[3] = new listNode;<br>    head[3]-&gt;data = 7;<br>    head[3]-&gt;next = NULL;<br>    head[4] = new listNode;<br>    head[4]-&gt;data = 5;<br>    head[4]-&gt;next = NULL;<br>    head[5] = new listNode;<br>    head[5]-&gt;data = 6;<br>    head[5]-&gt;next = NULL;<br>    head[6] = new listNode;<br>    head[6]-&gt;data = 15;<br>    head[6]-&gt;next = NULL;<br>    head[7] = new listNode;<br>    head[7]-&gt;data = 10;<br>    head[7]-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;data = 11;<br>    head[7]-&gt;next-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;next-&gt;data = 12;<br>    head[7]-&gt;next-&gt;next-&gt;next = NULL;<br>    head[8] = new listNode;<br>    head[8]-&gt;data = 9;<br>    head[8]-&gt;next = NULL;<br>    head[9] = new listNode;<br>    head[9]-&gt;data = 10;<br>    head[9]-&gt;next = new listNode;<br>    head[9]-&gt;next-&gt;data = 11;<br>    head[9]-&gt;next-&gt;next = NULL;<br>    head[10] = new listNode;<br>    head[10]-&gt;data = 14;<br>    head[10]-&gt;next = NULL;<br>    head[11] = NULL;<br>    head[12] = NULL;<br>    head[13] = NULL;<br>    head[14] = NULL;<br>    head[15] = NULL;<br>}<br>void DFS(listNode<em> list[], int index, int visited[])<br>{<br>    listNode</em> p;<br>    if (visited[index]) {<br>        return;<br>    }<br>    cout &lt;&lt; index;<br>    visited[index] = 1;<br>    p = list[index];<br>    while (p) {<br>        DFS(list, p-&gt;data, visited);<br>        p = p-&gt;next;<br>    }<br>}<br>void BFS(listNode<em> list[], int index, int visited[])<br>{<br>    int v;<br>    listNode</em> p;<br>    QueueNode<em> front,</em> rear;<br>    front = rear = new QueueNode;<br>    rear-&gt;next = NULL;<br>    enqueue(index, rear);<br>    visited[index] = 1;<br>    while (front != rear) {<br>        v = dequeue(front);<br>        cout &lt;&lt; v;<br>        p = list[v];<br>        while (p) {<br>            if (!(visited[p-&gt;data])) {<br>                enqueue(p-&gt;data, rear);<br>                visited[p-&gt;data] = 1;<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void resetVisited(int visited[])<br>{<br>    for (int i = 0; i &lt; N; i++) {<br>        visited[i] = 0;<br>    }<br>}<br>void main()<br>{<br>    listNode* list[N];<br>    int n;<br>    int visited[N];<br>    inputLesson(list);<br>    cout &lt;&lt; “请输入深度优先搜索起始点序号：\n”;<br>    cin &gt;&gt; n;<br>    resetVisited(visited);<br>    DFS(list, n, visited);<br>    cout &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “请输入广度优先搜索起始点序号：\n”;<br>    cin &gt;&gt; n;<br>    resetVisited(visited);<br>    BFS(list, n, visited);<br>    cout &lt;&lt; ‘\n’;<br>    system(“pause”);<br>}</p>
+<h4 id="最小生成树Prim算法"><a href="#最小生成树Prim算法" class="headerlink" title="最小生成树Prim算法"></a>最小生成树Prim算法</h4><p>#include<iostream></iostream></p>
+<p>#include<iomanip></iomanip></p>
+<p>#define N 8</p>
+<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int dist;<br>    int visited;<br>    int path;<br>    Vertex() {<br>        adj = NULL;<br>        path = 0;<br>        visited = 0;<br>        dist = MAX;<br>    }<br>};<br>class Edge<br>{<br>public:<br>    int v;<br>    int w;<br>    void printEdge()<br>    {<br>        cout &lt;&lt; v &lt;&lt; ‘-‘ &lt;&lt; w &lt;&lt; “\n”;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Vertex a[N];<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].dist = MAX;<br>    }<br>}<br>void incertMinHeap(Vertex v, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; v.dist &lt; minHeap.a[hole / 2].dist) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = v;<br>    checkOdd(minHeap);<br>}<br>Vertex deleteMin(Heap&amp; minHeap)<br>{<br>    Vertex min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].dist &gt; minHeap.a[hole <em> 2 + 1].dist || minHeap.a[minHeap.size].dist &gt; minHeap.a[hole </em> 2].dist)) {<br>        if (minHeap.a[hole <em> 2 + 1].dist &lt; minHeap.a[hole </em> 2].dist) {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2 + 1];<br>            hole = hole </em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2];<br>            hole = hole </em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList<em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0) {<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList</em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 3, 4);<br>    input(v[1], 4, 1);<br>    input(v[2], 1, 2);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 4, 2);<br>    input(v[3], 6, 5);<br>    input(v[4], 1, 1);<br>    input(v[4], 2, 3);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 7);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 2, 10);<br>    input(v[5], 4, 7);<br>    input(v[5], 7, 6);<br>    input(v[6], 3, 5);<br>    input(v[6], 4, 8);<br>    input(v[6], 7, 1);<br>    input(v[7], 4, 4);<br>    input(v[7], 5, 6);<br>    input(v[7], 6, 1);<br>}<br>void Prim(Vertex &amp;s, Vertex g[], Edge MST[])<br>{<br>    int i = 0;<br>    Vertex v;<br>    AdjList<em> p;<br>    Heap minHeap;<br>    minHeap.size = 0;<br>    s.dist = 0;<br>    incertMinHeap(s, minHeap);<br>    while (minHeap.size) {<br>        v = deleteMin(minHeap);<br>        while (g[v.id].visited) {<br>            if (!minHeap.size) {<br>                return;<br>            }<br>            v = deleteMin(minHeap);<br>        }<br>        g[v.id].visited = 1;<br>        g[v.id].dist = 0;<br>        if (v.path) {<br>            i++;<br>            MST[i].v = v.path;<br>            MST[i].w = v.id;<br>        }<br>        p = v.adj;<br>        while (p) {<br>            if (g[p-&gt;data].visited == 0 &amp;&amp; p-&gt;dist &lt; g[p-&gt;data].dist) {<br>                g[p-&gt;data].dist = p-&gt;dist ;<br>                g[p-&gt;data].path = v.id;<br>                incertMinHeap(g[p-&gt;data], minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void check(Vertex v[])<br>{<br>    AdjList</em> p;<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        cout &lt;&lt; i &lt;&lt; ‘\n’;<br>        p = v[i].adj;<br>        while (p) {<br>            cout &lt;&lt; p-&gt;data &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;dist &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;next &lt;&lt; ‘\n’;<br>            p = p-&gt;next;<br>        }<br>    }<br>    system(“pause”);<br>}<br>void main()<br>{</p>
+<pre><code>Vertex v\[N\];
+Edge MST\[N - 1\];
+int n;
+inputSample(v);
+cout &lt;&lt; &quot;请输入源点序号：\\n&quot;;
+cin &gt;&gt; n;
+Prim(v\[n\], v, MST);
+cout &lt;&lt; &quot;最小生成树为：\\n&quot;;
+for (int i = 1; i &lt; N - 1; i++)
+{
+    MST\[i\].printEdge();
+}
+system(&quot;pause&quot;);
+</code></pre><p>}</p>
+<h4 id="最小生成树Kruskal算法"><a href="#最小生成树Kruskal算法" class="headerlink" title="最小生成树Kruskal算法"></a>最小生成树Kruskal算法</h4><p>#include<iostream></iostream></p>
+<p>#include<iomanip></iomanip></p>
+<p>#define N 8</p>
+<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int root;<br>    int visited;</p>
+<pre><code>Vertex() {
+    adj = NULL;
+    root = -1;
+    visited = 0;
+}
+</code></pre><p>};<br>class Edge<br>{<br>public:<br>    int v;<br>    int w;<br>    int l;<br>    Edge(int v = 0, int w = 0, int l = 0) :v(v), w(w), l(l) {}<br>    void printEdge()<br>    {<br>        cout &lt;&lt; v &lt;&lt; ‘-‘ &lt;&lt; w &lt;&lt; “\n”;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Edge a[N<em>(N - 1)];<br>    Heap() {<br>        size = 0;<br>    }<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].l = MAX;<br>    }<br>}<br>void incertMinHeap(Edge e, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; e.l &lt; minHeap.a[hole / 2].l) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = e;<br>    checkOdd(minHeap);<br>}<br>Edge deleteMin(Heap&amp; minHeap)<br>{<br>    Edge min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].l &gt; minHeap.a[hole </em> 2 + 1].l || minHeap.a[minHeap.size].l &gt; minHeap.a[hole <em> 2].l)) {<br>        if (minHeap.a[hole </em> 2 + 1].l &lt; minHeap.a[hole <em> 2].l) {<br>            minHeap.a[hole] = minHeap.a[hole </em> 2 + 1];<br>            hole = hole <em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole </em> 2];<br>            hole = hole <em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>int find(Vertex v, Vertex g[])<br>{<br>    if (v.root == -1) {<br>        return v.id;<br>    }<br>    return find(g[v.root], g);<br>}<br>void unionSet(int r1, int r2, Vertex g[])<br>{<br>        g[r2].root = g[r1].id;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList</em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0) {<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList<em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 3, 4);<br>    input(v[1], 4, 1);<br>    input(v[2], 1, 2);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 4, 2);<br>    input(v[3], 6, 5);<br>    input(v[4], 1, 1);<br>    input(v[4], 2, 3);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 7);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 2, 10);<br>    input(v[5], 4, 7);<br>    input(v[5], 7, 6);<br>    input(v[6], 3, 5);<br>    input(v[6], 4, 8);<br>    input(v[6], 7, 1);<br>    input(v[7], 4, 4);<br>    input(v[7], 5, 6);<br>    input(v[7], 6, 1);<br>}<br>void Kruskal(Vertex g[], Edge MST[])<br>{<br>    Heap minHeap;<br>    Edge e;<br>    int i = 0;<br>    for (int i = 1; i &lt; N; i++) {<br>        AdjList</em> p = g[i].adj;<br>        while (p) {<br>            if (!g[p-&gt;data].visited) {<br>                Edge e(i, p-&gt;data, p-&gt;dist);<br>                incertMinHeap(e, minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>        g[i].visited = 1;<br>    }<br>    while (minHeap.size) {<br>        e = deleteMin(minHeap);<br>        int r1 = find(g[e.v], g);<br>        int r2 = find(g[e.w], g);<br>        if (r1 != r2) {<br>            MST[++i] = e;<br>            unionSet(r1, r2, g);<br>        }<br>    }</p>
+<p>}<br>void main()<br>{<br>    Vertex v[N];<br>    Edge MST[N - 1];<br>    inputSample(v);<br>    Kruskal(v, MST);<br>    cout &lt;&lt; “最小生成树为：\n”;<br>    for (int i = 1; i &lt; N - 1; i++)<br>    {<br>        MST[i].printEdge();<br>    }<br>    system(“pause”);<br>}</p>
+<h4 id="基于最小堆的有权图单源最短路径Dijkstra算法"><a href="#基于最小堆的有权图单源最短路径Dijkstra算法" class="headerlink" title="基于最小堆的有权图单源最短路径Dijkstra算法"></a>基于最小堆的有权图单源最短路径Dijkstra算法</h4><p>#include<iostream></iostream></p>
+<p>#include<iomanip></iomanip></p>
+<p>#define N 16</p>
+<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int dist;<br>    int visited;<br>    int path;<br>    Vertex() {<br>        adj = NULL;<br>        path = 0;<br>        visited = 0;<br>        dist = MAX;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Vertex a[N];<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].dist = MAX;<br>    }<br>}<br>void incertMinHeap(Vertex v, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; v.dist &lt; minHeap.a[hole / 2].dist) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = v;<br>    checkOdd(minHeap);<br>}<br>Vertex deleteMin(Heap&amp; minHeap)<br>{<br>    Vertex min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].dist &gt; minHeap.a[hole <em> 2 + 1].dist || minHeap.a[minHeap.size].dist &gt; minHeap.a[hole </em> 2].dist)) {<br>        if (minHeap.a[hole <em> 2 + 1].dist &lt; minHeap.a[hole </em> 2].dist) {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2 + 1];<br>            hole = hole </em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2];<br>            hole = hole </em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList<em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0){<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList</em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 4, 1);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 6, 5);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 2);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 7, 6);<br>    input(v[7], 6, 1);<br>}<br>void Dijkstra(Vertex &amp;s, Vertex g[])<br>{<br>    Vertex v;<br>    AdjList<em> p;<br>    Heap minHeap;<br>    minHeap.size = 0;<br>    s.dist = 0;<br>    incertMinHeap(s, minHeap);<br>    while (minHeap.size) {<br>        v = deleteMin(minHeap);<br>        while (g[v.id].visited) {<br>            if (!minHeap.size) {<br>                return;<br>            }<br>            v = deleteMin(minHeap);<br>        }<br>        g[v.id].visited = 1;<br>        p = v.adj;<br>        while (p) {<br>            if (g[p-&gt;data].visited == 0 &amp;&amp; p-&gt;dist + v.dist &lt; g[p-&gt;data].dist) {<br>                g[p-&gt;data].dist = p-&gt;dist + v.dist;<br>                g[p-&gt;data].path = v.id;<br>                incertMinHeap(g[p-&gt;data], minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void printPath(Vertex v, Vertex g[])<br>{<br>    if (v.path) {<br>        printPath(g[v.path], g);<br>        cout &lt;&lt; “-&gt;”;<br>    }<br>    cout &lt;&lt; v.id;<br>}<br>void check(Vertex v[])<br>{<br>    AdjList</em> p;<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        cout &lt;&lt; i &lt;&lt; ‘\n’;<br>        p = v[i].adj;<br>        while (p) {<br>            cout &lt;&lt; p-&gt;data &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;dist &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;next &lt;&lt; ‘\n’;<br>            p = p-&gt;next;<br>        }<br>    }<br>    system(“pause”);<br>}<br>void main()<br>{</p>
+<pre><code>Vertex v\[N\];
+int n;
+inputSample(v);
+cout &lt;&lt; &quot;请输入源点序号：\\n&quot;;
+cin &gt;&gt; n;
+Dijkstra(v\[n\], v);
+cout &lt;&lt; &quot;请输入终点序号：\\n&quot;;
+cin &gt;&gt; n;
+cout &lt;&lt; &quot;最短路径为：\\n&quot;;
+printPath(v\[n\], v);
+cout &lt;&lt; &quot;路径权重：&quot; &lt;&lt; v\[n\].dist;
+system(&quot;pause&quot;);
+</code></pre><p>}</p>
+<h4 id="邻接表存储有向无环图以队列法拓扑排序"><a href="#邻接表存储有向无环图以队列法拓扑排序" class="headerlink" title="邻接表存储有向无环图以队列法拓扑排序"></a>邻接表存储有向无环图以队列法拓扑排序</h4><p>#include<iostream></iostream></p>
+<p>#include<iomanip></iomanip></p>
+<p>#define N 16<br>using namespace std;<br>class listNode<br>{<br>public:<br>    int data;<br>    listNode<em> next;<br>};<br>class QueueNode<br>{<br>public:<br>    int a;<br>    QueueNode</em> next;<br>};<br>void enqueue(int a, QueueNode<em>&amp; rear) {<br>    rear-&gt;a = a;<br>    rear-&gt;next = new QueueNode;<br>    rear = rear-&gt;next;<br>    rear-&gt;next = NULL;<br>}<br>int dequeue(QueueNode</em>&amp; front) {<br>    QueueNode<em> temp = front;<br>    front = front-&gt;next;<br>    temp-&gt;next = NULL;<br>    return temp-&gt;a;<br>}<br>void inputLesson(listNode</em> head[])<br>{<br>    head[0] = NULL;<br>    head[1] = new listNode;<br>    head[1]-&gt;data = 3;<br>    head[1]-&gt;next = NULL;<br>    head[2] = new listNode;<br>    head[2]-&gt;data = 3;<br>    head[2]-&gt;next = new listNode;<br>    head[2]-&gt;next-&gt;data = 13;<br>    head[2]-&gt;next-&gt;next = NULL;<br>    head[3] = new listNode;<br>    head[3]-&gt;data = 7;<br>    head[3]-&gt;next = NULL;<br>    head[4] = new listNode;<br>    head[4]-&gt;data = 5;<br>    head[4]-&gt;next = NULL;<br>    head[5] = new listNode;<br>    head[5]-&gt;data = 6;<br>    head[5]-&gt;next = NULL;<br>    head[6] = new listNode;<br>    head[6]-&gt;data = 15;<br>    head[6]-&gt;next = NULL;<br>    head[7] = new listNode;<br>    head[7]-&gt;data = 10;<br>    head[7]-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;data = 11;<br>    head[7]-&gt;next-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;next-&gt;data = 12;<br>    head[7]-&gt;next-&gt;next-&gt;next = NULL;<br>    head[8] = new listNode;<br>    head[8]-&gt;data = 9;<br>    head[8]-&gt;next = NULL;<br>    head[9] = new listNode;<br>    head[9]-&gt;data = 10;<br>    head[9]-&gt;next = new listNode;<br>    head[9]-&gt;next-&gt;data = 11;<br>    head[9]-&gt;next-&gt;next = NULL;<br>    head[10] = new listNode;<br>    head[10]-&gt;data = 14;<br>    head[10]-&gt;next = NULL;<br>    head[11] = NULL;<br>    head[12] = NULL;<br>    head[13] = NULL;<br>    head[14] = NULL;<br>    head[15] = NULL;<br>}<br>void scanAll(listNode<em> list[], int inDegree[])<br>{<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        listNode</em> p;<br>        p = list[i];<br>        while (p)<br>        {<br>            inDegree[p-&gt;data]++;<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void topSort(listNode<em> list[])<br>{<br>    int v;<br>    int inDegree[N];<br>    listNode</em> p;<br>    QueueNode<em> front, </em>rear;<br>    front = rear = new QueueNode;<br>    for (int i = 0; i &lt; N; i++) {<br>        inDegree[i] = 0;<br>    }<br>    scanAll(list, inDegree);<br>    for (int i = 1; i &lt; N; i++) {<br>        if (!inDegree[i]) {<br>            enqueue(i, rear);<br>        }<br>    }<br>    while (front != rear) {<br>        v = dequeue(front);<br>        cout &lt;&lt; v &lt;&lt; ‘\n’;<br>        p = list[v];<br>        while (p) {<br>            if (!(–inDegree[p-&gt;data])) {<br>                enqueue(p-&gt;data, rear);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }</p>
+<p>}<br>void main()<br>{<br>    listNode* list[N];<br>    inputLesson(list);<br>    topSort(list);<br>    system(“pause”);<br>}</p>
+<pre><code>2016年3月
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/05/16/e8-ae-b0-e5-bd-95-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-94-a8-e7-9a-84-e8-bd-af-e4-bb-b6/" rel="next" title="记录一些好用的软件">
+                <i class="fa fa-chevron-left"></i> 记录一些好用的软件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/11/27/windows-e6-89-b9-e5-a4-84-e7-90-86-e5-b8-b8-e7-94-a8-e5-91-bd-e4-bb-a4/" rel="prev" title="Windows批处理常用命令">
+                Windows批处理常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#图的遍历DFS和BFS"><span class="nav-number">1.</span> <span class="nav-text">图的遍历DFS和BFS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小生成树Prim算法"><span class="nav-number">2.</span> <span class="nav-text">最小生成树Prim算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小生成树Kruskal算法"><span class="nav-number">3.</span> <span class="nav-text">最小生成树Kruskal算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于最小堆的有权图单源最短路径Dijkstra算法"><span class="nav-number">4.</span> <span class="nav-text">基于最小堆的有权图单源最短路径Dijkstra算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接表存储有向无环图以队列法拓扑排序"><span class="nav-number">5.</span> <span class="nav-text">邻接表存储有向无环图以队列法拓扑排序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

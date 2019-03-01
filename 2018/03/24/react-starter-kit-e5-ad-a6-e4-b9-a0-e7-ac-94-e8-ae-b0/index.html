@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="根据http://reactjs.cn/react/docs/…页面中Starter Kit 15.3.1中的例子汇总修改而成。  HTML代码 &amp;lt;!DOCTYPE html&amp;gt;         React test                                                               JS代码 const container1 =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Starter Kit 学习笔记">
+<meta property="og:url" content="http://diarychris.info/blog/2018/03/24/react-starter-kit-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="根据http://reactjs.cn/react/docs/…页面中Starter Kit 15.3.1中的例子汇总修改而成。  HTML代码 &amp;lt;!DOCTYPE html&amp;gt;         React test                                                               JS代码 const container1 =">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Starter Kit 学习笔记">
+<meta name="twitter:description" content="根据http://reactjs.cn/react/docs/…页面中Starter Kit 15.3.1中的例子汇总修改而成。  HTML代码 &amp;lt;!DOCTYPE html&amp;gt;         React test                                                               JS代码 const container1 =">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2018/03/24/react-starter-kit-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0/"/>
+
+
+
+
+
+  <title>React Starter Kit 学习笔记 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2018/03/24/react-starter-kit-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Starter Kit 学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-24T00:02:44+08:00">
+                2018-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>根据<a href="http://reactjs.cn/react/docs/getting-started.html" target="_blank" rel="noopener">http://reactjs.cn/react/docs/…</a>页面中Starter Kit 15.3.1中的例子汇总修改而成。</p>
+<hr>
+<p>HTML代码</p>
+<p>&lt;!DOCTYPE html&gt;</p>
+<html lang="en"><br><br><head><meta name="generator" content="Hexo 3.8.0"><br>    <meta charset="UTF-8"><br>    <title>React test</title><br>    <link rel="stylesheet" href="react_transition.css"><br>    <script src="lib/react-with-addons.js"></script><br>    <script src="lib/react-dom.js"></script><br>    <script src="lib/browser.min.js"></script><br></head><br><br><body><br>    <div id="container1"></div><br>    <div id="container2"></div><br>    <div id="container3"></div><br>    <div id="container4"></div><br>    <div id="container5"></div><br>    <div id="container6"></div><br>    <div id="container7"></div><br>    <div id="container8"></div><br>    <div id="container9"></div><br>    <div id="container10"></div><br>    <script src="react_test.js" type="text/babel"></script><br></body><br><br></html>
+
+<hr>
+<p>JS代码</p>
+<p>const container1 = document.getElementById(‘container1’)<br>const container2 = document.getElementById(‘container2’)<br>const container3 = document.getElementById(‘container3’)<br>const container4 = document.getElementById(‘container4’)<br>const container5 = document.getElementById(‘container5’)<br>const container6 = document.getElementById(‘container6’)</p>
+<p>//1 ‘Hello’ + name<br>function Welcome(props) {<br>    return </p><h1> Hello, { props.name } &lt; /h1&gt;;<br>}<p></p>
+<p>const element = &lt; Welcome name = “Diary” / &gt; ;<br>ReactDOM.render(<br>    element,<br>    container1<br>);</p>
+<p>//2 流逝时间计时器<br>var Elapsed = React.createClass({<br>    render: function () {<br>        var elapsed = Math.round(this.props.elapsed / 100);<br>        var seconds = elapsed / 10 + (elapsed % 10 ? ‘’ : ‘.0’);<br>        var message =<br>            ‘React has been successfully running for ‘ + seconds + ‘ seconds.’;</p>
+<pre><code>    return &lt;p &gt; { message } &lt; /p&gt;;
+}
+</code></pre><p>});</p>
+<p>var start = new Date().getTime();<br>setInterval(function () {<br>    ReactDOM.render( &lt; Elapsed elapsed = { new Date().getTime() - start }<br>        / > ,<br>        container2<br>    );<br>}, 50);</p>
+<p>//3 按钮点击计数</p>
+<p>var Counter = React.createClass({<br>    getInitialState: function () {<br>        return {<br>            count: 2,<br>            sum: 100<br>        };<br>    },<br>    handleClick: function () {<br>        this.setState({<br>            count: this.state.count * this.state.count,<br>        });<br>    },<br>    handleDoubleClick: function () {<br>        this.setState({<br>            count: 2,<br>            sum: 1000<br>        })<br>    },<br>    render: function () {<br>        return (<br>            &lt; button onClick = { this.handleClick } onDoubleClick = { this.handleDoubleClick }&gt;<br>            sum - count: { this.state.sum - this.state.count } &lt; /button&gt;<br>        );<br>    }<br>});<br>ReactDOM.render( &lt; Counter / &gt; ,<br>    container3<br>);</p>
+<p>//4 流逝时间计时器（ES6写法）</p>
+<p>class ExampleApplication extends React.Component {<br>    render() {<br>        var elapsed = Math.round(this.props.elapsed / 100);<br>        var seconds = elapsed / 10 + (elapsed % 10 ? ‘’ : ‘.0’);<br>        var message =<br>            `React has been successfully running for ${seconds} seconds.`;</p>
+<pre><code>    return &lt;p &gt; { message } &lt; /p&gt;;
+}
+</code></pre><p>}<br>var start = new Date().getTime();<br>setInterval(() =&gt; {<br>    ReactDOM.render( &lt; ExampleApplication elapsed = { new Date().getTime() - start }/&gt;,<br>        container4<br>    );<br>}, 50);</p>
+<p>//5 实时求解一元二次方程</p>
+<p>var QuadraticCalculator = React.createClass({<br>  getInitialState: function() {<br>    return {<br>      a: 1,<br>      b: 3,<br>      c: -4<br>    };<br>  },</p>
+<p>  /**<br>   * This function will be re-bound in render multiple times. Each .bind() will<br>   * create a new function that calls this with the appropriate key as well as<br>   * the event. The key is the key in the state object that the value should be<br>   * mapped from.<br>   */<br>  handleInputChange: function(key, event) {<br>    var partialState = {};<br>    partialState[key] = parseFloat(event.target.value);<br>    this.setState(partialState);<br>  },</p>
+<p>  render: function() {<br>    var a = this.state.a;<br>    var b = this.state.b;<br>    var c = this.state.c;<br>    var root = Math.sqrt(Math.pow(b, 2) - 4 <em> a </em> c);<br>    var denominator = 2 * a;<br>    var x1 = (-b + root) / denominator;<br>    var x2 = (-b - root) / denominator;<br>    return (<br>      <div><br>        <strong><br>          <em>ax</em><sup>2</sup> + <em>bx</em> + <em>c</em> = 0<br>        </strong><br>        <h4>Solve for <em>x</em>:</h4><br>        <p><br>          <label><br>            a: &lt;input type=”number” value={a} onChange={this.handleInputChange.bind(null, ‘a’)} /&gt;<br>          </label><br>          <br><br>          <label><br>            b: &lt;input type=”number” value={b} onChange={this.handleInputChange.bind(null, ‘b’)} /&gt;<br>          </label><br>          <br><br>          <label><br>            c: &lt;input type=”number” value={c} onChange={this.handleInputChange.bind(null, ‘c’)} /&gt;<br>          </label><br>          <br><br>          x: <strong>{x1}, {x2}</strong><br>        </p><br>      </div><br>    );<br>  }<br>});</p>
+<p>ReactDOM.render(<br>  <quadraticcalculator>,<br>  container5<br>);</quadraticcalculator></p>
+<p>//6 调用React组件CSSTransitionGroup制作动画效果</p>
+<p>var CSSTransitionGroup = React.addons.CSSTransitionGroup;<br>var INTERVAL = 2000;</p>
+<p>var AnimateDemo = React.createClass({<br>getInitialState: function() {<br>  return {current: 0};<br>},</p>
+<p>componentDidMount: function() {<br>  this.interval = setInterval(this.tick, INTERVAL);<br>},</p>
+<p>componentWillUnmount: function() {<br>  clearInterval(this.interval);<br>},</p>
+<p>tick: function() {<br>  this.setState({current: this.state.current + 1});<br>},</p>
+<p>render: function() {<br>  var children = [];<br>  var colors = [‘#fac’, ‘#cdc’, ‘#36d’, ‘#ca0’, ‘#0aa’];<br>  for (var i = this.state.current, pos=0; i &lt; this.state.current + colors.length; i++, pos++) {<br>    var style = {<br>      left: pos * 128,<br>      background: colors[i % colors.length]<br>    };<br>    children.push(<div key="{i}" classname="animateItem" style="{style}">{i}</div>);<br>  }<br>  return (<br>    <csstransitiongroup classname="animateExample" transitionentertimeout="{250}" transitionleavetimeout="{250}" transitionname="example"><br>      {children}<br>    </csstransitiongroup><br>  );<br>}<br>});</p>
+<p>ReactDOM.render(</p>
+<p><animatedemo>,<br>container6<br>);</animatedemo></p>
+<hr>
+<p>CSS代码（仅在例6中使用）</p>
+<p>.example-enter,<br>.example-leave {<br>  -webkit-transition: all .25s;<br>  transition: all .25s;<br>}</p>
+<p>.example-enter,<br>.example-leave.example-leave-active {<br>  opacity: 0.01;<br>}</p>
+<p>.example-leave.example-leave-active {<br>  margin-left: -128px;<br>}</p>
+<p>.example-enter {<br>  margin-left: 128px;<br>}</p>
+<p>.example-enter.example-enter-active,<br>.example-leave {<br>  margin-left: 0;<br>  opacity: 1;<br>}</p>
+<p>.animateExample {<br>  display: block;<br>  height: 128px;<br>  position: relative;<br>  width: 384px;<br>}</p>
+<p>.animateItem {<br>  color: white;<br>  font-size: 36px;<br>  font-weight: bold;<br>  height: 128px;<br>  line-height: 128px;<br>  position: absolute;<br>  text-align: center;<br>  -webkit-transition: all .25s; /<em> TODO: make this a move animation </em>/<br>  transition: all .25s; /<em> TODO: make this a move animation </em>/<br>  width: 128px;<br>}</p>
+</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/03/23/javascript-e9-97-ad-e5-8c-85-e5-8e-9f-e7-90-86-e5-88-86-e6-9e-90/" rel="next" title="JavaScript闭包原理分析">
+                <i class="fa fa-chevron-left"></i> JavaScript闭包原理分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/03/24/e6-80-8e-e4-b9-88-e4-bd-bf-e7-94-a8-e6-ad-a3-e5-88-99-e8-a1-a8-e8-be-be-e5-bc-8f-e5-ae-8c-e7-be-8e-e5-8c-b9-e9-85-8dhtml-e6-a0-87-e7-ad-be-ef-bc-88-e4-bb-85-e6-a0-87-e7-ad-be-ef-bc-89-ef-bc-9f/" rel="prev" title="怎么使用正则表达式完美匹配HTML标签？">
+                怎么使用正则表达式完美匹配HTML标签？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text"> Hello, { props.name } &lt; /h1&gt;;}
+const element = &lt; Welcome name = “Diary” / &gt; ;ReactDOM.render(    element,    container1);
+//2 流逝时间计时器var Elapsed = React.createClass({    render: function () {        var elapsed = Math.round(this.props.elapsed / 100);        var seconds = elapsed / 10 + (elapsed % 10 ? ‘’ : ‘.0’);        var message =            ‘React has been successfully running for ‘ + seconds + ‘ seconds.’;
+    return &lt;p &gt; { message } &lt; /p&gt;;
+}
+});
+var start = new Date().getTime();setInterval(function () {    ReactDOM.render( &lt; Elapsed elapsed = { new Date().getTime() - start }        / &gt; ,        container2    );}, 50);
+//3 按钮点击计数
+var Counter = React.createClass({    getInitialState: function () {        return {            count: 2,            sum: 100        };    },    handleClick: function () {        this.setState({            count: this.state.count * this.state.count,        });    },    handleDoubleClick: function () {        this.setState({            count: 2,            sum: 1000        })    },    render: function () {        return (            &lt; button onClick = { this.handleClick } onDoubleClick = { this.handleDoubleClick }&gt;            sum - count: { this.state.sum - this.state.count } &lt; /button&gt;        );    }});ReactDOM.render( &lt; Counter / &gt; ,    container3);
+//4 流逝时间计时器（ES6写法）
+class ExampleApplication extends React.Component {    render() {        var elapsed = Math.round(this.props.elapsed / 100);        var seconds = elapsed / 10 + (elapsed % 10 ? ‘’ : ‘.0’);        var message =            `React has been successfully running for ${seconds} seconds.`;
+    return &lt;p &gt; { message } &lt; /p&gt;;
+}
+}var start = new Date().getTime();setInterval(() =&gt; {    ReactDOM.render( &lt; ExampleApplication elapsed = { new Date().getTime() - start }/&gt;,        container4    );}, 50);
+//5 实时求解一元二次方程
+var QuadraticCalculator = React.createClass({  getInitialState: function() {    return {      a: 1,      b: 3,      c: -4    };  },
+  /**   * This function will be re-bound in render multiple times. Each .bind() will   * create a new function that calls this with the appropriate key as well as   * the event. The key is the key in the state object that the value should be   * mapped from.   */  handleInputChange: function(key, event) {    var partialState = {};    partialState[key] = parseFloat(event.target.value);    this.setState(partialState);  },
+  render: function() {    var a = this.state.a;    var b = this.state.b;    var c = this.state.c;    var root = Math.sqrt(Math.pow(b, 2) - 4  a  c);    var denominator = 2 * a;    var x1 = (-b + root) / denominator;    var x2 = (-b - root) / denominator;    return (                        ax2 + bx + c = 0                Solve for x:                              a: &lt;input type=”number” value={a} onChange={this.handleInputChange.bind(null, ‘a’)} /&gt;                                          b: &lt;input type=”number” value={b} onChange={this.handleInputChange.bind(null, ‘b’)} /&gt;                                          c: &lt;input type=”number” value={c} onChange={this.handleInputChange.bind(null, ‘c’)} /&gt;                              x: {x1}, {x2}                  );  }});
+ReactDOM.render(  ,  container5);
+//6 调用React组件CSSTransitionGroup制作动画效果
+var CSSTransitionGroup = React.addons.CSSTransitionGroup;var INTERVAL = 2000;
+var AnimateDemo = React.createClass({getInitialState: function() {  return {current: 0};},
+componentDidMount: function() {  this.interval = setInterval(this.tick, INTERVAL);},
+componentWillUnmount: function() {  clearInterval(this.interval);},
+tick: function() {  this.setState({current: this.state.current + 1});},
+render: function() {  var children = [];  var colors = [‘#fac’, ‘#cdc’, ‘#36d’, ‘#ca0’, ‘#0aa’];  for (var i = this.state.current, pos=0; i &lt; this.state.current + colors.length; i++, pos++) {    var style = {      left: pos * 128,      background: colors[i % colors.length]    };    children.push({i});  }  return (          {children}      );}});
+ReactDOM.render(
+,container6);
+
+CSS代码（仅在例6中使用）
+.example-enter,.example-leave {  -webkit-transition: all .25s;  transition: all .25s;}
+.example-enter,.example-leave.example-leave-active {  opacity: 0.01;}
+.example-leave.example-leave-active {  margin-left: -128px;}
+.example-enter {  margin-left: 128px;}
+.example-enter.example-enter-active,.example-leave {  margin-left: 0;  opacity: 1;}
+.animateExample {  display: block;  height: 128px;  position: relative;  width: 384px;}
+.animateItem {  color: white;  font-size: 36px;  font-weight: bold;  height: 128px;  line-height: 128px;  position: absolute;  text-align: center;  -webkit-transition: all .25s; / TODO: make this a move animation /  transition: all .25s; / TODO: make this a move animation /  width: 128px;}
+</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Solve for x:</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
