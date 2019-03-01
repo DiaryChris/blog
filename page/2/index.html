@@ -345,32 +345,17 @@
       
         
           
-            <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
-<h4 id="递推法求sinx"><a href="#递推法求sinx" class="headerlink" title="递推法求sinx"></a>递推法求sinx</h4><p>#include<iostream></iostream></p>
-<p>#include&lt;math.h&gt;<br>using namespace std;<br>float sinx(float x);<br>void main()<br>{<br>    float x;<br>    cout &lt;&lt; “请输入x：”;<br>    cin &gt;&gt; x;<br>    if (fabs(x) &gt;= 1)<br>    {<br>        cout &lt;&lt; “x大于等于1，数值非法”;<br>    }<br>    else<br>    {<br>    cout &lt;&lt; “sin “ &lt;&lt; x &lt;&lt; “ = “ &lt;&lt; sinx(x);<br>    }<br>    system(“pause”);<br>}<br>float sinx(float x)<br>{<br>    float term = x, result = x;<br>    for (int n = 1;; n++)<br>    {<br>        term = -term*x*x / ((2 <em> n)</em>(2 * n + 1));<br>        if (fabs(term)&lt;0.0001)<br>        {<br>            break;<br>        }<br>        result += term;<br>    }<br>    return result;<br>}</p>
-<h4 id="递推法输出斐波那契数列前20项"><a href="#递推法输出斐波那契数列前20项" class="headerlink" title="递推法输出斐波那契数列前20项"></a>递推法输出斐波那契数列前20项</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>void main()<br>{<br>    long int f1,f2,f3;<br>    f1 = f2 = 1;<br>    cout &lt;&lt; setw(10) &lt;&lt; f1 &lt;&lt; setw(10) &lt;&lt; f2;<br>    for (int i = 3; i &lt;= 20; i++)<br>    {<br>        f3 = f1 + f2;<br>        cout &lt;&lt; setw(10) &lt;&lt; f3;<br>        f1 = f2;<br>        f2 = f3;<br>        if (i % 5 == 0)<br>        {<br>            cout &lt;&lt; “\n”;<br>        }<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="欧几里得算法求两正整数最大公约数"><a href="#欧几里得算法求两正整数最大公约数" class="headerlink" title="欧几里得算法求两正整数最大公约数"></a>欧几里得算法求两正整数最大公约数</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>void main()<br>{<br>    int a, b,a0,b0;<br>    int temp;<br>    cout &lt;&lt; “请输入两整数的值”;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    a0 = a, b0 = b;<br>    if (a &lt;= 0 || b &lt;= 0) {<br>        cout &lt;&lt; “只能计算正整数！\n”;<br>    }<br>    else {<br>        while (a%b != 0) {<br>            temp = a%b;<br>            a = b;<br>            b = temp;<br>        }<br>        cout &lt;&lt; a0 &lt;&lt; “与” &lt;&lt; b0 &lt;&lt; “的最大公约数为” &lt;&lt; b &lt;&lt; “\n”;<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="递推法求n阶乘"><a href="#递推法求n阶乘" class="headerlink" title="递推法求n阶乘"></a>递推法求n阶乘</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>void main()<br>{<br>    int n;<br>    int result=1;<br>    cout &lt;&lt; “请输入正整数n\n”;<br>    cin &gt;&gt; n;<br>    if (n &lt;= 0) {<br>        cout &lt;&lt; “不是正整数！”;<br>    }<br>    else {<br>        for (; n &gt; 0; n–) {<br>            result *= n;<br>        }<br>        cout &lt;&lt; “n！=” &lt;&lt; result &lt;&lt; “\n”;<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="递归法求n阶乘"><a href="#递归法求n阶乘" class="headerlink" title="递归法求n阶乘"></a>递归法求n阶乘</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>int x(int n)<br>{<br>    if (n != 0) {<br>        return n*x(n - 1);<br>    }<br>    return 1;<br>}<br>void main()<br>{<br>    int n;<br>    int result;<br>    cout &lt;&lt; “请输入正整数n\n”;<br>    cin &gt;&gt; n;<br>    if (n &lt;= 0) {<br>        cout &lt;&lt; “不是正整数！”;<br>    }<br>    else {<br>        result=x(n);<br>        cout &lt;&lt; “n！=” &lt;&lt; result &lt;&lt; “\n”;<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="递归法输出斐波那契数列前20项"><a href="#递归法输出斐波那契数列前20项" class="headerlink" title="递归法输出斐波那契数列前20项"></a>递归法输出斐波那契数列前20项</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>int fib(int n)<br>{<br>    if (n == 1 || n == 2) {<br>        return 1;<br>    }<br>    return fib(n - 1) + fib(n - 2);<br>}<br>void main()<br>{<br>    for (int i = 1; i &lt;= 20; i++)<br>    {<br>        cout &lt;&lt; setw(10) &lt;&lt; fib(i);<br>        if (i % 5 == 0) {<br>            cout &lt;&lt; “\n”;<br>        }<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="汉诺塔问题"><a href="#汉诺塔问题" class="headerlink" title="汉诺塔问题"></a>汉诺塔问题</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>void hanio(int n ,char a , char b , char c ,int &amp;i)<br>{<br>    if (n == 0) {<br>        return;<br>    }<br>    hanio(n - 1, a, c, b, i);<br>    cout &lt;&lt; “移动第” &lt;&lt; n &lt;&lt; “个盘 从” &lt;&lt; a &lt;&lt; “柱到” &lt;&lt; c &lt;&lt; “柱\n”;<br>    i++;<br>    hanio(n - 1, b, a, c, i);<br>    return;<br>}<br>void main()<br>{<br>    int n, steps=0;<br>    cout &lt;&lt; “请输入汉诺塔总盘数：”;<br>    cin &gt;&gt; n;<br>    hanio(n,’A’,’B’,’C’,steps);<br>    cout &lt;&lt; “总步数：” &lt;&lt; steps &lt;&lt; “步\n”;<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="筛法求3-100以内素数"><a href="#筛法求3-100以内素数" class="headerlink" title="筛法求3-100以内素数"></a>筛法求3-100以内素数</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>void main()<br>{<br>    int prime[49];<br>    for (int i = 0; i &lt; 49; i++) {<br>        prime[i] = 3 + 2 * i;<br>    }<br>    for (int i = 0; i &lt; 4; i++) {<br>        if (prime[i]) {<br>            for (int j = i + 1; j &lt; 49; j++) {<br>                if (prime[j] % prime[i] == 0) {<br>                    prime[j] = 0;<br>                }<br>            }<br>        }<br>    }<br>    int j = 0;<br>    for (int i = 0; i &lt; 49; i++) {<br>        if (prime[i] != 0) {<br>            cout &lt;&lt; prime[i] &lt;&lt; setw(10);<br>            j++;<br>        }<br>        if (j != 0 &amp;&amp; j % 5 == 0) {<br>            cout &lt;&lt; “\n”;<br>        }<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="输入成绩并输出成绩低于平均成绩的学生"><a href="#输入成绩并输出成绩低于平均成绩的学生" class="headerlink" title="输入成绩并输出成绩低于平均成绩的学生"></a>输入成绩并输出成绩低于平均成绩的学生</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 100<br>using namespace std;<br>void main()<br>{<br>    float x[N], sum = 0, ave;<br>    int i = 0;<br>    cout &lt;&lt; “请输入学生成绩，以负数结束\n”;<br>    do {<br>        cin &gt;&gt; x[i];<br>        sum += x[i];<br>    } while (x[i++] &gt;= 0 &amp;&amp; i &lt; N);<br>    if (i == N) {<br>        ave = sum / i;<br>    }<br>    else {<br>        ave = (sum - x[–i]) / i;<br>    }<br>    cout &lt;&lt; “共输入” &lt;&lt; i &lt;&lt; “个学生    平均成绩” &lt;&lt; ave &lt;&lt; “分\n\n”;<br>    cout &lt;&lt; “其中低于平均成绩的学生有：”;<br>    for (int j = 0; j &lt; i; j++) {<br>        if (x[j] &lt; ave) {<br>            cout &lt;&lt; “第” &lt;&lt; j+1 &lt;&lt; “个学生    “ &lt;&lt; x[j] &lt;&lt; “分\n”;<br>        }<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="打印10层杨辉三角形"><a href="#打印10层杨辉三角形" class="headerlink" title="打印10层杨辉三角形"></a>打印10层杨辉三角形</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void main()<br>{<br>    int a[N][N];<br>    for (int i = 0; i &lt; N; i++) {<br>        for (int j = 0; j &lt;= i; j++) {<br>            if (j == 0 || j == i) {<br>                a[i][j] = 1;<br>            }<br>            else {<br>                a[i][j] = a[i - 1][j] + a[i - 1][j - 1];<br>            }<br>            cout &lt;&lt; a[i][j] &lt;&lt; setw(10);<br>        }<br>        cout &lt;&lt; “\n”;<br>    }<br>    system(“pause”);<br>}</p>
-<pre><code>2016年3月
-</code></pre>
-          
+          所有代码均由Microsoft Visual Studio 2015编译通过      
+递推法求sinx#include
+#include&lt;math.h&gt;using namespace std;float sinx(float x);void main(){    float x;  
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2018/03/10/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0-ef-bc-88-e5-9f-ba-e7-a1-80-ef-bc-89/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -510,25 +495,20 @@
       
         
           
-            <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
-<h4 id="20个随机数的数组中的顺序查找"><a href="#20个随机数的数组中的顺序查找" class="headerlink" title="20个随机数的数组中的顺序查找"></a>20个随机数的数组中的顺序查找</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#include&lt;stdlib.h&gt;</p>
-<p>#include&lt;time.h&gt;</p>
-<p>#define N 20<br>using namespace std;<br>void Order_Search(int a[], int n)<br>{<br>    for (int i=0;i&lt;N;i++){<br>        if (a[i] == n) {<br>            cout &lt;&lt; “在第” &lt;&lt;i+1 &lt;&lt; “个位置上找到” &lt;&lt; n &lt;&lt; “\n”;<br>            return;<br>        }<br>    }<br>    cout &lt;&lt; “未找到\n”;<br>    return;<br>}<br>void main()<br>{<br>    int a[N],n;<br>    srand(unsigned(time));<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        a[i] = rand();<br>        cout &lt;&lt; a[i] &lt;&lt; ‘\t’;<br>    }<br>    cout &lt;&lt; “\n请输入要查找的数：”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “\n\n”;<br>    Order_Search(a,n);<br>    system(“pause”);<br>}</p>
-<h4 id="20个随机数的数组中的二分查找"><a href="#20个随机数的数组中的二分查找" class="headerlink" title="20个随机数的数组中的二分查找"></a>20个随机数的数组中的二分查找</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#include&lt;stdlib.h&gt;</p>
-<p>#include&lt;time.h&gt;</p>
-<p>#define N 20<br>using namespace std;<br>void Bubble_Sort(int a[])<br>{<br>    int temp, flag = 1;<br>    for (int j = N - 1; j &gt; 0 &amp;&amp; flag; j–) {<br>        flag = 0;<br>        for (int i = 0; i &lt; j; i++) {<br>            if (a[i] &gt; a[i + 1]) {<br>                temp = a[i];<br>                a[i] = a[i + 1];<br>                a[i + 1] = temp;<br>                flag = 1;<br>            }<br>        }<br>    }<br>}<br>void Binary_Search(int a[], int n)<br>{<br>    int left = 0, right = N, mid;<br>    while (left &lt;= right) {<br>        mid = (left + right) / 2;<br>        if (a[mid] &gt; n) {<br>            right = mid-1;<br>        }<br>        else if (a[mid] &lt; n) {<br>            left = mid+1;<br>        }<br>        else {<br>            cout &lt;&lt; “在升序第” &lt;&lt; mid + 1 &lt;&lt; “个位置上找到” &lt;&lt; n &lt;&lt; “\n”;<br>            return;<br>        }<br>    }<br>    cout &lt;&lt; “未找到\n”;<br>    return;<br>}<br>void main()<br>{<br>    int a[N], n;<br>    srand(unsigned(time));<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        a[i] = rand();<br>        cout &lt;&lt; a[i] &lt;&lt; ‘\t’;<br>    }<br>    cout &lt;&lt; “\n请输入要查找的数：”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “\n\n”;<br>    Bubble_Sort(a);<br>    Binary_Search(a, n);<br>    system(“pause”);<br>}</p>
-<h4 id="使用平方探测的散列表的插入、删除、查找"><a href="#使用平方探测的散列表的插入、删除、查找" class="headerlink" title="使用平方探测的散列表的插入、删除、查找"></a>使用平方探测的散列表的插入、删除、查找</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 43</p>
-<p>#define I -100000</p>
-<p>#define HOLD 100000<br>using namespace std;<br>int Hash(int key)<br>{<br>    return key%N;<br>}<br>int findPos(int key, int table[])<br>{<br>    int n = 0;<br>    int pos, ipos;<br>    pos = ipos = Hash(key);<br>    while (table[pos]!=I &amp;&amp; table[pos] != key) {<br>        if (++n % 2) {<br>            pos = ipos + (n + 1) / 2 <em> (n + 1) / 2;<br>            while (pos &gt;= N) {<br>                pos -= N;<br>            }<br>        }<br>        else {<br>            pos = ipos - (n / 2)</em>(n / 2);<br>            while (pos &lt; 0) {<br>                pos += N;<br>            }<br>        }<br>    }<br>    return pos;<br>}<br>int contain(int key, int table[])<br>{<br>    int pos=findPos(key, table);<br>    if (table[pos]==I) {<br>        return 0;<br>    }<br>    else {<br>        return 1;<br>    }<br>}<br>void insert(int key, int table[])<br>{<br>    int pos = findPos(key, table);<br>    table[pos] = key;<br>}<br>int remove(int key, int table[])<br>{<br>    int pos = findPos(key, table);<br>    if (table[pos]==I) {<br>        return 0;<br>    }<br>    else {<br>        table[pos] = HOLD;<br>        return 1;<br>    }<br>}<br>void main()<br>{<br>    int n, a, res;<br>    int hashTable[N];<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        hashTable[i] = I;<br>    }<br>    cout &lt;&lt; “请输入要插入的数据个数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入数据：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        insert(a, hashTable);<br>    }<br>    cout &lt;&lt; “请输入要删除的数据个数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入要删除的数据：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = remove(a, hashTable);<br>        cout &lt;&lt; (res ? “删除成功\n” : “查无此数\n”);<br>    }<br>    cout &lt;&lt; “请输入要查找的数据个数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入要查找的数据：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = contain(a, hashTable);<br>        cout &lt;&lt; (res ? “已找到\n” : “未找到\n”);<br>    }<br>    system(“pause”);<br>}</p>
-<pre><code>2016年3月
-</code></pre>
-          
+          所有代码均由Microsoft Visual Studio 2015编译通过      
+20个随机数的数组中的顺序查找#include
+#include
+#include&lt;stdlib.h&gt;
+#include&lt;time.h&gt;
+#define N 20using namesp
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2018/03/10/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0-ef-bc-88-e6-9f-a5-e6-89-be-ef-bc-89/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -668,20 +648,17 @@
       
         
           
-            <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
-<h4 id="递归法实现二叉树的三种遍历"><a href="#递归法实现二叉树的三种遍历" class="headerlink" title="递归法实现二叉树的三种遍历"></a>递归法实现二叉树的三种遍历</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>class treeNode<br>{<br>public:<br>    int data;<br>    treeNode<em> left;<br>    treeNode</em> right;<br>};<br>int max(int a, int b)<br>{<br>    return (a &gt; b ? a : b);<br>}<br>int height(treeNode<em> root)<br>{<br>    if (!root) {<br>        return -1;<br>    }<br>    else {<br>        return max(height(root-&gt;left), height(root-&gt;right)) + 1;<br>    }<br>}<br>void singleRotateLeft(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;left;<br>    temp-&gt;left = root-&gt;right;<br>    root-&gt;right = temp;<br>}<br>void singleRotateRight(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;right;<br>    temp-&gt;right = root-&gt;left;<br>    root-&gt;left = temp;<br>}<br>void doubleRotateLeft(treeNode</em>&amp; root)<br>{<br>    singleRotateRight(root-&gt;left);<br>    singleRotateLeft(root);<br>}<br>void doubleRotateRight(treeNode<em>&amp; root)<br>{<br>    singleRotateLeft(root-&gt;right);<br>    singleRotateRight(root);<br>}<br>treeNode</em> findMin(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;left) {<br>        root = root-&gt;left;<br>    }<br>    return root;<br>}<br>treeNode</em> findMax(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;right) {<br>        root = root-&gt;right;<br>    }<br>    return root;<br>}<br>int incertNode(int a, treeNode</em>&amp; root)<br>{<br>    int res;<br>    if (!root) {<br>        root = new treeNode;<br>        root-&gt;data = a;<br>        root-&gt;left = root-&gt;right = NULL;<br>        return 1;<br>    }<br>    if (a &lt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;left);<br>        if (height(root-&gt;left) - height(root-&gt;right) &gt;= 2) {<br>            if (a &lt; root-&gt;left-&gt;data) {<br>                singleRotateLeft(root);<br>            }<br>            else {<br>                doubleRotateLeft(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else if (a &gt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;right);<br>        if (height(root-&gt;right) - height(root-&gt;left) &gt;= 2) {<br>            if (a &gt; root-&gt;right-&gt;data) {<br>                singleRotateRight(root);<br>            }<br>            else {<br>                doubleRotateRight(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else {<br>        return 0;<br>    }<br>}<br>void preorderTraverse(treeNode<em> root)<br>{<br>    if (root) {<br>        cout &lt;&lt; root-&gt;data;<br>        preorderTraverse(root-&gt;left);<br>        preorderTraverse(root-&gt;right);<br>    }<br>}<br>void inorderTraverse(treeNode</em> root)<br>{<br>    if (root) {<br>        inorderTraverse(root-&gt;left);<br>        cout &lt;&lt; root-&gt;data;<br>        inorderTraverse(root-&gt;right);<br>    }<br>}<br>void postorderTraverse(treeNode<em> root)<br>{<br>    if (root) {<br>        postorderTraverse(root-&gt;left);<br>        postorderTraverse(root-&gt;right);<br>        cout &lt;&lt; root-&gt;data;<br>    }<br>}<br>void main()<br>{<br>    int n, a, res;<br>    treeNode</em> root = NULL;<br>    cout &lt;&lt; “请输入二叉树结点总数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = incertNode(a, root);<br>        cout &lt;&lt; (res ? “插入成功\n” : “数据重复\n”);<br>    }<br>    cout &lt;&lt; “二叉树构建完毕，高度为：” &lt;&lt; height(root) &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “\n前序遍历：\n”;<br>    preorderTraverse(root);<br>    cout &lt;&lt; “\n中序遍历：\n”;<br>    inorderTraverse(root);<br>    cout &lt;&lt; “\n后序遍历：\n”;<br>    postorderTraverse(root);<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="非递归法实现二叉树的中序遍历"><a href="#非递归法实现二叉树的中序遍历" class="headerlink" title="非递归法实现二叉树的中序遍历"></a>非递归法实现二叉树的中序遍历</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>class treeNode<br>{<br>public:<br>    int data;<br>    treeNode<em> left;<br>    treeNode</em> right;<br>};<br>class Node<br>{<br>public:<br>    treeNode<em> p;<br>    Node</em> next;<br>};<br>void push(Node<em> &amp;top, treeNode</em> p)<br>{<br>    Node<em> temp = new Node;<br>    temp-&gt;next = top;<br>    top = temp;<br>    top-&gt;p = p;<br>}<br>treeNode</em> pop(Node<em> &amp;top)<br>{<br>    Node</em> temp = top;<br>    top = top-&gt;next;<br>    temp-&gt;next = NULL;<br>    return temp-&gt;p;<br>}<br>int max(int a, int b)<br>{<br>    return (a &gt; b ? a : b);<br>}<br>int height(treeNode<em> root)<br>{<br>    if (!root) {<br>        return -1;<br>    }<br>    else {<br>        return max(height(root-&gt;left), height(root-&gt;right)) + 1;<br>    }<br>}<br>void singleRotateLeft(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;left;<br>    temp-&gt;left = root-&gt;right;<br>    root-&gt;right = temp;<br>}<br>void singleRotateRight(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;right;<br>    temp-&gt;right = root-&gt;left;<br>    root-&gt;left = temp;<br>}<br>void doubleRotateLeft(treeNode</em>&amp; root)<br>{<br>    singleRotateRight(root-&gt;left);<br>    singleRotateLeft(root);<br>}<br>void doubleRotateRight(treeNode<em>&amp; root)<br>{<br>    singleRotateLeft(root-&gt;right);<br>    singleRotateRight(root);<br>}<br>treeNode</em> findMin(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;left) {<br>        root = root-&gt;left;<br>    }<br>    return root;<br>}<br>treeNode</em> findMax(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;right) {<br>        root = root-&gt;right;<br>    }<br>    return root;<br>}<br>int incertNode(int a, treeNode</em>&amp; root)<br>{<br>    int res;<br>    if (!root) {<br>        root = new treeNode;<br>        root-&gt;data = a;<br>        root-&gt;left = root-&gt;right = NULL;<br>        return 1;<br>    }<br>    if (a &lt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;left);<br>        if (height(root-&gt;left) - height(root-&gt;right) &gt;= 2) {<br>            if (a &lt; root-&gt;left-&gt;data) {<br>                singleRotateLeft(root);<br>            }<br>            else {<br>                doubleRotateLeft(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else if (a &gt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;right);<br>        if (height(root-&gt;right) - height(root-&gt;left) &gt;= 2) {<br>            if (a &gt; root-&gt;right-&gt;data) {<br>                singleRotateRight(root);<br>            }<br>            else {<br>                doubleRotateRight(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else {<br>        return 0;<br>    }<br>}<br>void inorderTraverse(treeNode<em> root)<br>{<br>    Node</em> stack = new Node;<br>    stack-&gt;next = NULL;<br>    while (root||stack-&gt;next) {<br>        while (root) {<br>            push(stack, root);<br>            root = root-&gt;left;<br>        }<br>        root = pop(stack);<br>        cout &lt;&lt; root-&gt;data;<br>        root = root-&gt;right;<br>    }<br>}<br>void main()<br>{<br>    int n, a, res;<br>    treeNode* root = NULL;<br>    cout &lt;&lt; “请输入二叉树结点总数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = incertNode(a, root);<br>        cout &lt;&lt; (res ? “插入成功\n” : “数据重复\n”);<br>    }<br>    cout &lt;&lt; “二叉树构建完毕，高度为：” &lt;&lt; height(root) &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “\n中序遍历：\n”;<br>    inorderTraverse(root);<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="平衡二叉树的插入、删除、查找"><a href="#平衡二叉树的插入、删除、查找" class="headerlink" title="平衡二叉树的插入、删除、查找"></a>平衡二叉树的插入、删除、查找</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip><br>using namespace std;<br>class treeNode<br>{<br>public:<br>    int data;<br>    treeNode<em> left;<br>    treeNode</em> right;<br>};<br>int max(int a, int b)<br>{<br>    return (a &gt; b ? a : b);<br>}<br>int height(treeNode<em> root)<br>{<br>    if (!root) {<br>        return -1;<br>    }<br>    else {<br>        return max(height(root-&gt;left), height(root-&gt;right)) + 1;<br>    }<br>}<br>void singleRotateLeft(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;left;<br>    temp-&gt;left = root-&gt;right;<br>    root-&gt;right = temp;<br>}<br>void singleRotateRight(treeNode</em>&amp; root)<br>{<br>    treeNode<em> temp = root;<br>    root = root-&gt;right;<br>    temp-&gt;right = root-&gt;left;<br>    root-&gt;left = temp;<br>}<br>void doubleRotateLeft(treeNode</em>&amp; root)<br>{<br>    singleRotateRight(root-&gt;left);<br>    singleRotateLeft(root);<br>}<br>void doubleRotateRight(treeNode<em>&amp; root)<br>{<br>    singleRotateLeft(root-&gt;right);<br>    singleRotateRight(root);<br>}<br>treeNode</em> find(int a, treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    if (a &lt; root-&gt;data) {<br>        return find(a, root-&gt;left);<br>    }<br>    else if (a &gt; root-&gt;data) {<br>        return find(a, root-&gt;right);<br>    }<br>    else {<br>        return root;<br>    }<br>}<br>treeNode</em> findMin(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;left) {<br>        root = root-&gt;left;<br>    }<br>    return root;<br>}<br>treeNode</em> findMax(treeNode<em> root)<br>{<br>    if (!root) {<br>        return NULL;<br>    }<br>    while (root-&gt;right) {<br>        root = root-&gt;right;<br>    }<br>    return root;<br>}<br>int incertNode(int a, treeNode</em>&amp; root)<br>{<br>    int res;<br>    if (!root) {<br>        root = new treeNode;<br>        root-&gt;data = a;<br>        root-&gt;left = root-&gt;right = NULL;<br>        return 1;<br>    }<br>    if (a &lt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;left);<br>        if (height(root-&gt;left) - height(root-&gt;right) &gt;= 2) {<br>            if (a &lt; root-&gt;left-&gt;data) {<br>                singleRotateLeft(root);<br>            }<br>            else {<br>                doubleRotateLeft(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else if (a &gt; root-&gt;data) {<br>        res = incertNode(a, root-&gt;right);<br>        if (height(root-&gt;right) - height(root-&gt;left) &gt;= 2) {<br>            if (a &gt; root-&gt;right-&gt;data) {<br>                singleRotateRight(root);<br>            }<br>            else {<br>                doubleRotateRight(root);<br>            }<br>        }<br>        return res;<br>    }<br>    else {<br>        return 0;<br>    }<br>}<br>int deleteNode(int a, treeNode<em>&amp; root)<br>{<br>    if (!root) {<br>        return 0;<br>    }<br>    if (a &lt; root-&gt;data) {<br>        return deleteNode(a, root-&gt;left);<br>    }<br>    else if (a &gt; root-&gt;data) {<br>        return deleteNode(a, root-&gt;right);<br>    }<br>    else if (root-&gt;left&amp;&amp;root-&gt;right) {<br>        treeNode</em> p;<br>        if (height(root-&gt;left) &lt; height(root-&gt;right)) {<br>            p = findMin(root-&gt;right);<br>            root-&gt;data = p-&gt;data;<br>            return deleteNode(p-&gt;data, root-&gt;right);<br>        }<br>        else {<br>            p = findMax(root-&gt;left);<br>            root-&gt;data = p-&gt;data;<br>            return deleteNode(p-&gt;data, root-&gt;left);<br>        }<br>    }<br>    else if (root-&gt;left || root-&gt;right) {<br>        treeNode<em> p = (root-&gt;left ? root-&gt;left : root-&gt;right);<br>        delete root;<br>        root = p;<br>        return 1;<br>    }<br>    else {<br>        delete root;<br>        root = NULL;<br>        return 1;<br>    }<br>}<br>void main()<br>{<br>    int n, a, res;<br>    treeNode</em> root = NULL, *resP = NULL;<br>    cout &lt;&lt; “请输入二叉树结点总数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = incertNode(a, root);<br>        cout &lt;&lt; (res ? “插入成功\n” : “数据重复\n”);<br>    }<br>    cout &lt;&lt; “二叉树构建完毕，高度为：” &lt;&lt; height(root) &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “请输入要删除的结点个数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        res = deleteNode(a, root);<br>        cout &lt;&lt; (res ? “删除成功\n” : “查无此数\n”);<br>    }<br>    cout &lt;&lt; “删除完毕，高度为：” &lt;&lt; height(root) &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “请输入要查找的结点个数：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        resP = find(a, root);<br>        cout &lt;&lt; (resP ? “已找到\n” : “未找到\n”);<br>    }<br>    system(“pause”);<br>}</iomanip></p>
-<h4 id="最小堆的插入与删除"><a href="#最小堆的插入与删除" class="headerlink" title="最小堆的插入与删除"></a>最小堆的插入与删除</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 100</p>
-<p>#define MAX 100000<br>using namespace std;<br>class Heap<br>{<br>public:<br>    int size;<br>    int a[N];<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1] = MAX;<br>    }<br>}<br>void incertMinHeap(int a, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; a &lt; minHeap.a[hole / 2]) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = a;<br>    checkOdd(minHeap);<br>}<br>int deleteMin(Heap&amp; minHeap)<br>{<br>    int min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size] &gt; minHeap.a[hole <em> 2 + 1] || minHeap.a[minHeap.size] &gt; minHeap.a[hole </em> 2])) {<br>        if (minHeap.a[hole <em> 2 + 1] &lt; minHeap.a[hole </em> 2]) {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2 + 1];<br>            hole = hole </em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2];<br>            hole = hole </em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>void main()<br>{<br>    int n, a;<br>    Heap minHeap;<br>    minHeap.size = 0;<br>    cout &lt;&lt; “请输入最小堆结点个数（100以内）：\n”;<br>    cin &gt;&gt; n;<br>    cout &lt;&lt; “请依次输入结点数字：\n”;<br>    for (int i = 0; i &lt; n; i++) {<br>        cin &gt;&gt; a;<br>        incertMinHeap(a, minHeap);<br>        cout &lt;&lt; “已插入第” &lt;&lt; i + 1 &lt;&lt; “个数\n”;<br>    }<br>    cout &lt;&lt; “请输入要查看从小到大排列的前几个数：\n”;<br>    cin &gt;&gt; n;<br>    for (int i = 0; i &lt; n; i++) {<br>        a = deleteMin(minHeap);<br>        cout &lt;&lt; “第” &lt;&lt; i + 1 &lt;&lt; “小的数为：” &lt;&lt; a &lt;&lt; “\n”;<br>    }<br>    system(“pause”);<br>}</p>
-<pre><code>2016年3月
-</code></pre>
-          
+          所有代码均由Microsoft Visual Studio 2015编译通过      
+递归法实现二叉树的三种遍历#include
+#includeusing namespace std;class treeNode{public:    int data;    treeNode left;  
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2018/03/10/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0-ef-bc-88-e6-a0-91-ef-bc-89/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -821,35 +798,18 @@
       
         
           
-            <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
-<h4 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion_Sort）"></a>插入排序（Insertion_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void Insertion_Sort(int a[], int n)<br>{<br>    int temp;<br>    for (int i = 1; i &lt; n; i++) {<br>        int j = i - 1;<br>        temp = a[i];<br>        while (j &gt;= 0 &amp;&amp; a[j] &gt; temp) {<br>            a[j + 1] = a[j];<br>            j–;<br>        }<br>        a[j + 1] = temp;<br>    }<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Insertion_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="希尔排序（Shell-Sort）"><a href="#希尔排序（Shell-Sort）" class="headerlink" title="希尔排序（Shell_Sort）"></a>希尔排序（Shell_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void Shell_Sort(int a[], int n)<br>{<br>    int temp;<br>    for (int gap = n / 2; gap &gt; 0; gap /= 2) {<br>        for (int i = gap; i &lt; n; i += gap) {<br>            int j = i - gap;<br>            temp = a[i];<br>            while (j &gt;= 0 &amp;&amp; a[j] &gt; temp) {<br>                a[j + gap] = a[j];<br>                j -= gap;<br>            }<br>            a[j + gap] = temp;<br>        }<br>    }<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Shell_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="冒泡排序（Bubble-Sort）"><a href="#冒泡排序（Bubble-Sort）" class="headerlink" title="冒泡排序（Bubble_Sort）"></a>冒泡排序（Bubble_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void Bubble_Sort(int a[], int n)<br>{<br>    int temp, flag = 1;<br>    for (int j = n - 1; j &gt; 0 &amp;&amp; flag; j–) {<br>        flag = 0;<br>        for (int i = 0; i &lt; j; i++) {<br>            if (a[i] &gt; a[i + 1]) {<br>                temp = a[i];<br>                a[i] = a[i + 1];<br>                a[i + 1] = temp;<br>                flag = 1;<br>            }<br>        }<br>    }<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Bubble_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="快速排序（Quick-Sort）"><a href="#快速排序（Quick-Sort）" class="headerlink" title="快速排序（Quick_Sort）"></a>快速排序（Quick_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void Insertion_Sort(int a[], int n)<br>{<br>    int temp;<br>    for (int i = 1; i &lt; n; i++) {<br>        int j = i - 1;<br>        temp = a[i];<br>        while (j &gt;= 0 &amp;&amp; a[j] &gt; temp) {<br>            a[j + 1] = a[j];<br>            j–;<br>        }<br>        a[j + 1] = temp;<br>    }<br>}<br>void swap(int &amp;a, int &amp;b)<br>{<br>    int temp = a;<br>    a = b;<br>    b = temp;<br>}<br>int median(int a[], int l, int r)<br>{<br>    int c = (l + r) / 2;<br>    if (a[l] &gt; a[c]) {<br>        swap(a[l], a[c]);<br>    }<br>    if (a[c] &gt; a[r]) {<br>        swap(a[c], a[r]);<br>    }<br>    if (a[l] &gt; a[c]) {<br>        swap(a[l], a[c]);<br>    }<br>    swap(a[c], a[r - 1]);<br>    return a[r - 1];<br>}<br>void quickSort(int a[], int left, int right)<br>{<br>    if (right - left + 1 &gt; 3) {<br>        int pivot = median(a, left, right);<br>        int i, j;<br>        i = left;<br>        j = right - 1;<br>        while (1) {<br>            while (a[++i] &lt; pivot) {}<br>            while (a[–j] &gt; pivot) {}<br>            if (i &lt; j) {<br>                swap(a[i], a[j]);<br>            }<br>            else {<br>                break;<br>            }<br>        }<br>        swap(a[i], a[right - 1]);<br>        quickSort(a, left, i - 1);<br>        quickSort(a, i + 1, right);<br>    }<br>    else {<br>        Insertion_Sort(a + left, right - left + 1);<br>    }<br>}<br>void Quick_Sort(int a[], int n)<br>{<br>    quickSort(a, 0, n - 1);<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Quick_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="选择排序（Select-Sort）"><a href="#选择排序（Select-Sort）" class="headerlink" title="选择排序（Select_Sort）"></a>选择排序（Select_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void Select_Sort(int a[], int n)<br>{<br>    int min, temp;<br>    for (int i = 0; i &lt; n - 1; i++) {<br>        min = i;<br>        for (int j = i + 1; j &lt; n; j++) {<br>            if (a[j] &lt; a[min]) {<br>                min = j;<br>            }<br>        }<br>        temp = a[i];<br>        a[i] = a[min];<br>        a[min] = temp;<br>    }<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Select_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="堆排序（Heap-Sort）"><a href="#堆排序（Heap-Sort）" class="headerlink" title="堆排序（Heap_Sort）"></a>堆排序（Heap_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>class Heap<br>{<br>public:<br>    int size;<br>    int<em> a;<br>    Heap() {<br>        size = 0;<br>    }<br>};<br>void incertMaxHeap(int a, Heap&amp; maxHeap)<br>{<br>    int hole = maxHeap.size++;<br>    while (hole != 0 &amp;&amp; a &gt; maxHeap.a[(hole - 1) / 2]) {<br>        maxHeap.a[hole] = maxHeap.a[(hole - 1) / 2];<br>        hole = (hole - 1) / 2;<br>    }<br>    maxHeap.a[hole] = a;<br>}<br>void moveMaxRear(Heap&amp; maxHeap)<br>{<br>    int max = maxHeap.a[0];<br>    int hole = 0;<br>    while (hole &lt;= maxHeap.size / 2 - 1 &amp;&amp; (maxHeap.a[maxHeap.size - 1] &lt; maxHeap.a[hole </em> 2 + 1] || maxHeap.a[maxHeap.size - 1] &lt; maxHeap.a[hole <em> 2 + 2])) {<br>        if (maxHeap.a[hole </em> 2 + 2] &gt; maxHeap.a[hole <em> 2 + 1]) {<br>            maxHeap.a[hole] = maxHeap.a[hole </em> 2 + 2];<br>            hole = hole <em> 2 + 2;<br>        }<br>        else {<br>            maxHeap.a[hole] = maxHeap.a[hole </em> 2 + 1];<br>            hole = hole * 2 + 1;<br>        }<br>    }<br>    if (maxHeap.size % 2 == 0 &amp;&amp; hole == maxHeap.size) {<br>        maxHeap.a[maxHeap.size] = maxHeap.a[(hole - 1) / 2];<br>        hole = (hole - 1) / 2;<br>    }<br>    maxHeap.a[hole] = maxHeap.a[maxHeap.size - 1];<br>    maxHeap.size–;<br>    maxHeap.a[maxHeap.size] = max;<br>}<br>void Heap_Sort(int a[], int n)<br>{<br>    Heap maxHeap;<br>    maxHeap.a = a;<br>    for (int i = 0; i &lt; n; i++) {<br>        incertMaxHeap(a[i], maxHeap);<br>    }<br>    for (int i = 0; i &lt; n; i++) {<br>        moveMaxRear(maxHeap);<br>    }<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Heap_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge_Sort）"></a>归并排序（Merge_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10<br>using namespace std;<br>void merge(int obj[], int src[], int left, int right, int rEnd)<br>{<br>    int lEnd = right - 1;<br>    int i = left;<br>    while (left &lt;= lEnd&amp;&amp;right &lt;= rEnd) {<br>        if (src[left] &lt;= src[right]) {<br>            obj[i++] = src[left++];<br>        }<br>        else {<br>            obj[i++] = src[right++];<br>        }<br>    }<br>    while (left &lt;= lEnd) {<br>        obj[i++] = src[left++];<br>    }<br>    while (right &lt;= rEnd) {<br>        obj[i++] = src[right++];<br>    }<br>}<br>void mergeSort(int obj[],int src[],int left,int right)<br>{<br>    if (left &gt;= right) {<br>        return;<br>    }<br>    int center = (left + right) / 2;<br>    mergeSort(src, obj, left, center);<br>    mergeSort(src, obj, center + 1, right);<br>    merge(obj, src, left, center + 1, right);<br>}<br>void Merge_Sort(int a[], int n)<br>{<br>    int* temp = new int[n];<br>    for (int i = 0; i &lt; n; i++) {<br>        temp[i] = a[i];<br>    }<br>    mergeSort(a, temp, 0, n - 1);<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Merge_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="桶排序（Bucket-Sort）"><a href="#桶排序（Bucket-Sort）" class="headerlink" title="桶排序（Bucket_Sort）"></a>桶排序（Bucket_Sort）</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 10</p>
-<p>#define SIZE 100<br>using namespace std;<br>class listNode<br>{<br>public:<br>    int data;<br>    listNode<em> next;<br>    listNode() {<br>        next = NULL;<br>    }<br>};<br>void addNode(listNode&amp; node, int n)<br>{<br>    listNode</em> p = new listNode;<br>    p-&gt;data = n;<br>    p-&gt;next = node.next;<br>    node.next = p;<br>}<br>void readNode(listNode bucket[], int a[])<br>{<br>    int j = 0;<br>    for (int i = 0; i &lt; SIZE; i++) {<br>        listNode* p = bucket[i].next;<br>        while (p) {<br>            a[j++] = p-&gt;data;<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void Bucket_Sort(int a[], int n)<br>{<br>    listNode bucket[SIZE];<br>    for (int i = 0; i &lt; n; i++) {<br>        addNode(bucket[a[i]], a[i]);<br>    }<br>    readNode(bucket, a);<br>}<br>void main()<br>{<br>    int a[N];<br>    cout &lt;&lt; “请输入要排序的” &lt;&lt; N &lt;&lt; “个整数(0-99之间)：\n”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cin &gt;&gt; a[i];<br>    }<br>    Bucket_Sort(a, N);<br>    cout &lt;&lt; “排序后：”;<br>    for (int i = 0; i &lt; N; i++) {<br>        cout &lt;&lt; a[i] &lt;&lt; “    “;<br>    }<br>    system(“pause”);<br>}</p>
-<pre><code>2016年3月
-</code></pre>
-          
+          所有代码均由Microsoft Visual Studio 2015编译通过      
+插入排序（Insertion_Sort）#include
+#include
+#define N 10using namespace std;void Insertion_Sort(int a[], int n)
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2018/03/10/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0-ef-bc-88-e6-8e-92-e5-ba-8f-ef-bc-89/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -989,63 +949,18 @@
       
         
           
-            <p><em>所有代码均由Microsoft Visual Studio 2015编译通过</em>      </p>
-<h4 id="图的遍历DFS和BFS"><a href="#图的遍历DFS和BFS" class="headerlink" title="图的遍历DFS和BFS"></a>图的遍历DFS和BFS</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 16<br>using namespace std;<br>class listNode<br>{<br>public:<br>    int data;<br>    listNode<em> next;<br>};<br>class QueueNode<br>{<br>public:<br>    int a;<br>    QueueNode</em> next;<br>};<br>void enqueue(int a, QueueNode<em>&amp; rear) {<br>    rear-&gt;a = a;<br>    rear-&gt;next = new QueueNode;<br>    rear = rear-&gt;next;<br>    rear-&gt;next = NULL;<br>}<br>int dequeue(QueueNode</em>&amp; front) {<br>    QueueNode<em> temp = front;<br>    front = front-&gt;next;<br>    temp-&gt;next = NULL;<br>    return temp-&gt;a;<br>}<br>void inputLesson(listNode</em> head[])<br>{<br>    head[0] = NULL;<br>    head[1] = new listNode;<br>    head[1]-&gt;data = 3;<br>    head[1]-&gt;next = NULL;<br>    head[2] = new listNode;<br>    head[2]-&gt;data = 3;<br>    head[2]-&gt;next = new listNode;<br>    head[2]-&gt;next-&gt;data = 13;<br>    head[2]-&gt;next-&gt;next = NULL;<br>    head[3] = new listNode;<br>    head[3]-&gt;data = 7;<br>    head[3]-&gt;next = NULL;<br>    head[4] = new listNode;<br>    head[4]-&gt;data = 5;<br>    head[4]-&gt;next = NULL;<br>    head[5] = new listNode;<br>    head[5]-&gt;data = 6;<br>    head[5]-&gt;next = NULL;<br>    head[6] = new listNode;<br>    head[6]-&gt;data = 15;<br>    head[6]-&gt;next = NULL;<br>    head[7] = new listNode;<br>    head[7]-&gt;data = 10;<br>    head[7]-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;data = 11;<br>    head[7]-&gt;next-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;next-&gt;data = 12;<br>    head[7]-&gt;next-&gt;next-&gt;next = NULL;<br>    head[8] = new listNode;<br>    head[8]-&gt;data = 9;<br>    head[8]-&gt;next = NULL;<br>    head[9] = new listNode;<br>    head[9]-&gt;data = 10;<br>    head[9]-&gt;next = new listNode;<br>    head[9]-&gt;next-&gt;data = 11;<br>    head[9]-&gt;next-&gt;next = NULL;<br>    head[10] = new listNode;<br>    head[10]-&gt;data = 14;<br>    head[10]-&gt;next = NULL;<br>    head[11] = NULL;<br>    head[12] = NULL;<br>    head[13] = NULL;<br>    head[14] = NULL;<br>    head[15] = NULL;<br>}<br>void DFS(listNode<em> list[], int index, int visited[])<br>{<br>    listNode</em> p;<br>    if (visited[index]) {<br>        return;<br>    }<br>    cout &lt;&lt; index;<br>    visited[index] = 1;<br>    p = list[index];<br>    while (p) {<br>        DFS(list, p-&gt;data, visited);<br>        p = p-&gt;next;<br>    }<br>}<br>void BFS(listNode<em> list[], int index, int visited[])<br>{<br>    int v;<br>    listNode</em> p;<br>    QueueNode<em> front,</em> rear;<br>    front = rear = new QueueNode;<br>    rear-&gt;next = NULL;<br>    enqueue(index, rear);<br>    visited[index] = 1;<br>    while (front != rear) {<br>        v = dequeue(front);<br>        cout &lt;&lt; v;<br>        p = list[v];<br>        while (p) {<br>            if (!(visited[p-&gt;data])) {<br>                enqueue(p-&gt;data, rear);<br>                visited[p-&gt;data] = 1;<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void resetVisited(int visited[])<br>{<br>    for (int i = 0; i &lt; N; i++) {<br>        visited[i] = 0;<br>    }<br>}<br>void main()<br>{<br>    listNode* list[N];<br>    int n;<br>    int visited[N];<br>    inputLesson(list);<br>    cout &lt;&lt; “请输入深度优先搜索起始点序号：\n”;<br>    cin &gt;&gt; n;<br>    resetVisited(visited);<br>    DFS(list, n, visited);<br>    cout &lt;&lt; ‘\n’;<br>    cout &lt;&lt; “请输入广度优先搜索起始点序号：\n”;<br>    cin &gt;&gt; n;<br>    resetVisited(visited);<br>    BFS(list, n, visited);<br>    cout &lt;&lt; ‘\n’;<br>    system(“pause”);<br>}</p>
-<h4 id="最小生成树Prim算法"><a href="#最小生成树Prim算法" class="headerlink" title="最小生成树Prim算法"></a>最小生成树Prim算法</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 8</p>
-<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int dist;<br>    int visited;<br>    int path;<br>    Vertex() {<br>        adj = NULL;<br>        path = 0;<br>        visited = 0;<br>        dist = MAX;<br>    }<br>};<br>class Edge<br>{<br>public:<br>    int v;<br>    int w;<br>    void printEdge()<br>    {<br>        cout &lt;&lt; v &lt;&lt; ‘-‘ &lt;&lt; w &lt;&lt; “\n”;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Vertex a[N];<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].dist = MAX;<br>    }<br>}<br>void incertMinHeap(Vertex v, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; v.dist &lt; minHeap.a[hole / 2].dist) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = v;<br>    checkOdd(minHeap);<br>}<br>Vertex deleteMin(Heap&amp; minHeap)<br>{<br>    Vertex min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].dist &gt; minHeap.a[hole <em> 2 + 1].dist || minHeap.a[minHeap.size].dist &gt; minHeap.a[hole </em> 2].dist)) {<br>        if (minHeap.a[hole <em> 2 + 1].dist &lt; minHeap.a[hole </em> 2].dist) {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2 + 1];<br>            hole = hole </em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2];<br>            hole = hole </em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList<em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0) {<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList</em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 3, 4);<br>    input(v[1], 4, 1);<br>    input(v[2], 1, 2);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 4, 2);<br>    input(v[3], 6, 5);<br>    input(v[4], 1, 1);<br>    input(v[4], 2, 3);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 7);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 2, 10);<br>    input(v[5], 4, 7);<br>    input(v[5], 7, 6);<br>    input(v[6], 3, 5);<br>    input(v[6], 4, 8);<br>    input(v[6], 7, 1);<br>    input(v[7], 4, 4);<br>    input(v[7], 5, 6);<br>    input(v[7], 6, 1);<br>}<br>void Prim(Vertex &amp;s, Vertex g[], Edge MST[])<br>{<br>    int i = 0;<br>    Vertex v;<br>    AdjList<em> p;<br>    Heap minHeap;<br>    minHeap.size = 0;<br>    s.dist = 0;<br>    incertMinHeap(s, minHeap);<br>    while (minHeap.size) {<br>        v = deleteMin(minHeap);<br>        while (g[v.id].visited) {<br>            if (!minHeap.size) {<br>                return;<br>            }<br>            v = deleteMin(minHeap);<br>        }<br>        g[v.id].visited = 1;<br>        g[v.id].dist = 0;<br>        if (v.path) {<br>            i++;<br>            MST[i].v = v.path;<br>            MST[i].w = v.id;<br>        }<br>        p = v.adj;<br>        while (p) {<br>            if (g[p-&gt;data].visited == 0 &amp;&amp; p-&gt;dist &lt; g[p-&gt;data].dist) {<br>                g[p-&gt;data].dist = p-&gt;dist ;<br>                g[p-&gt;data].path = v.id;<br>                incertMinHeap(g[p-&gt;data], minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void check(Vertex v[])<br>{<br>    AdjList</em> p;<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        cout &lt;&lt; i &lt;&lt; ‘\n’;<br>        p = v[i].adj;<br>        while (p) {<br>            cout &lt;&lt; p-&gt;data &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;dist &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;next &lt;&lt; ‘\n’;<br>            p = p-&gt;next;<br>        }<br>    }<br>    system(“pause”);<br>}<br>void main()<br>{</p>
-<pre><code>Vertex v\[N\];
-Edge MST\[N - 1\];
-int n;
-inputSample(v);
-cout &lt;&lt; &quot;请输入源点序号：\\n&quot;;
-cin &gt;&gt; n;
-Prim(v\[n\], v, MST);
-cout &lt;&lt; &quot;最小生成树为：\\n&quot;;
-for (int i = 1; i &lt; N - 1; i++)
-{
-    MST\[i\].printEdge();
-}
-system(&quot;pause&quot;);
-</code></pre><p>}</p>
-<h4 id="最小生成树Kruskal算法"><a href="#最小生成树Kruskal算法" class="headerlink" title="最小生成树Kruskal算法"></a>最小生成树Kruskal算法</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 8</p>
-<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int root;<br>    int visited;</p>
-<pre><code>Vertex() {
-    adj = NULL;
-    root = -1;
-    visited = 0;
-}
-</code></pre><p>};<br>class Edge<br>{<br>public:<br>    int v;<br>    int w;<br>    int l;<br>    Edge(int v = 0, int w = 0, int l = 0) :v(v), w(w), l(l) {}<br>    void printEdge()<br>    {<br>        cout &lt;&lt; v &lt;&lt; ‘-‘ &lt;&lt; w &lt;&lt; “\n”;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Edge a[N<em>(N - 1)];<br>    Heap() {<br>        size = 0;<br>    }<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].l = MAX;<br>    }<br>}<br>void incertMinHeap(Edge e, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; e.l &lt; minHeap.a[hole / 2].l) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = e;<br>    checkOdd(minHeap);<br>}<br>Edge deleteMin(Heap&amp; minHeap)<br>{<br>    Edge min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].l &gt; minHeap.a[hole </em> 2 + 1].l || minHeap.a[minHeap.size].l &gt; minHeap.a[hole <em> 2].l)) {<br>        if (minHeap.a[hole </em> 2 + 1].l &lt; minHeap.a[hole <em> 2].l) {<br>            minHeap.a[hole] = minHeap.a[hole </em> 2 + 1];<br>            hole = hole <em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole </em> 2];<br>            hole = hole <em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>int find(Vertex v, Vertex g[])<br>{<br>    if (v.root == -1) {<br>        return v.id;<br>    }<br>    return find(g[v.root], g);<br>}<br>void unionSet(int r1, int r2, Vertex g[])<br>{<br>        g[r2].root = g[r1].id;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList</em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0) {<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList<em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 3, 4);<br>    input(v[1], 4, 1);<br>    input(v[2], 1, 2);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 4, 2);<br>    input(v[3], 6, 5);<br>    input(v[4], 1, 1);<br>    input(v[4], 2, 3);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 7);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 2, 10);<br>    input(v[5], 4, 7);<br>    input(v[5], 7, 6);<br>    input(v[6], 3, 5);<br>    input(v[6], 4, 8);<br>    input(v[6], 7, 1);<br>    input(v[7], 4, 4);<br>    input(v[7], 5, 6);<br>    input(v[7], 6, 1);<br>}<br>void Kruskal(Vertex g[], Edge MST[])<br>{<br>    Heap minHeap;<br>    Edge e;<br>    int i = 0;<br>    for (int i = 1; i &lt; N; i++) {<br>        AdjList</em> p = g[i].adj;<br>        while (p) {<br>            if (!g[p-&gt;data].visited) {<br>                Edge e(i, p-&gt;data, p-&gt;dist);<br>                incertMinHeap(e, minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>        g[i].visited = 1;<br>    }<br>    while (minHeap.size) {<br>        e = deleteMin(minHeap);<br>        int r1 = find(g[e.v], g);<br>        int r2 = find(g[e.w], g);<br>        if (r1 != r2) {<br>            MST[++i] = e;<br>            unionSet(r1, r2, g);<br>        }<br>    }</p>
-<p>}<br>void main()<br>{<br>    Vertex v[N];<br>    Edge MST[N - 1];<br>    inputSample(v);<br>    Kruskal(v, MST);<br>    cout &lt;&lt; “最小生成树为：\n”;<br>    for (int i = 1; i &lt; N - 1; i++)<br>    {<br>        MST[i].printEdge();<br>    }<br>    system(“pause”);<br>}</p>
-<h4 id="基于最小堆的有权图单源最短路径Dijkstra算法"><a href="#基于最小堆的有权图单源最短路径Dijkstra算法" class="headerlink" title="基于最小堆的有权图单源最短路径Dijkstra算法"></a>基于最小堆的有权图单源最短路径Dijkstra算法</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 16</p>
-<p>#define MAX 100000<br>using namespace std;<br>class AdjList<br>{<br>public:<br>    int data;<br>    int dist;<br>    AdjList<em> next;<br>    AdjList() {<br>        next = NULL;<br>    }<br>};<br>class Vertex<br>{<br>public:<br>    int id;<br>    AdjList</em> adj;<br>    int dist;<br>    int visited;<br>    int path;<br>    Vertex() {<br>        adj = NULL;<br>        path = 0;<br>        visited = 0;<br>        dist = MAX;<br>    }<br>};<br>class Heap<br>{<br>public:<br>    int size;<br>    Vertex a[N];<br>};<br>void checkOdd(Heap&amp; minHeap)<br>{<br>    if (!(minHeap.size % 2)) {<br>        minHeap.a[minHeap.size + 1].dist = MAX;<br>    }<br>}<br>void incertMinHeap(Vertex v, Heap&amp; minHeap)<br>{<br>    int hole = ++minHeap.size;<br>    while (hole != 1 &amp;&amp; v.dist &lt; minHeap.a[hole / 2].dist) {<br>        minHeap.a[hole] = minHeap.a[hole / 2];<br>        hole = hole / 2;<br>    }<br>    minHeap.a[hole] = v;<br>    checkOdd(minHeap);<br>}<br>Vertex deleteMin(Heap&amp; minHeap)<br>{<br>    Vertex min = minHeap.a[1];<br>    int hole = 1;<br>    while (hole &lt;= minHeap.size / 2 &amp;&amp; (minHeap.a[minHeap.size].dist &gt; minHeap.a[hole <em> 2 + 1].dist || minHeap.a[minHeap.size].dist &gt; minHeap.a[hole </em> 2].dist)) {<br>        if (minHeap.a[hole <em> 2 + 1].dist &lt; minHeap.a[hole </em> 2].dist) {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2 + 1];<br>            hole = hole </em> 2 + 1;<br>        }<br>        else {<br>            minHeap.a[hole] = minHeap.a[hole <em> 2];<br>            hole = hole </em> 2;<br>        }<br>    }<br>    minHeap.a[hole] = minHeap.a[minHeap.size];<br>    minHeap.size–;<br>    checkOdd(minHeap);<br>    return min;<br>}<br>void input(Vertex &amp;v, int data, int dist)<br>{<br>    AdjList<em>&amp; p = v.adj;<br>    if (data == 0 &amp;&amp; dist == 0){<br>        p = NULL;<br>        return;<br>    }<br>    if (!p) {<br>        p = new AdjList;<br>        p-&gt;data = data;<br>        p-&gt;dist = dist;<br>    }<br>    else {<br>        AdjList</em> temp = p;<br>        while (p-&gt;next) {<br>            p = p-&gt;next;<br>        }<br>        p-&gt;next = new AdjList;<br>        p-&gt;next-&gt;data = data;<br>        p-&gt;next-&gt;dist = dist;<br>        p = temp;<br>    }<br>}<br>void inputSample(Vertex v[])<br>{<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        v[i].id = i;<br>    }<br>    input(v[1], 2, 2);<br>    input(v[1], 4, 1);<br>    input(v[2], 4, 3);<br>    input(v[2], 5, 10);<br>    input(v[3], 1, 4);<br>    input(v[3], 6, 5);<br>    input(v[4], 3, 2);<br>    input(v[4], 5, 2);<br>    input(v[4], 6, 8);<br>    input(v[4], 7, 4);<br>    input(v[5], 7, 6);<br>    input(v[7], 6, 1);<br>}<br>void Dijkstra(Vertex &amp;s, Vertex g[])<br>{<br>    Vertex v;<br>    AdjList<em> p;<br>    Heap minHeap;<br>    minHeap.size = 0;<br>    s.dist = 0;<br>    incertMinHeap(s, minHeap);<br>    while (minHeap.size) {<br>        v = deleteMin(minHeap);<br>        while (g[v.id].visited) {<br>            if (!minHeap.size) {<br>                return;<br>            }<br>            v = deleteMin(minHeap);<br>        }<br>        g[v.id].visited = 1;<br>        p = v.adj;<br>        while (p) {<br>            if (g[p-&gt;data].visited == 0 &amp;&amp; p-&gt;dist + v.dist &lt; g[p-&gt;data].dist) {<br>                g[p-&gt;data].dist = p-&gt;dist + v.dist;<br>                g[p-&gt;data].path = v.id;<br>                incertMinHeap(g[p-&gt;data], minHeap);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void printPath(Vertex v, Vertex g[])<br>{<br>    if (v.path) {<br>        printPath(g[v.path], g);<br>        cout &lt;&lt; “-&gt;”;<br>    }<br>    cout &lt;&lt; v.id;<br>}<br>void check(Vertex v[])<br>{<br>    AdjList</em> p;<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        cout &lt;&lt; i &lt;&lt; ‘\n’;<br>        p = v[i].adj;<br>        while (p) {<br>            cout &lt;&lt; p-&gt;data &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;dist &lt;&lt; ‘ ‘ &lt;&lt; p-&gt;next &lt;&lt; ‘\n’;<br>            p = p-&gt;next;<br>        }<br>    }<br>    system(“pause”);<br>}<br>void main()<br>{</p>
-<pre><code>Vertex v\[N\];
-int n;
-inputSample(v);
-cout &lt;&lt; &quot;请输入源点序号：\\n&quot;;
-cin &gt;&gt; n;
-Dijkstra(v\[n\], v);
-cout &lt;&lt; &quot;请输入终点序号：\\n&quot;;
-cin &gt;&gt; n;
-cout &lt;&lt; &quot;最短路径为：\\n&quot;;
-printPath(v\[n\], v);
-cout &lt;&lt; &quot;路径权重：&quot; &lt;&lt; v\[n\].dist;
-system(&quot;pause&quot;);
-</code></pre><p>}</p>
-<h4 id="邻接表存储有向无环图以队列法拓扑排序"><a href="#邻接表存储有向无环图以队列法拓扑排序" class="headerlink" title="邻接表存储有向无环图以队列法拓扑排序"></a>邻接表存储有向无环图以队列法拓扑排序</h4><p>#include<iostream></iostream></p>
-<p>#include<iomanip></iomanip></p>
-<p>#define N 16<br>using namespace std;<br>class listNode<br>{<br>public:<br>    int data;<br>    listNode<em> next;<br>};<br>class QueueNode<br>{<br>public:<br>    int a;<br>    QueueNode</em> next;<br>};<br>void enqueue(int a, QueueNode<em>&amp; rear) {<br>    rear-&gt;a = a;<br>    rear-&gt;next = new QueueNode;<br>    rear = rear-&gt;next;<br>    rear-&gt;next = NULL;<br>}<br>int dequeue(QueueNode</em>&amp; front) {<br>    QueueNode<em> temp = front;<br>    front = front-&gt;next;<br>    temp-&gt;next = NULL;<br>    return temp-&gt;a;<br>}<br>void inputLesson(listNode</em> head[])<br>{<br>    head[0] = NULL;<br>    head[1] = new listNode;<br>    head[1]-&gt;data = 3;<br>    head[1]-&gt;next = NULL;<br>    head[2] = new listNode;<br>    head[2]-&gt;data = 3;<br>    head[2]-&gt;next = new listNode;<br>    head[2]-&gt;next-&gt;data = 13;<br>    head[2]-&gt;next-&gt;next = NULL;<br>    head[3] = new listNode;<br>    head[3]-&gt;data = 7;<br>    head[3]-&gt;next = NULL;<br>    head[4] = new listNode;<br>    head[4]-&gt;data = 5;<br>    head[4]-&gt;next = NULL;<br>    head[5] = new listNode;<br>    head[5]-&gt;data = 6;<br>    head[5]-&gt;next = NULL;<br>    head[6] = new listNode;<br>    head[6]-&gt;data = 15;<br>    head[6]-&gt;next = NULL;<br>    head[7] = new listNode;<br>    head[7]-&gt;data = 10;<br>    head[7]-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;data = 11;<br>    head[7]-&gt;next-&gt;next = new listNode;<br>    head[7]-&gt;next-&gt;next-&gt;data = 12;<br>    head[7]-&gt;next-&gt;next-&gt;next = NULL;<br>    head[8] = new listNode;<br>    head[8]-&gt;data = 9;<br>    head[8]-&gt;next = NULL;<br>    head[9] = new listNode;<br>    head[9]-&gt;data = 10;<br>    head[9]-&gt;next = new listNode;<br>    head[9]-&gt;next-&gt;data = 11;<br>    head[9]-&gt;next-&gt;next = NULL;<br>    head[10] = new listNode;<br>    head[10]-&gt;data = 14;<br>    head[10]-&gt;next = NULL;<br>    head[11] = NULL;<br>    head[12] = NULL;<br>    head[13] = NULL;<br>    head[14] = NULL;<br>    head[15] = NULL;<br>}<br>void scanAll(listNode<em> list[], int inDegree[])<br>{<br>    for (int i = 1; i &lt; N; i++)<br>    {<br>        listNode</em> p;<br>        p = list[i];<br>        while (p)<br>        {<br>            inDegree[p-&gt;data]++;<br>            p = p-&gt;next;<br>        }<br>    }<br>}<br>void topSort(listNode<em> list[])<br>{<br>    int v;<br>    int inDegree[N];<br>    listNode</em> p;<br>    QueueNode<em> front, </em>rear;<br>    front = rear = new QueueNode;<br>    for (int i = 0; i &lt; N; i++) {<br>        inDegree[i] = 0;<br>    }<br>    scanAll(list, inDegree);<br>    for (int i = 1; i &lt; N; i++) {<br>        if (!inDegree[i]) {<br>            enqueue(i, rear);<br>        }<br>    }<br>    while (front != rear) {<br>        v = dequeue(front);<br>        cout &lt;&lt; v &lt;&lt; ‘\n’;<br>        p = list[v];<br>        while (p) {<br>            if (!(–inDegree[p-&gt;data])) {<br>                enqueue(p-&gt;data, rear);<br>            }<br>            p = p-&gt;next;<br>        }<br>    }</p>
-<p>}<br>void main()<br>{<br>    listNode* list[N];<br>    inputLesson(list);<br>    topSort(list);<br>    system(“pause”);<br>}</p>
-<pre><code>2016年3月
-</code></pre>
-          
+          所有代码均由Microsoft Visual Studio 2015编译通过      
+图的遍历DFS和BFS#include
+#include
+#define N 16using namespace std;class listNode{public:    int data;    listN
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/11/27/e6-95-b0-e6-8d-ae-e7-bb-93-e6-9e-84-e4-b8-8e-e7-ae-97-e6-b3-95-ef-bc-88c-ef-bc-89-e4-bb-a3-e7-a0-81-e7-bb-83-e4-b9-a0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1185,19 +1100,20 @@ system(&quot;pause&quot;);
       
         
           
-            <p>regex match tracer  正则表达式匹配工具 </p>
-<p>phpstudy  简易快速搭建一个Apache服务器，同时启动PHP+MySQL </p>
-<p>beyond compare  专业文本比对工具 </p>
-<p>switchhosts  本地hosts文件快速切换 </p>
-<p>unlocker  快速解除特定软件进程 </p>
-<p>takecolor  屏幕取色   </p>
-<p>ComfyFileRecovery  数据恢复 </p>
-<p>TeamViewer  远程协助 </p>
-<p>Typora  本地markdown编辑器 </p>
-<p>Pixel Ruler  屏幕像素测量 </p>
-<p>FastStone Capture  屏幕截图</p>
+          regex match tracer  正则表达式匹配工具 
+phpstudy  简易快速搭建一个Apache服务器，同时启动PHP+MySQL 
+beyond compare  专业文本比对工具 
+switchhosts  本地hosts文件快速切换 
+unlocker  快速解除特定软件进程 
 
-          
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/05/16/e8-ae-b0-e5-bd-95-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-94-a8-e7-9a-84-e8-bd-af-e4-bb-b6/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1337,101 +1253,26 @@ system(&quot;pause&quot;);
       
         
           
-            <h1 id="2017-05-04"><a href="#2017-05-04" class="headerlink" title="2017-05-04"></a>2017-05-04</h1><h2 id="SUMMARY"><a href="#SUMMARY" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天继续羽毛球，遇见两个好搭档，成功霸场，大臂继续疑似拉伤。最近很安逸，处于舒适区，需要搞点事情。</p>
-<h2 id="SKILL-TREE"><a href="#SKILL-TREE" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="健身"><a href="#健身" class="headerlink" title="健身"></a>健身</h3><ul>
-<li>羽毛球 2h</li>
-</ul>
-<h5 id="核心加强计划"><a href="#核心加强计划" class="headerlink" title="核心加强计划"></a>核心加强计划</h5><ul>
-<li>卷腹 15*2</li>
-<li>平板支撑 30s*2</li>
-</ul>
-<h2 id="STATISTIC"><a href="#STATISTIC" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.05kg</li>
-</ul>
-<h1 id="2017-05-05"><a href="#2017-05-05" class="headerlink" title="2017-05-05"></a>2017-05-05</h1><h2 id="SUMMARY-1"><a href="#SUMMARY-1" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天没忍住继续打球，手臂终于坚持不住了，今天起必须休养半个月。</p>
-<h2 id="SKILL-TREE-1"><a href="#SKILL-TREE-1" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="英语"><a href="#英语" class="headerlink" title="英语"></a>英语</h3><ul>
-<li>扇贝新闻 3篇</li>
-</ul>
-<h3 id="健身-1"><a href="#健身-1" class="headerlink" title="健身"></a>健身</h3><ul>
-<li>跑步机 2000m 12.5km/h</li>
-<li>羽毛球 1.5h</li>
-</ul>
-<h5 id="核心加强计划-1"><a href="#核心加强计划-1" class="headerlink" title="核心加强计划"></a>核心加强计划</h5><ul>
-<li>平板支撑 45s*4</li>
-</ul>
-<h2 id="STATISTIC-1"><a href="#STATISTIC-1" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.40kg</li>
-</ul>
-<h1 id="2017-05-06"><a href="#2017-05-06" class="headerlink" title="2017-05-06"></a>2017-05-06</h1><h2 id="SUMMARY-2"><a href="#SUMMARY-2" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>成功掌握了焊接机械键盘轴的技能，还挺好玩的，需要细心</p>
-<h2 id="SKILL-TREE-2"><a href="#SKILL-TREE-2" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li>学会机械键盘换轴</li>
-</ul>
-<h3 id="英语-1"><a href="#英语-1" class="headerlink" title="英语"></a>英语</h3><ul>
-<li>扇贝新闻 2篇</li>
-</ul>
-<h2 id="STATISTIC-2"><a href="#STATISTIC-2" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.90kg</li>
-</ul>
-<h1 id="2017-05-07"><a href="#2017-05-07" class="headerlink" title="2017-05-07"></a>2017-05-07</h1><h2 id="SUMMARY-3"><a href="#SUMMARY-3" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>吃饱喝足休息一天</p>
-<h2 id="SKILL-TREE-3"><a href="#SKILL-TREE-3" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="电影"><a href="#电影" class="headerlink" title="电影"></a>电影</h3><ul>
-<li>《摔跤吧！爸爸》</li>
-</ul>
-<h3 id="烹饪"><a href="#烹饪" class="headerlink" title="烹饪"></a>烹饪</h3><ul>
-<li>柠檬黄油煎鸡胸</li>
-</ul>
-<h2 id="STATISTIC-3"><a href="#STATISTIC-3" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.90kg</li>
-</ul>
-<h1 id="2017-05-08"><a href="#2017-05-08" class="headerlink" title="2017-05-08"></a>2017-05-08</h1><h2 id="SUMMARY-4"><a href="#SUMMARY-4" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>发现软件SwitchHosts。公司代码上线CDN试验成功。</p>
-<h2 id="SKILL-TREE-4"><a href="#SKILL-TREE-4" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="健身-2"><a href="#健身-2" class="headerlink" title="健身"></a>健身</h3><ul>
-<li>跑步机 2000m 12.5km/h</li>
-</ul>
-<h2 id="STATISTIC-4"><a href="#STATISTIC-4" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.15kg</li>
-</ul>
-<h1 id="2017-05-09"><a href="#2017-05-09" class="headerlink" title="2017-05-09"></a>2017-05-09</h1><h2 id="SUMMARY-5"><a href="#SUMMARY-5" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天买了想买很久的3DS，一个限量版xbox one s 蓝牙手柄，还有一张闪迪的32G SD卡。最近买的东西有点多，要努力点别浪费时间啊。今天别的事啥事没干，真是废柴啊，要积极利落起来啊。 发现一个很厉害的网盘搜索<a href="http://www.panc.cc。" target="_blank" rel="noopener">http://www.panc.cc。</a></p>
-<h2 id="SKILL-TREE-5"><a href="#SKILL-TREE-5" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="烹饪-1"><a href="#烹饪-1" class="headerlink" title="烹饪"></a>烹饪</h3><ul>
-<li>基础版味噌汤</li>
-</ul>
-<h2 id="STATISTIC-5"><a href="#STATISTIC-5" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.15kg</li>
-</ul>
-<h1 id="2017-05-10"><a href="#2017-05-10" class="headerlink" title="2017-05-10"></a>2017-05-10</h1><h2 id="SUMMARY-6"><a href="#SUMMARY-6" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>找了一些3DS游戏</p>
-<h2 id="SKILL-TREE-6"><a href="#SKILL-TREE-6" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h2 id="STATISTIC-6"><a href="#STATISTIC-6" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 60.25kg</li>
-</ul>
-<h1 id="2017-05-11"><a href="#2017-05-11" class="headerlink" title="2017-05-11"></a>2017-05-11</h1><h2 id="SUMMARY-7"><a href="#SUMMARY-7" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>3DS到货了，成色略差，但是功能很好。手柄有些问题，准备退货。至于3DS破解，就是跟着有人总结的pdf文件一步一步做下来就行，还是挺佩服这些写破解文件的开发人员的。</p>
-<h2 id="SKILL-TREE-7"><a href="#SKILL-TREE-7" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><ul>
-<li>A9破解3DS</li>
-</ul>
-<h2 id="STATISTIC-7"><a href="#STATISTIC-7" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 60.25kg</li>
-</ul>
-<h1 id="2017-05-12"><a href="#2017-05-12" class="headerlink" title="2017-05-12"></a>2017-05-12</h1><h2 id="SUMMARY-8"><a href="#SUMMARY-8" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>改BUG改的头大，结果发现是数据问题，还是我定位问题的方法有问题，应该更快速发现BUG的原因。  </p>
-<h2 id="SKILL-TREE-8"><a href="#SKILL-TREE-8" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h2 id="STATISTIC-8"><a href="#STATISTIC-8" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 59.75kg</li>
-</ul>
-<h1 id="2017-05-13"><a href="#2017-05-13" class="headerlink" title="2017-05-13"></a>2017-05-13</h1><h2 id="SUMMARY-9"><a href="#SUMMARY-9" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>约拍了一个妹子，还行，因为妹子人很憨厚很不错。我还应该表现得更专业和自信一些。玩了一下午游戏，没好好吃饭，不应该这样。也可能是玩上了一直以来想玩的游戏掌机，小时候爸妈不可能给买，所以弥补了儿时的渴望，就像小时候玩游戏一样疯狂啊，还是要控制自己。称重一下瘦了4斤，有点夸张，以后一个人也要好好吃饭。</p>
-<h2 id="SKILL-TREE-9"><a href="#SKILL-TREE-9" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="摄影"><a href="#摄影" class="headerlink" title="摄影"></a>摄影</h3><ul>
-<li>人像约拍99元</li>
-</ul>
-<h2 id="STATISTIC-9"><a href="#STATISTIC-9" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 58.25kg</li>
-</ul>
-<h1 id="2017-05-14"><a href="#2017-05-14" class="headerlink" title="2017-05-14"></a>2017-05-14</h1><h2 id="SUMMARY-10"><a href="#SUMMARY-10" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天去拿到了900块买的新大三，发现非常的划算，32G SD + 64G SD + GW卡 + new 3DSLL，而且还基本装满了游戏，感觉这配置很豪华。但是我手贱点了一下升级系统，GW虚拟系统就不能启动了，很郁闷，搞了半天没办法了。以后没有问题的时候还是不要瞎折腾，就算要瞎折腾也应该在充分了解信息的情况下，分析利弊，再做决定。冲动往往导致一些不好的结果。</p>
-<h2 id="SKILL-TREE-10"><a href="#SKILL-TREE-10" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h2 id="STATISTIC-10"><a href="#STATISTIC-10" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><h1 id="2017-05-15"><a href="#2017-05-15" class="headerlink" title="2017-05-15"></a>2017-05-15</h1><h2 id="SUMMARY-11"><a href="#SUMMARY-11" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天状态还行，下面要开始抓紧办理离职手续了。3DS的系统再不想折腾了，毕竟买游戏机的初衷是玩想玩的那几个游戏，而不是装很多游戏装逼，更不是折腾系统什么的，感觉折腾系统已经花费了很多时间了，还是静待GW官网更新吧。今天记录了一下在公司时发现的一些好用的software：<a href="http://diaryfun.info/2017/05/记录一些好用的软件/" target="_blank" rel="noopener">http://diaryfun.info/2017/05/记录一些好用的软件/</a></p>
-<h2 id="SKILL-TREE-11"><a href="#SKILL-TREE-11" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="健身-3"><a href="#健身-3" class="headerlink" title="健身"></a>健身</h3><ul>
-<li>跑步机2000m 11km/h</li>
-</ul>
-<h3 id="烹饪-2"><a href="#烹饪-2" class="headerlink" title="烹饪"></a>烹饪</h3><ul>
-<li>红焖牛肉</li>
-<li>海鲜菇牛腩汤</li>
-</ul>
-<h2 id="STATISTIC-11"><a href="#STATISTIC-11" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li>体重 58.25kg</li>
-</ul>
+          2017-05-04SUMMARY今天继续羽毛球，遇见两个好搭档，成功霸场，大臂继续疑似拉伤。最近很安逸，处于舒适区，需要搞点事情。
+SKILL TREE健身
+羽毛球 2h
 
-          
+核心加强计划
+卷腹 15*2
+平板支撑 30s*2
+
+STATISTIC
+体重 59.05kg
+
+2017-05-05SUM
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/05/05/2017-05-diary-e6-97-a5-e6-8a-a5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1571,38 +1412,16 @@ system(&quot;pause&quot;);
       
         
           
-            <p><strong>懒惰是有惯性的，而打破这种循环的办法只有一个，那就是立刻行动起来。</strong>   准备从今天起写日报，在未来的每一天，希望能够总结当天的收获以及为了目标所作出的努力，避免时间消磨在惰性之上。 先简单写个模板出来（使用Markdown语法）：  </p>
-<p># 2017-05-04    //日期<br>## SUMMARY   //每日收获总结</p>
-<p>今天继续羽毛球，遇见两个好搭档，成功霸场，大臂继续疑似拉伤。最近很安逸，处于舒适区，需要搞点事情。</p>
-<p>## SKILL TREE    //技能树</p>
-<p>### 健身    //技能树方向</p>
-<p>- 羽毛球 2h</p>
-<p>##### 核心加强计划    //专项计划名称</p>
-<p>- 卷腹 15<em>2<br>- 平板支撑 30s</em>2</p>
-<p>## TODO LIST    //待办事项</p>
-<p>- 做JS五子棋首页入口<br>- 用node.js写爬虫日志备份<br>- 为个人网站应用gulp.js</p>
-<p>## STATISTIC    //统计数据</p>
-<p>- 体重 59.05kg</p>
-<h1 id="2017-05-04"><a href="#2017-05-04" class="headerlink" title="2017-05-04"></a>2017-05-04</h1><h2 id="SUMMARY"><a href="#SUMMARY" class="headerlink" title="SUMMARY"></a>SUMMARY</h2><p>今天继续羽毛球，遇见两个好搭档，成功霸场，大臂继续疑似拉伤。最近很安逸，处于舒适区，需要搞点事情。</p>
-<h2 id="SKILL-TREE"><a href="#SKILL-TREE" class="headerlink" title="SKILL TREE"></a>SKILL TREE</h2><h3 id="健身"><a href="#健身" class="headerlink" title="健身"></a>健身</h3><ul>
-<li>羽毛球 2h</li>
-</ul>
-<h5 id="核心加强计划"><a href="#核心加强计划" class="headerlink" title="核心加强计划"></a>核心加强计划</h5><ul>
-<li>卷腹 15*2</li>
-<li>平板支撑 30s*2</li>
-</ul>
-<h2 id="TODO-LIST"><a href="#TODO-LIST" class="headerlink" title="TODO LIST"></a>TODO LIST</h2><ul>
-<li>做JS五子棋首页入口</li>
-<li>用node.js写爬虫日志备份</li>
-<li>为个人网站应用gulp.js</li>
-</ul>
-<h2 id="STATISTIC"><a href="#STATISTIC" class="headerlink" title="STATISTIC"></a>STATISTIC</h2><ul>
-<li><p>体重 59.05kg</p>
-<p>感觉wordpress里并没有typora里显示的那么好，不过也没关系了： <a href="http://diaryfun.info/wp-content/uploads/2017/05/捕获.gif" target="_blank" rel="noopener"><img src="http://diaryfun.info/wp-content/uploads/2017/05/捕获.gif" alt></a>     之前微博发过了总结的有效提升自己的方法论： <strong>1.保持开放的心态</strong> <strong>2.明确自身定位进行倒逼</strong> 这两句话很重要   立夏了，又到了最喜欢的季节。 Carpe diem, 一定要过好每一天啊。</p>
-</li>
-</ul>
-
-          
+          懒惰是有惯性的，而打破这种循环的办法只有一个，那就是立刻行动起来。   准备从今天起写日报，在未来的每一天，希望能够总结当天的收获以及为了目标所作出的努力，避免时间消磨在惰性之上。 先简单写个模板出来（使用Markdown语法）：  
+# 2017-05-04    //日期## SUMMARY  
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/05/05/e5-bc-80-e5-a7-8b-e5-86-99-e6-97-a5-e6-8a-a5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1742,14 +1561,17 @@ system(&quot;pause&quot;);
       
         
           
-            <h4 id="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。"><a href="#自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。" class="headerlink" title="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。"></a>自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。</h4><p>明天上班带着这个，<strong>啪啪啪啪</strong>的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧</p>
-<p>for(var i = 0;i &lt;= 100;i++){</p>
-<pre><code>console.log(&quot;我是Cherry G80-3000 青轴&quot;);
-</code></pre><p>}</p>
-<p>我感觉有一个缺点，就是容易一激动按错键。 还有就是，打多了手有点累啊。我的手这会儿好酸。</p>
-<p>cd d<br>cd repository<br>cd git-learn<br>git init<br>git add test.js<br>git commit -m “From my cherry keyboard”</p>
-
-          
+          自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。明天上班带着这个，啪啪啪啪的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧
+for(var i = 0;i &lt;= 100;i++){
+console.log(&quot;我是Cherry G8
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1889,9 +1711,16 @@ system(&quot;pause&quot;);
       
         
           
-            <p>你好哇！</p>
+          你好哇！
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/03/20/hello-world-1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2219,6 +2048,28 @@ system(&quot;pause&quot;);
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
