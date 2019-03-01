@@ -88,7 +88,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://diaryfun.info/wp-content/uploads/2018/10/234816ylnpqg2azlxpnlqz.jpg">
 <meta property="og:image" content="http://diaryfun.info/wp-content/uploads/2018/10/Snipaste_2018-10-13_12-49-40.png">
-<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta property="og:updated_time" content="2019-03-01T17:03:52.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LAMP搭建私有云OwnCloud流程">
 <meta name="twitter:description" content="STEP1: 在Ubuntu 16.04搭建LAMPApache installationTo install webserver i.e. Apache, open terminal &amp;amp; execute the following command, $ sudo apt-get install apache2 Once the package has been installed, st">
@@ -330,7 +330,7 @@
 <p><code>$ sudo systemctl start apache2</code></p>
 <p><code>$ sudo systemctl enable apache2</code></p>
 <p>Now we can test the apache installation. To test the apache installation, open web browser &amp; in the address bar enter the following url,</p>
-<p><a href="http://localhost" target="_blank" rel="noopener">http://localhost</a></p>
+<p><code>http://localhost</code></p>
 <h3 id="MySQL-installation"><a href="#MySQL-installation" class="headerlink" title="MySQL installation"></a>MySQL installation</h3><p>Next thing to install is database, we are using MySql as our choice of database server. To install MySql on Ubuntu machine, run the following command from terminal</p>
 <p><code>$ sudo apt-get install mysql-server mysql-client</code></p>
 <p>During the MySql installation, we will be asked to provide ‘root’ password, provide a suitable password &amp; than confirm it to complete the installation. Once the installation has been completed, start the MySql service &amp; enable it for boot,</p>
@@ -350,7 +350,7 @@ phpinfo();
 <p>Save the file &amp; restart the apache service,</p>
 <p><code>$ sudo systemctl restart apache2</code></p>
 <p>Now open the browser &amp; enter the following URL,</p>
-<p><a href="http://localhost/test.php" target="_blank" rel="noopener">http://localhost/test.php</a></p>
+<p><code>http://localhost/test.php</code></p>
 <p>We should now see the following page with details about the installed PHP,</p>
 <p>We know have our LAMP stack on Ubuntu OS ready to use, we can now deploy the dynamic websites on this stack.</p>
 <h2 id="STEP2-搭建OwnCloud"><a href="#STEP2-搭建OwnCloud" class="headerlink" title="STEP2: 搭建OwnCloud"></a>STEP2: 搭建OwnCloud</h2><p>我们需要在自己的设备里安装这些包：</p>
@@ -507,7 +507,7 @@ mysql &gt; quit;
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
