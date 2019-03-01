@@ -5,11 +5,11 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   &amp;lt;!DOCTYPE html&amp;gt;         Test            0    1    2    3    4    5    什么是闭包     JS代码 $(function () { /* 给6个按钮绑定事件，点击打印按钮的序号  */ for (var i = 0; i &amp;lt; 6; i">
+<meta name="description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   12345678910111213141516171819&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&quot;UTF-8&quot;&amp;gt;    &amp;lt;title&amp;gt;Test&amp;lt;/title&amp;gt;    &amp;lt;sc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript闭包原理分析">
 <meta property="og:url" content="http://diarychris.info/blog/2018/03/23/javascript-e9-97-ad-e5-8c-85-e5-8e-9f-e7-90-86-e5-88-86-e6-9e-90/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   &amp;lt;!DOCTYPE html&amp;gt;         Test            0    1    2    3    4    5    什么是闭包     JS代码 $(function () { /* 给6个按钮绑定事件，点击打印按钮的序号  */ for (var i = 0; i &amp;lt; 6; i">
+<meta property="og:description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   12345678910111213141516171819&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&quot;UTF-8&quot;&amp;gt;    &amp;lt;title&amp;gt;Test&amp;lt;/title&amp;gt;    &amp;lt;sc">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta property="og:updated_time" content="2019-03-01T17:31:10.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript闭包原理分析">
-<meta name="twitter:description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   &amp;lt;!DOCTYPE html&amp;gt;         Test            0    1    2    3    4    5    什么是闭包     JS代码 $(function () { /* 给6个按钮绑定事件，点击打印按钮的序号  */ for (var i = 0; i &amp;lt; 6; i">
+<meta name="twitter:description" content="写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。  HTML文件   12345678910111213141516171819&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&quot;UTF-8&quot;&amp;gt;    &amp;lt;title&amp;gt;Test&amp;lt;/title&amp;gt;    &amp;lt;sc">
 
 
 
@@ -97,7 +97,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/blog/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -119,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://diarychris.info/blog/2018/03/23/javascript-e9-97-ad-e5-8c-85-e5-8e-9f-e7-90-86-e5-88-86-e6-9e-90/"/>
+  <link rel="canonical" href="http://diarychris.info/blog/2018/03/23/javascript-e9-97-ad-e5-8c-85-e5-8e-9f-e7-90-86-e5-88-86-e6-9e-90/">
 
 
 
@@ -153,7 +153,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/"  class="brand" rel="start">
+      <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Diary's Blog</span>
         <span class="logo-line-after"><i></i></span>
@@ -183,7 +183,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -193,7 +193,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -236,7 +236,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Diary">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
@@ -272,7 +272,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -324,90 +324,10 @@
         <p>写了几个小例子揭示JS中闭包的本质，适合自己运行后分析。</p>
 <hr>
 <p>HTML文件  </p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html lang="en"><br><br><head><meta name="generator" content="Hexo 3.8.0"><br>    <meta charset="UTF-8"><br>    <title>Test</title><br>    <script src="lib/jquery-3.1.0.js"></script><br>    <script src="closure_example.js"></script><br></head><br><br><body><br>    <button>0</button><br>    <button>1</button><br>    <button>2</button><br>    <button>3</button><br>    <button>4</button><br>    <button>5</button><br>    <button style="display:none" class="hide">什么是闭包</button><br></body><br><br></html>
-
-
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"lib/jquery-3.1.0.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"closure_example.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>0<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>4<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>5<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">style</span>=<span class="string">"display:none"</span> <span class="attr">class</span>=<span class="string">"hide"</span>&gt;</span>什么是闭包<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <hr>
 <p>JS代码</p>
-<p>$(function () {</p>
-<pre><code>/*
-给6个按钮绑定事件，点击打印按钮的序号
- */
-for (var i = 0; i &lt; 6; i++) {
-    $(&apos;button&apos;).eq(i).on(&apos;click&apos;, function () {
-        console.log(i);
-    });
-}
-
-/*
-解决方案一：借用DOM元素的属性存储序号i
- */
-for (var i = 0; i &lt; 6; i++) {
-    $(&apos;button&apos;).eq(i).attr(&apos;i&apos;, i).on(&apos;click&apos;, function () {
-        console.log($(this).attr(&apos;i&apos;));
-    });
-}
-
-
-/*
-解决方案二：利用IIFE将i作为参数传递给内部函数
- */
-for (var i = 0; i &lt; 6; i++) {
-    (function (i) {
-        $(&apos;button&apos;).eq(i).on(&apos;click&apos;, function () {
-            console.log(i);
-        });
-    })(i);
-}
-
-/*
-错误方案：IIFE使用位置错误
- */
-for (var i = 0; i &lt; 6; i++) {
-    $(&apos;button&apos;).eq(i).on(&apos;click&apos;, function () {
-        (function (i) {
-            console.log(i);
-        })(i);
-    });
-}
-
-/*
-解决方案三：利用IIFE所创造的“块级作用域”，将i赋值给局部变量
-*/
-for (var i = 0; i &lt; 6; i++) {
-    (function () {
-        var temp = i;
-        $(&apos;button&apos;).eq(temp).on(&apos;click&apos;, function () {
-            console.log(temp);
-        });
-    })();
-}
-
-/*
-什么是闭包？
-*/
-function closure() {
-    var i = 0;
-    return function fun() {
-        i++;
-        console.log(i);
-    }
-}
-
-var foo = closure();
-foo();
-foo();
-foo();
-
-var bar = closure();
-bar();
-bar();
-bar();
-
-$(&apos;.hide&apos;).show().on(&apos;click&apos;, foo)
-</code></pre><p>});</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给6个按钮绑定事件，点击打印按钮的序号</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    $(<span class="string">'button'</span>).eq(i).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">解决方案一：借用DOM元素的属性存储序号i</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    $(<span class="string">'button'</span>).eq(i).attr(<span class="string">'i'</span>, i).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log($(<span class="keyword">this</span>).attr(<span class="string">'i'</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">解决方案二：利用IIFE将i作为参数传递给内部函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">        $(<span class="string">'button'</span>).eq(i).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">错误方案：IIFE使用位置错误</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    $(<span class="string">'button'</span>).eq(i).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">        &#125;)(i);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">解决方案三：利用IIFE所创造的“块级作用域”，将i赋值给局部变量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> temp = i;</span><br><span class="line">        $(<span class="string">'button'</span>).eq(temp).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(temp);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">什么是闭包？</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closure</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = closure();</span><br><span class="line">foo();</span><br><span class="line">foo();</span><br><span class="line">foo();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = closure();</span><br><span class="line">bar();</span><br><span class="line">bar();</span><br><span class="line">bar();</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.hide'</span>).show().on(<span class="string">'click'</span>, foo)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -512,7 +432,7 @@ $(&apos;.hide&apos;).show().on(&apos;click&apos;, foo)
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -580,7 +500,7 @@ $(&apos;.hide&apos;).show().on(&apos;click&apos;, foo)
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -679,6 +599,13 @@ $(&apos;.hide&apos;).show().on(&apos;click&apos;, foo)
 
   
   
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>

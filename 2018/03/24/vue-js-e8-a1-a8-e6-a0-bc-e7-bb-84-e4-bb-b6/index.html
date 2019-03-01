@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next pisces use-motion" lang>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="HTML：     JS： //Vue组件开始var Grid = Vue.extend({    template: ‘\                \                    \                        \                        { {col.display}}\                        \">
+<meta name="description" content="HTML： 1&amp;lt;div id=&quot;target&quot;&amp;gt;&amp;lt;/div&amp;gt;   JS： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue.js 表格组件">
 <meta property="og:url" content="http://diarychris.info/blog/2018/03/24/vue-js-e8-a1-a8-e6-a0-bc-e7-bb-84-e4-bb-b6/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="HTML：     JS： //Vue组件开始var Grid = Vue.extend({    template: ‘\                \                    \                        \                        { {col.display}}\                        \">
+<meta property="og:description" content="HTML： 1&amp;lt;div id=&quot;target&quot;&amp;gt;&amp;lt;/div&amp;gt;   JS： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta property="og:updated_time" content="2019-03-01T17:20:47.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 表格组件">
-<meta name="twitter:description" content="HTML：     JS： //Vue组件开始var Grid = Vue.extend({    template: ‘\                \                    \                        \                        { {col.display}}\                        \">
+<meta name="twitter:description" content="HTML： 1&amp;lt;div id=&quot;target&quot;&amp;gt;&amp;lt;/div&amp;gt;   JS： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980">
 
 
 
@@ -97,7 +97,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/blog/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -322,68 +322,9 @@
 
       
         <p>HTML：</p>
-<div id="target"></div>
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"target"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>  JS：</p>
-<p>//Vue组件开始<br>var Grid = Vue.extend({<br>    template: ‘<table class="table" :class="{layoutFixed: config.layoutFixed}">\<br>                <thead>\<br>                    <tr>\<br>                        <th v-for="col in config.colModel" \ v-if="col.sort" :width="col.width" :col="col.name" :title="removeTag(col.display)">\<br>                        <div class="sort ellipsis" :sorttype="col.sortType">{ {col.display}}\<br>                        <i class="icon-chevron-up" @click="sortUp"></i>\<br>                        <i class="icon-chevron-down" @click="sortDown"></i>\<br>                        </div></th>\<br>                        &lt;th v-else \<br>                        class=”ellipsis”\<br>                        :width=”col.width” \<br>                        :col=”col.name” \<br>                        :title=”removeTag(col.display)” &gt;{ {col.display}}\<br>                    </tr>\<br>                </thead>\<br>                <tbody>\<br>                    <tr v-for="row in resData.rows">\<br>                        &lt;td v-for=”col in config.colModel”\<br>                        :title=”removeTag(row[col.name])” v-handle=”{handler:col.handler, v:row[col.name], data:row}”&gt;{ {row[col.name]}}\<br>                    </tr>\<br>                </tbody>\<br>            </table>‘,<br>    data: function () {<br>        return {<br>            url: ‘’,<br>            config: {},<br>            param: {},<br>            resData: {}<br>        };<br>    },<br>    computed: {</p>
-<pre><code>},
-methods: {
-    getData: function () {
-        var self = this;
-        $.ajax({
-            url: this.url,
-            type: &apos;GET&apos;,
-            data: this.param,
-            success: function (json) {
-                json = JSON.parse(json);
-                self.resData = json.data;
-            }
-        });
-    },
-    sortUp: function (event) {
-        $.extend(this.param, {
-            sortType: $(event.target).parent().attr(&apos;sorttype&apos;),
-            orderType: &quot;1&quot;
-        });
-        this.getData();
-    },
-    sortDown: function (event) {
-        $.extend(this.param, {
-            sortType: $(event.target).parent().attr(&apos;sorttype&apos;),
-            orderType: &quot;2&quot;
-        });
-        this.getData();
-    },
-    removeTag: function (str) {
-        if (str) {
-            str = str.toString();
-            return str.replace(/&lt;(&quot;\[^&quot;\]*&quot;|&apos;\[^&apos;\]*&apos;|\[^&quot;&apos;&gt;\])&gt;/g, &apos;&apos;);
-        } else {
-            return &apos;&apos;;
-        }
-    },
-    log: function (str) {
-        console.log(str);
-    }
-},
-directives: {
-    handle: {
-        inserted: function (el, binding) {
-            var handler = binding.value.handler;
-            if (handler &amp;&amp; $.isFunction(handler)) {
-                handler(binding.value.v, binding.value.data, $(el), $(el).parent(&apos;tr&apos;));
-            }
-        }
-    }
-},
-mounted: function () {
-    this.getData();
-}
-</code></pre><p>});</p>
-<p>Vue.component(‘grid’, Grid);<br>//Vue组件结束</p>
-<p>//创建Vue实例开始<br>var vm = new Grid({<br>    el: config.renderTo,<br>    data: {<br>        url: config.url,<br>        config: config<br>    },<br>    computed: {</p>
-<pre><code>}
-</code></pre><p>});<br>//创建Vue实例结束</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Vue组件开始</span></span><br><span class="line"><span class="keyword">var</span> Grid = Vue.extend(&#123;</span><br><span class="line">    template: <span class="string">'&lt;table class="table" :class="&#123;layoutFixed: config.layoutFixed&#125;"&gt;\</span></span><br><span class="line"><span class="string">                &lt;thead&gt;\</span></span><br><span class="line"><span class="string">                    &lt;tr&gt;\</span></span><br><span class="line"><span class="string">                        &lt;th v-for="col in config.colModel" \</span></span><br><span class="line"><span class="string">                        v-if="col.sort" \</span></span><br><span class="line"><span class="string">                        :width="col.width" \</span></span><br><span class="line"><span class="string">                        :col="col.name" \</span></span><br><span class="line"><span class="string">                        :title="removeTag(col.display)" &gt;\</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                        &lt;div class="sort ellipsis" :sortType="col.sortType"&gt;&#123; &#123;col.display&#125;&#125;\</span></span><br><span class="line"><span class="string">                        &lt;i class="icon-chevron-up" @click="sortUp"&gt;&lt;/i&gt;\</span></span><br><span class="line"><span class="string">                        &lt;i class="icon-chevron-down" @click="sortDown"&gt;&lt;/i&gt;\</span></span><br><span class="line"><span class="string">                        &lt;/div&gt;&lt;/th&gt;\</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">​                        &lt;th v-else \</span></span><br><span class="line"><span class="string">​                        class="ellipsis"\</span></span><br><span class="line"><span class="string">​                        :width="col.width" \</span></span><br><span class="line"><span class="string">​                        :col="col.name" \</span></span><br><span class="line"><span class="string">​                        :title="removeTag(col.display)" &gt;&#123; &#123;col.display&#125;&#125;&lt;/th&gt;\</span></span><br><span class="line"><span class="string">​                    &lt;/tr&gt;\</span></span><br><span class="line"><span class="string">​                &lt;/thead&gt;\</span></span><br><span class="line"><span class="string">​                &lt;tbody&gt;\</span></span><br><span class="line"><span class="string">​                    &lt;tr v-for="row in resData.rows"&gt;\</span></span><br><span class="line"><span class="string">​                        &lt;td v-for="col in config.colModel"\</span></span><br><span class="line"><span class="string">​                        :title="removeTag(row\[col.name\])" v-handle="&#123;handler:col.handler, v:row\[col.name\], data:row&#125;"&gt;&#123; &#123;row\[col.name\]&#125;&#125;&lt;/td&gt;\</span></span><br><span class="line"><span class="string">​                    &lt;/tr&gt;\</span></span><br><span class="line"><span class="string">​                &lt;/tbody&gt;\</span></span><br><span class="line"><span class="string">​            &lt;/table&gt;'</span>,</span><br><span class="line">​    data: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">​        <span class="keyword">return</span> &#123;</span><br><span class="line">​            url: <span class="string">''</span>,</span><br><span class="line">​            config: &#123;&#125;,</span><br><span class="line">​            param: &#123;&#125;,</span><br><span class="line">​            resData: &#123;&#125;</span><br><span class="line">​        &#125;;</span><br><span class="line">​    &#125;,</span><br><span class="line">​    computed: &#123;</span><br><span class="line"></span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">    getData: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: <span class="keyword">this</span>.url,</span><br><span class="line">            type: <span class="string">'GET'</span>,</span><br><span class="line">            data: <span class="keyword">this</span>.param,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">json</span>) </span>&#123;</span><br><span class="line">                json = <span class="built_in">JSON</span>.parse(json);</span><br><span class="line">                self.resData = json.data;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    sortUp: <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">        $.extend(<span class="keyword">this</span>.param, &#123;</span><br><span class="line">            sortType: $(event.target).parent().attr(<span class="string">'sorttype'</span>),</span><br><span class="line">            orderType: <span class="string">"1"</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.getData();</span><br><span class="line">    &#125;,</span><br><span class="line">    sortDown: <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">        $.extend(<span class="keyword">this</span>.param, &#123;</span><br><span class="line">            sortType: $(event.target).parent().attr(<span class="string">'sorttype'</span>),</span><br><span class="line">            orderType: <span class="string">"2"</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.getData();</span><br><span class="line">    &#125;,</span><br><span class="line">    removeTag: <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str) &#123;</span><br><span class="line">            str = str.toString();</span><br><span class="line">            <span class="keyword">return</span> str.replace(<span class="regexp">/&lt;("\[^"\]*"|'\[^'\]*'|\[^"'&gt;\])&gt;/g</span>, <span class="string">''</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    log: <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">directives: &#123;</span><br><span class="line">    handle: &#123;</span><br><span class="line">        inserted: <span class="function"><span class="keyword">function</span> (<span class="params">el, binding</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> handler = binding.value.handler;</span><br><span class="line">            <span class="keyword">if</span> (handler &amp;&amp; $.isFunction(handler)) &#123;</span><br><span class="line">                handler(binding.value.v, binding.value.data, $(el), $(el).parent(<span class="string">'tr'</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">mounted: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.getData();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'grid'</span>, Grid);</span><br><span class="line"><span class="comment">//Vue组件结束</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建Vue实例开始</span></span><br><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Grid(&#123;</span><br><span class="line">    el: config.renderTo,</span><br><span class="line">    data: &#123;</span><br><span class="line">        url: config.url,</span><br><span class="line">        config: config</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//创建Vue实例结束</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -488,7 +429,7 @@ mounted: function () {
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -556,7 +497,7 @@ mounted: function () {
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -655,6 +596,13 @@ mounted: function () {
 
   
   
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
