@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20150211224916768?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2FuZHljYXQxOTky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20150212105617286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2FuZHljYXQxOTky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20150212105800681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2FuZHljYXQxOTky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
-<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta property="og:updated_time" content="2019-03-02T03:47:27.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四元数（Quaternion）和旋转">
 <meta name="twitter:description" content="原文链接：https://blog.csdn.net/candycat1992/article/details/41254799 四元数介绍旋转，应该是三种坐标变换——缩放、旋转和平移，中最复杂的一种了。大家应该都听过，有一种旋转的表示方法叫四元数。按照我们的习惯，我们更加熟悉的是另外两种旋转的表示方法——矩阵旋转和欧拉旋转。矩阵旋转使用了一个4*4大小的矩阵来表示绕任意轴旋转的变换矩阵，而欧拉选">
@@ -450,13 +450,13 @@
 <p>Q3  = (sin((1-t)A)/sin(A))*Q1 + (sin((tA)/sin(A))*Q2)</p>
 <p>Q = Q3/|Q3|，即单位化</p>
 <h1 id="四元数的创建"><a href="#四元数的创建" class="headerlink" title="四元数的创建"></a>四元数的创建</h1><p>在了解了上述知识后，我们就不需要那么惧怕四元数了，实际上它和矩阵类似，不同的只是它的表示方式以及运算方式。那么在Unity里如何利用四元数进行旋转呢？Unity里提供了非常多的方式来创建一个四元数。例如Quaternion.AngleAxis(float angle, Vector3 axis)，它可以返回一个绕轴线axis旋转angle角度的四元数变换。我们可以一个Vector3和它进行左乘，就将得到旋转后的Vector3。在Unity里只需要用一个“ * ”操作符就可以进行四元数对向量的变换操作，相当于我们上述讲到的p′=qpq−1操作。如果我们想要进行多个旋转变换，只需要左乘其他四元数变换即可。例如下面这样：</p>
-<pre><code>Vector3 newVector = Quaternion.AngleAxis(90, Vector3.up) * Quaternion.LookRotation(someDirection) * someVector;
-</code></pre><p>尽管欧拉角更容易我们理解，但四元数比欧拉角要强大很多。Unity提供了这两种方式供我们选择，我们可以选择最合适的变换。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Vector3 newVector = Quaternion.AngleAxis(90, Vector3.up) * Quaternion.LookRotation(someDirection) * someVector;</span><br></pre></td></tr></table></figure>
+<p>尽管欧拉角更容易我们理解，但四元数比欧拉角要强大很多。Unity提供了这两种方式供我们选择，我们可以选择最合适的变换。</p>
 <p>例如，如果我们需要对旋转进行插值，我们可以首先使用Quaternion.eulerAngles来得到欧拉角度，然后使用Mathf.Clamp对其进行插值运算。</p>
 <p>最后更新Quaternion.eulerAngles或者使用Quaternion.Euler(yourAngles)来创建一个新的四元数。</p>
 <p>又例如，如果你想要组合旋转，比如让人物的脑袋向下看或者旋转身体，两种方法其实都可以，但一旦这些旋转不是以世界坐标轴为旋转轴，比如人物扭动脖子向下看等，那么四元数是一个更合适的选择。Unity还提供了transform.forward, transform.right and transform.up 这些非常有用的轴，这些轴可以和Quaternion.AngleAxis组合起来，来创建非常有用的旋转组合。例如，下面的代码让物体执行低头的动作：</p>
-<pre><code>transform.rotation = Quaternion.AngleAxis(degrees, transform.right) * transform.rotation;
-</code></pre><p>关于Quaternion的其他函数，后面再补充吧，原理类似~</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">transform.rotation = Quaternion.AngleAxis(degrees, transform.right) * transform.rotation;</span><br></pre></td></tr></table></figure>
+<p>关于Quaternion的其他函数，后面再补充吧，原理类似~</p>
 <h1 id="补充：欧拉旋转"><a href="#补充：欧拉旋转" class="headerlink" title="补充：欧拉旋转"></a>补充：欧拉旋转</h1><p>在文章开头关于欧拉旋转的细节没有解释的太清楚，而又有不少人询问相关问题，我尽量把自己的理解写到这里，如有不对还望指出。</p>
 <h2 id="欧拉旋转是怎么运作的"><a href="#欧拉旋转是怎么运作的" class="headerlink" title="欧拉旋转是怎么运作的"></a>欧拉旋转是怎么运作的</h2><p>欧拉旋转是我们最容易理解的一种旋转方式。以我们生活中为例，一个舞蹈老师告诉我们，完成某个舞蹈动作需要先向你的左边转30°，再向左侧弯腰60°，再起身向后弯腰90°（如果你能办到的话）。上面这样一个旋转的过程其实和我们在三维中进行欧拉旋转很类似，即我们是通过指明绕三个轴旋转的角度来进行旋转的，不同的是，日常生活中我们更愿意叫这些轴为前后左右上下。而这也意味着我们需要指明一个旋转顺序。这是因为，先绕X轴旋转90°、再绕Y轴30°和先绕Y轴旋转90°、再绕X轴30°得到的是不同的结果。</p>
 <p>在Unity里，欧拉旋转的旋转顺序是Z、X、Y，这在相关的API文档中都有说明，例如<a href="http://docs.unity3d.com/ScriptReference/Transform.Rotate.html" target="_blank" rel="noopener">Transform.Rotate</a>。其实文档中说得不是非常详细，还有一个细节我们需要明白。如果你仔细想想，就会发现有一个非常重要的东西我们没有说明白，那就是旋转时使用的坐标系。给定一个旋转顺序（例如这里的Z、X、Y），以及它们对应的旋转角度（α，β，r），有两种坐标系可以选择：</p>
@@ -466,8 +466,8 @@
 </ol>
 <p>很容易知道，这两种选择的结果是不一样的。但如果把它们的旋转顺序颠倒一下，其实结果就会一样。说得明白点，在第一种情况下、按ZXY顺序旋转和在第二种情况下、按YXZ顺序旋转是一样的。证明方法可以看下<a href="http://www.cnitblog.com/luckydmz/archive/2010/09/07/68674.html" target="_blank" rel="noopener">这篇文章</a>。而Unity文档中说明的旋转顺序指的是在第一种情况下的顺序。</p>
 <p>如果你还是不懂这意味着什么，可以试着调用下这个函数。例如，你认为下面代码的结果是什么：</p>
-<pre><code>transform.Rotate(new Vector3(0, 30, 90));
-</code></pre><p>原模型的方向和执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">transform.Rotate(new Vector3(0, 30, 90));</span><br></pre></td></tr></table></figure>
+<p>原模型的方向和执行结果如下：</p>
 <p><img src="https://img-blog.csdn.net/20150211171430220?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2FuZHljYXQxOTky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt> <img src="https://img-blog.csdn.net/20150211174626667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2FuZHljYXQxOTky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></p>
 <p>而我们可以再分别执行下面的代码：</p>
 <p>// First case</p>
