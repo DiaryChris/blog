@@ -86,14 +86,10 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="软件设计原则  论述一下“针对接口编程”的好处。 信息隐藏原则要求接口与实现分离，接口可以理解为一个类所提供的所有服务。实现就是类自身实现服务的方式。不必是因为没有必要知道内情就可以协作工作；不应是因为如果类的实现细节让客户知道，第一增加客户的负担，导致程序的可理解性降低；第二可能使客户的某些行为依赖于这些实现细节，导致若类内部实现发生变化，会迫使客户跟着变化。 信息隐藏非常重要的原因在于，它可以">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="c:/Users/Diary/AppData/Roaming/Typora/typora-user-images/1561973529136.png">
-<meta property="og:image" content="c:/Users/Diary/AppData/Roaming/Typora/typora-user-images/1561974298184.png">
-<meta property="og:image" content="c:/Users/Diary/AppData/Roaming/Typora/typora-user-images/1561973801000.png">
-<meta property="og:updated_time" content="2019-07-01T12:10:37.000Z">
+<meta property="og:updated_time" content="2019-11-05T10:32:22.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Diary&#39;s Blog">
 <meta name="twitter:description" content="软件设计原则  论述一下“针对接口编程”的好处。 信息隐藏原则要求接口与实现分离，接口可以理解为一个类所提供的所有服务。实现就是类自身实现服务的方式。不必是因为没有必要知道内情就可以协作工作；不应是因为如果类的实现细节让客户知道，第一增加客户的负担，导致程序的可理解性降低；第二可能使客户的某些行为依赖于这些实现细节，导致若类内部实现发生变化，会迫使客户跟着变化。 信息隐藏非常重要的原因在于，它可以">
-<meta name="twitter:image" content="c:/Users/Diary/AppData/Roaming/Typora/typora-user-images/1561973529136.png">
 
 
 
@@ -428,21 +424,18 @@
 <p><strong>模型：</strong>模型用于管理应用程序域的行为和数据，并响应为获取其状态信息（通常来自视图）而发出的请求，还会响应更改状态的指令（通常来自控制器）。包含了应用问题核心数据、逻辑关系和计算功能。控制器依据输入/输出的需要调用这些操作，模型还为视图获取显示数据而提供了访问其数据的操作。</p>
 <p><strong>视图：</strong>视图用于管理信息的显示。以不同的表达形式显示模型的数据和状态。每个视图有一个更新操作，它们可以被变化-传播机制所激活。当视图的更新操作被调用时，它还会反过来获得来自模型的数据。</p>
 <p><strong>控制器：</strong>控制器用于解释用户的鼠标和键盘输入，以通知模型和或视图进行相应的更改。以事件触发的方式接收用户输入。控制器如何获得事件依赖于界面的运行平台。控制器通过事件处理过程对事件进行处理，并为每个输入事件提供了相应的操作服务，把事件转化成对模型或视图的激发操作。</p>
-<p><img src="C:\Users\Diary\AppData\Roaming\Typora\typora-user-images\1561973529136.png" alt="1561973529136"></p>
-<p>用户输入导致模型变化，并触发变更-传递机制的过程：</p>
+</li>
+</ol>
+<p>   用户输入导致模型变化，并触发变更-传递机制的过程：</p>
 <ol>
 <li>控制器在事件处理中接受用户输入事件，解释事件，并激活模型的相应服务方法；</li>
 <li>模型执行所请求的服务，导致其内部数据和状态的变化；</li>
 <li>模型找到在其中注册了的视图和控制器，并调用它们的update()方法，对它们进行通知；</li>
 <li>每个注册了视图从模型中读取已经改变的数据，并更新其在视图中的显示；</li>
-<li>每个注册的控制器从模型中读取已经改变的数据，根据设定关系允许或者禁止某些功能。<img src="C:\Users\Diary\AppData\Roaming\Typora\typora-user-images\1561974298184.png" alt="1561974298184"></li>
-</ol>
-</li>
+<li>每个注册的控制器从模型中读取已经改变的数据，根据设定关系允许或者禁止某些功能。</li>
 </ol>
 <ol start="3">
-<li><p>C/S结构</p>
-<p><img src="C:\Users\Diary\AppData\Roaming\Typora\typora-user-images\1561973801000.png" alt="1561973801000"></p>
-</li>
+<li>C/S结构</li>
 </ol>
 <h5 id="应用框架"><a href="#应用框架" class="headerlink" title="应用框架"></a>应用框架</h5><ol>
 <li><p>论述与其它软件复用技术的异同。</p>
@@ -567,8 +560,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/04/15/Experience-Driven-Procedural-Content-Generation-论文笔记/" rel="next" title="Experience-Driven Procedural Content Generation 论文笔记">
-                <i class="fa fa-chevron-left"></i> Experience-Driven Procedural Content Generation 论文笔记
+              <a href="/blog/2019/04/10/Improving-Level-Design-Through-GUR-a-Comparison-of-Methodologies/" rel="next" title="Improving Level Design Through Game User Research 论文笔记">
+                <i class="fa fa-chevron-left"></i> Improving Level Design Through Game User Research 论文笔记
               </a>
             
           </div>
@@ -657,7 +650,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
