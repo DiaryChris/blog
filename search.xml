@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[面试问答汇总]]></title>
     <url>%2Fblog%2F2019%2F11%2F09%2F%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%2F</url>
-    <content type="text"><![CDATA[图形学相关渲染管线顶点着色器 Unity轻量级渲染管线人物阴影渲染两个立方体之间的阴影渲染PBR引擎相关C#相关C++相关数据结构相关算法相关项目相关]]></content>
+    <content type="text"><![CDATA[图形学相关渲染管线顶点数据 =&gt; 顶点着色器 =&gt; 曲面细分 =&gt; 几何着色器 =&gt; 图元装配 =&gt; 裁剪剔除 =&gt; 光栅化 =&gt; 片元着色器 =&gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持C#脚本自定义渲染管线。特点为注重性能，单通道前向渲染，Shader Graph支持。而Unity内置渲染管线则更加通用而功能强大。 人物阴影渲染两个立方体之间的阴影渲染PBR主要参数以Unity标准材质为例： Albedo 反射率（漫反射） Metallic 金属度 specular 高光度（镜面反射） Smoothness 光滑度 Occlusion 环境光遮蔽贴图 Normal 法线贴图 Emission 自发光贴图 扩展链接：https://zhuanlan.zhihu.com/p/53086060 光栅化的几种方法线段扫描转换： 数字微分画线算法DDA Bresenham光栅化算法 多边形填充： 扫描线填充算法 引擎相关游戏引擎主要模块C#相关C++相关数据结构相关算法相关项目相关]]></content>
   </entry>
   <entry>
     <title><![CDATA[软件工程思考题]]></title>
