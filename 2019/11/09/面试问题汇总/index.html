@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="图形学相关渲染管线顶点数据 =&amp;gt; 顶点着色器 =&amp;gt; 曲面细分 =&amp;gt; 几何着色器 =&amp;gt; 图元装配 =&amp;gt; 裁剪剔除 =&amp;gt; 光栅化 =&amp;gt; 片元着色器 =&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持C#脚本自定义渲染管线。特点为注重性能，单通道前向渲染，Shader Gr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-09T15:58:24.332Z">
+<meta property="og:updated_time" content="2020-01-21T14:03:09.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试问答汇总">
 <meta name="twitter:description" content="图形学相关渲染管线顶点数据 =&amp;gt; 顶点着色器 =&amp;gt; 曲面细分 =&amp;gt; 几何着色器 =&amp;gt; 图元装配 =&amp;gt; 裁剪剔除 =&amp;gt; 光栅化 =&amp;gt; 片元着色器 =&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持C#脚本自定义渲染管线。特点为注重性能，单通道前向渲染，Shader Gr">
@@ -384,7 +384,14 @@
       
         <h4 id="图形学相关"><a href="#图形学相关" class="headerlink" title="图形学相关"></a>图形学相关</h4><h5 id="渲染管线"><a href="#渲染管线" class="headerlink" title="渲染管线"></a>渲染管线</h5><p>顶点数据 =&gt; 顶点着色器 =&gt; 曲面细分 =&gt; 几何着色器 =&gt; 图元装配 =&gt; 裁剪剔除 =&gt; 光栅化 =&gt; 片元着色器 =&gt; 测试混合</p>
 <h5 id="Unity轻量级渲染管线"><a href="#Unity轻量级渲染管线" class="headerlink" title="Unity轻量级渲染管线"></a>Unity轻量级渲染管线</h5><p>又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持<strong>C#脚本自定义</strong>渲染管线。特点为注重性能，单通道前向渲染，Shader Graph支持。而Unity内置渲染管线则更加通用而功能强大。</p>
-<h5 id="人物阴影渲染"><a href="#人物阴影渲染" class="headerlink" title="人物阴影渲染"></a>人物阴影渲染</h5><h5 id="两个立方体之间的阴影渲染"><a href="#两个立方体之间的阴影渲染" class="headerlink" title="两个立方体之间的阴影渲染"></a>两个立方体之间的阴影渲染</h5><h5 id="PBR主要参数"><a href="#PBR主要参数" class="headerlink" title="PBR主要参数"></a>PBR主要参数</h5><p>以Unity标准材质为例：</p>
+<h5 id="渲染为什么以三角形为基础"><a href="#渲染为什么以三角形为基础" class="headerlink" title="渲染为什么以三角形为基础"></a>渲染为什么以三角形为基础</h5><ul>
+<li>任意三点必然共面。</li>
+<li>三角形是最简单的多边形。</li>
+<li>三角形经多种转换之后，仍然是三角形，对于仿射转换和透视转换成立。</li>
+<li>几乎所有商用图形加速硬件都是为三角形光栅化而设计的。</li>
+</ul>
+<h5 id="人物阴影渲染"><a href="#人物阴影渲染" class="headerlink" title="人物阴影渲染"></a>人物阴影渲染</h5><h5 id="两个立方体之间的阴影渲染"><a href="#两个立方体之间的阴影渲染" class="headerlink" title="两个立方体之间的阴影渲染"></a>两个立方体之间的阴影渲染</h5><h5 id="Shadow-Map的基本原理"><a href="#Shadow-Map的基本原理" class="headerlink" title="Shadow Map的基本原理"></a>Shadow Map的基本原理</h5><p>先从光源位置观察渲染一遍深度信息保存，第二遍渲染时将物体的坐标转换至光源观察坐标，和之前记录的深度比较，判断物体是否在阴影内。</p>
+<h5 id="PBR主要参数"><a href="#PBR主要参数" class="headerlink" title="PBR主要参数"></a>PBR主要参数</h5><p>以Unity标准材质为例：</p>
 <ul>
 <li>Albedo 反射率（漫反射）</li>
 <li>Metallic 金属度</li>
@@ -404,7 +411,13 @@
 <ul>
 <li>扫描线填充算法</li>
 </ul>
-<h4 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h4><h5 id="游戏引擎主要模块"><a href="#游戏引擎主要模块" class="headerlink" title="游戏引擎主要模块"></a>游戏引擎主要模块</h5><h4 id="C-相关"><a href="#C-相关" class="headerlink" title="C#相关"></a>C#相关</h4><h5 id="C-拆装箱"><a href="#C-拆装箱" class="headerlink" title="C#拆装箱"></a>C#拆装箱</h5><p>装箱：值类型变量转变为引用类型Object存储在堆内存中</p>
+<h5 id="BRDF的物理含义"><a href="#BRDF的物理含义" class="headerlink" title="BRDF的物理含义"></a>BRDF的物理含义</h5><p>双向反射分布函数：</p>
+<p><strong>双向</strong>：入射方向和观察方向（分别为BRDF的两个输入）</p>
+<p><strong>BRDF</strong>：描述了入射光线经过某个表面反射后如何在各个出射方向上分布</p>
+<p>想象你有一个不透明的桌面，一个激光发射器。你先让激光向下垂直地射在那个桌面上，这样你就可以在桌面上看到一个亮点，接着你从各个不同的方向来观察那个亮点，你会发现亮点的亮度随着观察方向的不同而发生了改变。然后你站着不动，改变激光发射方向和桌面的夹角，你又会发现亮点的亮度发生了改变。这就是说，一个表面对不同的光线入射角和反射角的组合，拥有不同的反射率。BRDF就是用来对这种反射性质进行定义的。</p>
+<p><a href="https://www.zhihu.com/question/20286038" target="_blank" rel="noopener">https://www.zhihu.com/question/20286038</a></p>
+<h4 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h4><h5 id="游戏引擎主要模块"><a href="#游戏引擎主要模块" class="headerlink" title="游戏引擎主要模块"></a>游戏引擎主要模块</h5><p>渲染、物理、动画、AI、输入、内存管理、资源管理、编辑器、网络、UI</p>
+<h4 id="C-相关"><a href="#C-相关" class="headerlink" title="C#相关"></a>C#相关</h4><h5 id="C-拆装箱"><a href="#C-拆装箱" class="headerlink" title="C#拆装箱"></a>C#拆装箱</h5><p>装箱：值类型变量转变为引用类型Object存储在堆内存中</p>
 <p>拆箱：引用类型Object转变为值类型存储在线程栈中</p>
 <p>ArrayList（每个元素为Object类型）中存取Vector3（值类型）时分别用到装拆箱操作。</p>
 <h5 id="C-结构体与类的区别"><a href="#C-结构体与类的区别" class="headerlink" title="C#结构体与类的区别"></a>C#结构体与类的区别</h5><ol>
@@ -606,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#图形学相关"><span class="nav-number">1.</span> <span class="nav-text">图形学相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染管线"><span class="nav-number">1.1.</span> <span class="nav-text">渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Unity轻量级渲染管线"><span class="nav-number">1.2.</span> <span class="nav-text">Unity轻量级渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#人物阴影渲染"><span class="nav-number">1.3.</span> <span class="nav-text">人物阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#两个立方体之间的阴影渲染"><span class="nav-number">1.4.</span> <span class="nav-text">两个立方体之间的阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PBR主要参数"><span class="nav-number">1.5.</span> <span class="nav-text">PBR主要参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光栅化的几种方法"><span class="nav-number">1.6.</span> <span class="nav-text">光栅化的几种方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引擎相关"><span class="nav-number">2.</span> <span class="nav-text">引擎相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#游戏引擎主要模块"><span class="nav-number">2.1.</span> <span class="nav-text">游戏引擎主要模块</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关"><span class="nav-number">3.</span> <span class="nav-text">C#相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-拆装箱"><span class="nav-number">3.1.</span> <span class="nav-text">C#拆装箱</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#C-结构体与类的区别"><span class="nav-number">3.2.</span> <span class="nav-text">C#结构体与类的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关-1"><span class="nav-number">4.</span> <span class="nav-text">C++相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构相关"><span class="nav-number">5.</span> <span class="nav-text">数据结构相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法相关"><span class="nav-number">6.</span> <span class="nav-text">算法相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目相关"><span class="nav-number">7.</span> <span class="nav-text">项目相关</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#图形学相关"><span class="nav-number">1.</span> <span class="nav-text">图形学相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染管线"><span class="nav-number">1.1.</span> <span class="nav-text">渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Unity轻量级渲染管线"><span class="nav-number">1.2.</span> <span class="nav-text">Unity轻量级渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染为什么以三角形为基础"><span class="nav-number">1.3.</span> <span class="nav-text">渲染为什么以三角形为基础</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#人物阴影渲染"><span class="nav-number">1.4.</span> <span class="nav-text">人物阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#两个立方体之间的阴影渲染"><span class="nav-number">1.5.</span> <span class="nav-text">两个立方体之间的阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadow-Map的基本原理"><span class="nav-number">1.6.</span> <span class="nav-text">Shadow Map的基本原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PBR主要参数"><span class="nav-number">1.7.</span> <span class="nav-text">PBR主要参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光栅化的几种方法"><span class="nav-number">1.8.</span> <span class="nav-text">光栅化的几种方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BRDF的物理含义"><span class="nav-number">1.9.</span> <span class="nav-text">BRDF的物理含义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引擎相关"><span class="nav-number">2.</span> <span class="nav-text">引擎相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#游戏引擎主要模块"><span class="nav-number">2.1.</span> <span class="nav-text">游戏引擎主要模块</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关"><span class="nav-number">3.</span> <span class="nav-text">C#相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-拆装箱"><span class="nav-number">3.1.</span> <span class="nav-text">C#拆装箱</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#C-结构体与类的区别"><span class="nav-number">3.2.</span> <span class="nav-text">C#结构体与类的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关-1"><span class="nav-number">4.</span> <span class="nav-text">C++相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构相关"><span class="nav-number">5.</span> <span class="nav-text">数据结构相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法相关"><span class="nav-number">6.</span> <span class="nav-text">算法相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目相关"><span class="nav-number">7.</span> <span class="nav-text">项目相关</span></a></li></ol></div>
             
 
           </div>
