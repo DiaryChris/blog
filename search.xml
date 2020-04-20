@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2019年实习笔记总结]]></title>
+    <url>%2Fblog%2F2020%2F04%2F15%2F2019%E5%B9%B4%E5%AE%9E%E4%B9%A0%E7%AC%94%E8%AE%B0%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[2019年阿里游戏和完美世界实习时在本子上的笔记整理汇总，方便查找。 Unity相关Difference between Color&amp;Color32Color: 4 float (1.0, 1.0, 1.0, 1.0) Color32: 4 byte (255, 255, 255, 255) Transform.InverseTransformDirection()Convert direction from worldspace to localspace 菜单验证函数[MenuItem(&quot;...&quot;, true)]static bool func 若返回false，则菜单项不显示。 Selection.gameObject返回Editor中选择的对象。 Unity脚本编译顺序 Standard Assets/Plugin下的脚本 Standard Assets/Plugin/Editor下的脚本 非Editor脚本 Editor脚本 ScriptableObject保存为.asset文件其中class必须标记为[serializable] 即用到的所有自定义类均必须为“可序列化” 属性property和静态变量无法被序列化。 保存为.asset时，ScriptableObject只能在同名文件中定义。 属性{get; set;}，只是自动生成了匿名成员变量。 C#相关List的几个查找方法 input output Contains() Object bool Exists() Function bool Find() Function Object IndexOf() Object int FindIndex() Function int The Function in the table means delegate bool Predicate&lt;T&gt; System.IEquatable&lt;T&gt; 类似于IComparable&lt;T&gt;，用于List.Contains()。必须实现Equals(T)，用于比较对象相等。 System.IEqualityComparer&lt;T&gt;用于 List.Distinct()去重。 int的最大最小值int.MaxValue = 2147483647(0x7FFFFFFF) int.MinValue = -2147483647(0x80000000) 算法相关博弈树与决策树的区别博弈树（极大极小树）- α-β剪枝（基于DFS）： 已知叶子结点（结果值）倒推出根节点的值与路径 决策树： 一种ML算法，不存在双人博弈 动态规划的特征 无后效性 最优子结构]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[记心路历程]]></title>
     <url>%2Fblog%2F2020%2F03%2F21%2F%E8%AE%B0%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B%2F</url>
     <content type="text"><![CDATA[小时候梦想着长大写歌，后来也尝试写过小说，表达自我。 后来写了歌，做了MV，感觉自己不是从小学音乐，也天赋不足，这条路追不上别人的脚步。而且音乐这个形式用于表达稍微有点单薄。 后来就在想，我的天赋是逻辑与深入的思考，怎么和艺术作品结合呢？ 首先我想到的是设计，然后做了Web前端开发，这是技术领域和艺术沾点边的部分。 入门以后发现，自己还需要更深入地学习技术。同时也发现，游戏确实是这个世纪新出现的一种更强大的新兴艺术形式。 我觉得用自己的擅长去实现自己的艺术想法是非常棒的一件事。 这就是我选择游戏这个方向的原因。 我在说我的心路历程。]]></content>
