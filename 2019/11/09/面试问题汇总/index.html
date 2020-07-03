@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="图形学相关渲染管线顶点数据 =&amp;gt; 顶点着色器 =&amp;gt; 曲面细分 =&amp;gt; 几何着色器 =&amp;gt; 图元装配 =&amp;gt; 裁剪剔除 =&amp;gt; 光栅化 =&amp;gt; 片元着色器 =&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持C#脚本自定义渲染管线。特点为注重性能，单通道前向渲染，Shader Gr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-24T09:31:04.304Z">
+<meta property="og:updated_time" content="2020-07-03T17:16:14.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试问答汇总">
 <meta name="twitter:description" content="图形学相关渲染管线顶点数据 =&amp;gt; 顶点着色器 =&amp;gt; 曲面细分 =&amp;gt; 几何着色器 =&amp;gt; 图元装配 =&amp;gt; 裁剪剔除 =&amp;gt; 光栅化 =&amp;gt; 片元着色器 =&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持C#脚本自定义渲染管线。特点为注重性能，单通道前向渲染，Shader Gr">
@@ -424,6 +424,8 @@
 <p><a href="https://www.zhihu.com/question/20286038" target="_blank" rel="noopener">https://www.zhihu.com/question/20286038</a></p>
 <h5 id="mipmap的用途"><a href="#mipmap的用途" class="headerlink" title="mipmap的用途"></a>mipmap的用途</h5><p>Mipmapping是贴图渲染中常用技术，为了<strong>加快渲染速度</strong>和<strong>减少图像锯齿</strong>，贴图被处理成由一系列被预先计算和优化过的图片组成的文件，被称为mipmap。</p>
 <p>Mipmap中每一个层级的小图都是主图的一个特定比例的缩小细节的复制品，当贴图被缩小或者只需要从远距离观看时，mipmap就会转换到适当的层级。</p>
+<p>Mipmap的一个重要用途就是渲染远距离纹理时进行范围查找，即远距离物体渲染时，一个像素通常对应着Texture上的一个范围而不是一个像素，mipmap事先缩小纹理，方便查找到该像素所对应的颜色，通常使用双线性插值后再在两个等级的mipmap间线性插值的三线性插值（Trilinear interpolation）来确定最终颜色。</p>
+<p>Mipmap仅比原图多占用1/3的空间。</p>
 <h4 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h4><h5 id="游戏引擎主要模块"><a href="#游戏引擎主要模块" class="headerlink" title="游戏引擎主要模块"></a>游戏引擎主要模块</h5><p>渲染、物理、动画、AI、输入、内存管理、资源管理、编辑器、网络、UI</p>
 <h5 id="可靠UDP的实现思路"><a href="#可靠UDP的实现思路" class="headerlink" title="可靠UDP的实现思路"></a>可靠UDP的实现思路</h5><p>最简单的方式是在应用层模仿传输层TCP的可靠性传输。</p>
 <ul>
