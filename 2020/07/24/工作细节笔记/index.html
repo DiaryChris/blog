@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="[MarshalAs(UnmanagedType.I1)]Indicates how to marshal the data between managed and unmanaged code. [ExecuteAlways]Makes instances of a script always execute, both as part of Play Mode and when editing">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-24T14:35:45.554Z">
+<meta property="og:updated_time" content="2020-08-01T11:55:53.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作细节笔记">
 <meta name="twitter:description" content="[MarshalAs(UnmanagedType.I1)]Indicates how to marshal the data between managed and unmanaged code. [ExecuteAlways]Makes instances of a script always execute, both as part of Play Mode and when editing">
@@ -410,6 +410,22 @@
 <p>使用”@”取属性节点</p>
 <h4 id="C-string"><a href="#C-string" class="headerlink" title="C# @string"></a><strong>C# @string</strong></h4><p>逐字字符串（不进行转义），正则表达式中经常需要使用</p>
 <h4 id="XmlDocument-Save-XmlWriter"><a href="#XmlDocument-Save-XmlWriter" class="headerlink" title="XmlDocument.Save(XmlWriter)"></a><strong>XmlDocument.Save(XmlWriter)</strong></h4><p>保存Xml文件</p>
+<p><strong>TRANSFORM_TEX ()</strong></p>
+<p>简单来说，TRANSFORM_TEX主要作用是拿顶点的uv去和材质球的tiling和offset作运算， 确保材质球里的缩放和偏移设置是正确的。</p>
+<p>下面这两个函数是等价的:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">o.uv = TRANSFORM_TEX(v.texcoord,_MainTex);</span><br><span class="line">o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;</span><br></pre></td></tr></table></figure>
+<p>_MainTex_ST.xy是tiling</p>
+<p>_MainTex_ST.zw是offset</p>
+<p>如果Tiling 和Offset你留的是默认值，即Tiling为（1，1） Offset为（0，0）</p>
+<p><em>UnityCG.cginc</em></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Transforms 2D UV by scale/bias property</span><br><span class="line">#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)</span><br></pre></td></tr></table></figure>
+<p><strong>预编译符号##和#</strong></p>
+<p>##：预编译时将符号直接拼接</p>
+<p>#：预编译时将符号转为字符串</p>
+<p><strong>CustomEditor “C#ScriptName”</strong></p>
+<p>自定义shader材质编辑面板</p>
+<p><strong>Load (DirectX HLSL Texture Object)</strong></p>
+<p>顶点着色器中获取纹理</p>
 
       
     </div>
