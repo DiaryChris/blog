@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。明天上班带着这个，啪啪啪啪的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧 for(var i = 0;i &amp;lt;= 100;i++){ console.log(&amp;quot;我是Cherry G80-3000 青轴&amp;quot;); } 我感觉有一个缺点，就是容易一激动按错键。 还有就是，打多了手">
+<meta name="description" content="最初接触坐标系变换时，很难形象理解所乘矩阵的含义，现在我归纳一下向量坐标的坐标系变换（即不需要考虑位移）的简易理解：  本篇文章中所讨论坐标系均为笛卡尔正交坐标系 设旧坐标系与新坐标系，其中新旧坐标系的区分方式为新坐标系的坐标轴由旧坐标系表示，已知新坐标系的坐标轴在旧坐标系$XYZ$下的表示分别为向量$T$, $B$, $N$。 当已知向量旧坐标系下坐标$(x, y, z)$，求新坐标系下坐标时，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cherry G80-3000 机械键盘试用">
-<meta property="og:url" content="http://diarychris.info/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/index.html">
+<meta property="og:title" content="坐标系变换的简易理解————以切线空间与世界空间为例">
+<meta property="og:url" content="http://diarychris.info/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。明天上班带着这个，啪啪啪啪的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧 for(var i = 0;i &amp;lt;= 100;i++){ console.log(&amp;quot;我是Cherry G80-3000 青轴&amp;quot;); } 我感觉有一个缺点，就是容易一激动按错键。 还有就是，打多了手">
+<meta property="og:description" content="最初接触坐标系变换时，很难形象理解所乘矩阵的含义，现在我归纳一下向量坐标的坐标系变换（即不需要考虑位移）的简易理解：  本篇文章中所讨论坐标系均为笛卡尔正交坐标系 设旧坐标系与新坐标系，其中新旧坐标系的区分方式为新坐标系的坐标轴由旧坐标系表示，已知新坐标系的坐标轴在旧坐标系$XYZ$下的表示分别为向量$T$, $B$, $N$。 当已知向量旧坐标系下坐标$(x, y, z)$，求新坐标系下坐标时，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-01T16:07:39.372Z">
+<meta property="og:updated_time" content="2020-08-03T18:07:16.545Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cherry G80-3000 机械键盘试用">
-<meta name="twitter:description" content="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。明天上班带着这个，啪啪啪啪的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧 for(var i = 0;i &amp;lt;= 100;i++){ console.log(&amp;quot;我是Cherry G80-3000 青轴&amp;quot;); } 我感觉有一个缺点，就是容易一激动按错键。 还有就是，打多了手">
+<meta name="twitter:title" content="坐标系变换的简易理解————以切线空间与世界空间为例">
+<meta name="twitter:description" content="最初接触坐标系变换时，很难形象理解所乘矩阵的含义，现在我归纳一下向量坐标的坐标系变换（即不需要考虑位移）的简易理解：  本篇文章中所讨论坐标系均为笛卡尔正交坐标系 设旧坐标系与新坐标系，其中新旧坐标系的区分方式为新坐标系的坐标轴由旧坐标系表示，已知新坐标系的坐标轴在旧坐标系$XYZ$下的表示分别为向量$T$, $B$, $N$。 当已知向量旧坐标系下坐标$(x, y, z)$，求新坐标系下坐标时，">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://diarychris.info/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/">
+  <link rel="canonical" href="http://diarychris.info/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/">
 
 
 
 
 
-  <title>Cherry G80-3000 机械键盘试用 | Diary's Blog</title>
+  <title>坐标系变换的简易理解————以切线空间与世界空间为例 | Diary's Blog</title>
   
 
 
@@ -294,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Diary">
@@ -311,7 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Cherry G80-3000 机械键盘试用</h1>
+          <h1 class="post-title" itemprop="name headline">坐标系变换的简易理解————以切线空间与世界空间为例</h1>
         
 
         <div class="post-meta">
@@ -323,8 +323,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-22T02:08:12+08:00">
-                2017-03-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-03T22:47:46+08:00">
+                2020-08-03
               </time>
             
 
@@ -334,28 +334,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/数码/" itemprop="url" rel="index">
-                    <span itemprop="name">数码</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -364,8 +342,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/" itemprop="commentCount"></span>
+                <a href="/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,7 +351,7 @@
 
           
           
-             <span id="/blog/2017/03/22/cherry-g80-3000-e6-9c-ba-e6-a2-b0-e9-94-ae-e7-9b-98-e8-af-95-e7-94-a8/" class="leancloud_visitors" data-flag-title="Cherry G80-3000 机械键盘试用">
+             <span id="/blog/2020/08/03/坐标系变换的简易理解————以切线空间为例/" class="leancloud_visitors" data-flag-title="坐标系变换的简易理解————以切线空间与世界空间为例">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -404,12 +382,12 @@
       
 
       
-        <h4 id="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。"><a href="#自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。" class="headerlink" title="自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。"></a>自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。</h4><p>明天上班带着这个，<strong>啪啪啪啪</strong>的，领导听见以后一定会认为我敲代码很用功，一定会赏识我的！ 写几行代码试试吧</p>
-<p>for(var i = 0;i &lt;= 100;i++){</p>
-<pre><code>console.log(&quot;我是Cherry G80-3000 青轴&quot;);
-</code></pre><p>}</p>
-<p>我感觉有一个缺点，就是容易一激动按错键。 还有就是，打多了手有点累啊。我的手这会儿好酸。</p>
-<p>cd d<br>cd repository<br>cd git-learn<br>git init<br>git add test.js<br>git commit -m “From my cherry keyboard”</p>
+        <p>最初接触坐标系变换时，很难形象理解所乘矩阵的含义，现在我归纳一下向量坐标的坐标系变换<em>（即不需要考虑位移）</em>的简易理解：</p>
+<hr>
+<p><em>本篇文章中所讨论坐标系均为笛卡尔正交坐标系</em></p>
+<p>设<strong>旧坐标系</strong>与<strong>新坐标系</strong>，其中新旧坐标系的区分方式为新坐标系的坐标轴由旧坐标系表示，已知新坐标系的坐标轴在旧坐标系$XYZ$下的表示分别为向量$T$, $B$, $N$。</p>
+<p>当已知向量旧坐标系下坐标$(x, y, z)$，求新坐标系下坐标时，则直接考虑求$(x, y, z)$在新坐标轴上的投影，即分别求$t = (x, y, z) \cdot T$, $b = (x, y, z) \cdot B$, $n = (x, y, z) \cdot N$， 即待求坐标$(t, b, n)$为：<br>$$<br>(x, y, z) \cdot<br>\left[<br>\begin{matrix}<br>T_x &amp; B_x &amp; N_x \\<br>T_y &amp; B_y &amp; N_x \\<br>T_z &amp; B_z &amp; N_z<br>\end{matrix}<br>\right]<br>$$</p>
+<p>当已知向量新坐标系下坐标$(t, b, n)$，求旧坐标系下坐标时，由于坐标$(t, b, n)$各分量分别代表相应轴方向上的长度，则直接考虑将当前坐标$(t, b, n)$各分量分别与相应轴相乘之后再合成，即求$t (T_x, T_y, T_z) + b (B_x, B_y, B_z) + n (N_x, N_y, N_z)$，其中$X$轴上的分量为$tT_x + bB_x + nN_x$，以此类推，即待求坐标$(x, y, z)$为：<br>$$<br>(t, b, n) \cdot<br>\left[<br>\begin{matrix}<br>T_x &amp; T_y &amp; T_z \\<br>B_x &amp; B_y &amp; B_z \\<br>N_x &amp; N_y &amp; N_z<br>\end{matrix}<br>\right]<br>$$<br>正好可以发现两个变换矩阵互为转置，且由于坐标轴正交，则两矩阵正交，可得两个变换矩阵互为逆矩阵，这与两坐标系变换互为逆过程相符。</p>
 
       
     </div>
@@ -434,8 +412,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/03/20/hello-world-1/" rel="next" title="世界，你好！">
-                <i class="fa fa-chevron-left"></i> 世界，你好！
+              <a href="/blog/2020/07/24/工作细节笔记/" rel="next" title="工作细节笔记">
+                <i class="fa fa-chevron-left"></i> 工作细节笔记
               </a>
             
           </div>
@@ -443,10 +421,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2017/05/05/e5-bc-80-e5-a7-8b-e5-86-99-e6-97-a5-e6-8a-a5/" rel="prev" title="开始写日报">
-                开始写日报 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -501,17 +475,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -598,22 +563,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。"><span class="nav-number">1.</span> <span class="nav-text">自从我用了机械键盘以后，我觉得我打字要飞起来了。我了个去，这个声音好大啊。</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
