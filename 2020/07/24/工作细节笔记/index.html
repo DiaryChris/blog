@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="[MarshalAs(UnmanagedType.I1)]Indicates how to marshal the data between managed and unmanaged code. [ExecuteAlways]Makes instances of a script always execute, both as part of Play Mode and when editing">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-01T11:59:18.989Z">
+<meta property="og:updated_time" content="2020-08-05T08:50:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作细节笔记">
 <meta name="twitter:description" content="[MarshalAs(UnmanagedType.I1)]Indicates how to marshal the data between managed and unmanaged code. [ExecuteAlways]Makes instances of a script always execute, both as part of Play Mode and when editing">
@@ -412,16 +412,17 @@
 <h4 id="XmlDocument-Save-XmlWriter"><a href="#XmlDocument-Save-XmlWriter" class="headerlink" title="XmlDocument.Save(XmlWriter)"></a><strong>XmlDocument.Save(XmlWriter)</strong></h4><p>保存Xml文件</p>
 <h4 id="TRANSFORM-TEX"><a href="#TRANSFORM-TEX" class="headerlink" title="TRANSFORM_TEX ()"></a><strong>TRANSFORM_TEX ()</strong></h4><p>简单来说，TRANSFORM_TEX主要作用是拿顶点的uv去和材质球的tiling和offset作运算， 确保材质球里的缩放和偏移设置是正确的。</p>
 <p>下面这两个函数是等价的:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">o.uv = TRANSFORM_TEX(v.texcoord,_MainTex);</span><br><span class="line">o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">o.uv = TRANSFORM_TEX(v.texcoord,_MainTex);</span><br><span class="line">o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;</span><br></pre></td></tr></table></figure>
 <p>_MainTex_ST.xy是tiling</p>
 <p>_MainTex_ST.zw是offset</p>
 <p>如果Tiling 和Offset你留的是默认值，即Tiling为（1，1） Offset为（0，0）</p>
 <p><em>UnityCG.cginc</em></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Transforms 2D UV by scale/bias property</span><br><span class="line">#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Transforms 2D UV by scale/bias property</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)</span></span><br></pre></td></tr></table></figure>
 <h4 id="预编译符号-和"><a href="#预编译符号-和" class="headerlink" title="预编译符号##和#"></a><strong>预编译符号##和#</strong></h4><p>##：预编译时将符号直接拼接</p>
 <p>#：预编译时将符号转为字符串</p>
 <h4 id="CustomEditor-“C-ScriptName”"><a href="#CustomEditor-“C-ScriptName”" class="headerlink" title="CustomEditor “C#ScriptName”"></a><strong>CustomEditor “C#ScriptName”</strong></h4><p>自定义shader材质编辑面板</p>
 <h4 id="Load-DirectX-HLSL-Texture-Object"><a href="#Load-DirectX-HLSL-Texture-Object" class="headerlink" title="Load (DirectX HLSL Texture Object)"></a><strong>Load (DirectX HLSL Texture Object)</strong></h4><p>顶点着色器中获取纹理</p>
+<h4 id="UnpackNormalmapRGorAG-Function-in-UnityCG-cginc"><a href="#UnpackNormalmapRGorAG-Function-in-UnityCG-cginc" class="headerlink" title="UnpackNormalmapRGorAG Function in UnityCG.cginc"></a><strong>UnpackNormalmapRGorAG Function in UnityCG.cginc</strong></h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Unpack normal as DXT5nm (1, y, 1, x) or BC5 (x, y, 0, 1)</span></span><br><span class="line"><span class="comment">// Note neutral texture like "bump" is (0, 0, 1, 1) to work with both plain RGB normal and DXT5nm/BC5</span></span><br><span class="line"><span class="function">fixed3 <span class="title">UnpackNormalmapRGorAG</span><span class="params">(fixed4 packednormal)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// This do the trick</span></span><br><span class="line">    packednormal.x *= packednormal.w;</span><br><span class="line">    fixed3 normal;</span><br><span class="line">    normal.xy = packednormal.xy * <span class="number">2</span> - <span class="number">1</span>;</span><br><span class="line">    normal.z = <span class="built_in">sqrt</span>(<span class="number">1</span> - saturate(dot(normal.xy, normal.xy)));</span><br><span class="line">    <span class="keyword">return</span> normal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -540,7 +541,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#MarshalAs-UnmanagedType-I1"><span class="nav-number">1.</span> <span class="nav-text">[MarshalAs(UnmanagedType.I1)]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ExecuteAlways"><span class="nav-number">2.</span> <span class="nav-text">[ExecuteAlways]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TextAsset"><span class="nav-number">3.</span> <span class="nav-text">TextAsset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XPath"><span class="nav-number">4.</span> <span class="nav-text">XPath</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-string"><span class="nav-number">5.</span> <span class="nav-text">C# @string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XmlDocument-Save-XmlWriter"><span class="nav-number">6.</span> <span class="nav-text">XmlDocument.Save(XmlWriter)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TRANSFORM-TEX"><span class="nav-number">7.</span> <span class="nav-text">TRANSFORM_TEX ()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预编译符号-和"><span class="nav-number">8.</span> <span class="nav-text">预编译符号##和#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CustomEditor-“C-ScriptName”"><span class="nav-number">9.</span> <span class="nav-text">CustomEditor “C#ScriptName”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Load-DirectX-HLSL-Texture-Object"><span class="nav-number">10.</span> <span class="nav-text">Load (DirectX HLSL Texture Object)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#MarshalAs-UnmanagedType-I1"><span class="nav-number">1.</span> <span class="nav-text">[MarshalAs(UnmanagedType.I1)]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ExecuteAlways"><span class="nav-number">2.</span> <span class="nav-text">[ExecuteAlways]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TextAsset"><span class="nav-number">3.</span> <span class="nav-text">TextAsset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XPath"><span class="nav-number">4.</span> <span class="nav-text">XPath</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-string"><span class="nav-number">5.</span> <span class="nav-text">C# @string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XmlDocument-Save-XmlWriter"><span class="nav-number">6.</span> <span class="nav-text">XmlDocument.Save(XmlWriter)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TRANSFORM-TEX"><span class="nav-number">7.</span> <span class="nav-text">TRANSFORM_TEX ()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预编译符号-和"><span class="nav-number">8.</span> <span class="nav-text">预编译符号##和#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CustomEditor-“C-ScriptName”"><span class="nav-number">9.</span> <span class="nav-text">CustomEditor “C#ScriptName”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Load-DirectX-HLSL-Texture-Object"><span class="nav-number">10.</span> <span class="nav-text">Load (DirectX HLSL Texture Object)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UnpackNormalmapRGorAG-Function-in-UnityCG-cginc"><span class="nav-number">11.</span> <span class="nav-text">UnpackNormalmapRGorAG Function in UnityCG.cginc</span></a></li></ol></div>
             
 
           </div>
