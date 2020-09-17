@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="辐射度量学概念辨析Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation  Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time  Radiant intensity$I(\omega)">
+<meta name="description" content="辐射度量学概念辨析 Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation   Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time   Radiant intensity$I(\ome">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Notes on Some Difficult Points in BRDF and Ray Tracing">
 <meta property="og:url" content="http://diarychris.info/blog/2020/09/17/Notes on some difficult points in BRDF and ray tracing/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="辐射度量学概念辨析Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation  Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time  Radiant intensity$I(\omega)">
+<meta property="og:description" content="辐射度量学概念辨析 Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation   Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time   Radiant intensity$I(\ome">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/114624-115989.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/142614-407654.png">
@@ -93,10 +93,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/152315-564138.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/152657-786707.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/155209-191348.png">
-<meta property="og:updated_time" content="2020-09-17T14:04:40.883Z">
+<meta property="og:updated_time" content="2020-09-17T14:15:47.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Notes on Some Difficult Points in BRDF and Ray Tracing">
-<meta name="twitter:description" content="辐射度量学概念辨析Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation  Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time  Radiant intensity$I(\omega)">
+<meta name="twitter:description" content="辐射度量学概念辨析 Radiant energy$Q$  $[J = Joule]$ The energy of electromagnetic radiation   Radiant flux$\phi \equiv \frac{dQ}{dt} $  $[W = Watt] [lm = lumen]$ Energy per unit time   Radiant intensity$I(\ome">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/114624-115989.png">
 
 
@@ -390,29 +390,36 @@
       
 
       
-        <h3 id="辐射度量学概念辨析"><a href="#辐射度量学概念辨析" class="headerlink" title="辐射度量学概念辨析"></a>辐射度量学概念辨析</h3><h4 id="Radiant-energy"><a href="#Radiant-energy" class="headerlink" title="Radiant energy"></a>Radiant energy</h4><p>$Q$ </p>
+        <h3 id="辐射度量学概念辨析"><a href="#辐射度量学概念辨析" class="headerlink" title="辐射度量学概念辨析"></a>辐射度量学概念辨析</h3><p><br></p>
+<h4 id="Radiant-energy"><a href="#Radiant-energy" class="headerlink" title="Radiant energy"></a>Radiant energy</h4><p>$Q$ </p>
 <p><em>$[J = Joule]$</em></p>
 <p>The energy of electromagnetic radiation </p>
+<p><br></p>
 <h4 id="Radiant-flux"><a href="#Radiant-flux" class="headerlink" title="Radiant flux"></a>Radiant flux</h4><p>$\phi \equiv \frac{dQ}{dt} $ </p>
 <p><em>$[W = Watt] [lm = lumen]$</em></p>
 <p>Energy per unit time </p>
+<p><br></p>
 <h4 id="Radiant-intensity"><a href="#Radiant-intensity" class="headerlink" title="Radiant intensity"></a>Radiant intensity</h4><p>$I(\omega) \equiv \frac{d\phi}{d\omega}$  </p>
 <p><em>$[cd = candela = \frac{lm}{sr}]$</em></p>
 <p>Radiant flux per unit solid angle</p>
 <p><strong>思考：</strong>Radiant intensity主要用于描述光源的性质，对于一个均匀点光源，空间内任意一点的Radiant intensity应当是相等的，且等于点光源功率 $\phi$ 除以 $4\pi$ 。</p>
+<p><br></p>
 <h4 id="Irradiance"><a href="#Irradiance" class="headerlink" title="Irradiance"></a>Irradiance</h4><p>$E(x) \equiv \frac{d\phi(x)}{dA}$   </p>
 <p><em>$[lux = \frac{lm}{m^2}]$</em></p>
 <p>The flux per unit area incident on a surface point. </p>
 <p><strong>思考：</strong>Irradiance 总是对于平面上一点而言的，而不是对于某条光线而言的。</p>
+<p><br></p>
 <h4 id="Radiance"><a href="#Radiance" class="headerlink" title="Radiance"></a>Radiance</h4><p>$L(p, \omega) \equiv \frac{d^2\phi(p, \omega)}{d\omega dA \cos\theta}$</p>
 <p><em>$[nit = \frac{cd}{m^2} = \frac{lm}{sr \space m^2}]$</em></p>
 <p>The flux emitted, reflected, transmitted or received by a surface, per unit solid angle, per projected unit area. </p>
 <p><strong>思考：</strong>Radiance 是对于某个方向上的一条光线而言的。</p>
+<p><br></p>
 <h3 id="Irradiance定义中cosθ的理解"><a href="#Irradiance定义中cosθ的理解" class="headerlink" title="Irradiance定义中cosθ的理解"></a>Irradiance定义中cosθ的理解</h3><p>如下图所示，初始笔记中的理解还是有所偏差，红色小字为具体修正部分。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/114624-115989.png" alt="image-20200917112453147"></p>
 <p>引入 $\cos\theta$ 的本质原因是在计算入射 $Irradiance$ 时，一束光线照射在倾斜平面$P$上面积$dA$的光通量 $d\phi$ 实际上是其垂直平面$P’$上通过面积$dA$的光通量 $d\phi’$ 的 $\cos\theta$ 倍。即导致了 $E=E’\cos\theta$ ，其中 $E’$ 为该光线在垂直平面上造成的 $Irradiance$ 。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/142614-407654.png" alt="image-20200917142613601"></p>
 <p>而由于 $Radiance$ 描述的是光线的性质，所以始终为其垂直平面上的 $\frac{dE}{d\omega}$ ，当其照射在倾斜平面上 $dA$ 时，$L(p, \omega) \equiv \frac{d^2\phi(p, \omega)}{d\omega dA_\perp}\equiv \frac{d^2\phi(p, \omega)}{d\omega dA \cos\theta}$</p>
+<p><br></p>
 <h3 id="渲染方程简化"><a href="#渲染方程简化" class="headerlink" title="渲染方程简化"></a>渲染方程简化</h3><p>首先，渲染方程为：</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/151432-100547.png" alt="image-20200917151431515"></p>
 <p>将对于 $x$ 的入射光 $L_i$ 替换为从另一物体 $x’$ 发出的反射光（包括其自发光）：</p>
@@ -422,14 +429,18 @@
 <p>对于全局而言，一个物体的 $l(u)$ 会在另一个物体的式子中充当 $l(v)$，所以可以将全局所有的光照计算写成一个矩阵方程形式：</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/152657-786707.png" alt="image-20200917152656607"></p>
 <p>当场景中有 $a,b,c$ 三个物体时，可以简单理解为：<br>$$<br>\left[<br>\begin{matrix}<br>a_o \\<br>b_o \\<br>c_o<br>\end{matrix}<br>\right]<br>=<br>\left[<br>\begin{matrix}<br>a_e \\<br>b_e \\<br>c_e<br>\end{matrix}<br>\right]<br>+<br>K_{3\times3}<br>\left[<br>\begin{matrix}<br>a_o \\<br>b_o \\<br>c_o<br>\end{matrix}<br>\right]<br>$$<br>其中：<br>$$<br>K=<br>\left[<br>\begin{matrix}<br>0 &amp; k_{ba} &amp; k_{ca} \\<br>k_{ab} &amp; 0 &amp; k_{cb} \\<br>k_{ac} &amp; k_{bc} &amp; 0<br>\end{matrix}<br>\right]<br>$$</p>
+<p><br></p>
 <h3 id="Russian-Roulette方法中运用的思想"><a href="#Russian-Roulette方法中运用的思想" class="headerlink" title="Russian Roulette方法中运用的思想"></a>Russian Roulette方法中运用的思想</h3><p>在Path tracing中，理论上光线需要递归弹射无数次，我们无论怎样设置截断次数都将得到一个理论上不正确的值。</p>
 <p>使用Russian Roulette可以非常巧妙的解决这一问题：对于一次光线弹射，设定以概率 $P$ 打出光线并计算结果，而概率 $1-P$ 不打出光线。将打出光线的计算结果除以 $P$ ，则其期望为理论正确值 $L_o$ 。对一次弹射而言这种处理毫无意义且引入误差，而对于多次计算则大不相同，对于同一条光线多次多层递归计算后的结果求期望，其结果依概率收敛于光线进行无穷次弹射的正确值。</p>
 <p>对于一束光线，需要计算 $n$ 次弹射的概率为 $P^n$ ，随 $n$ 的增大而趋于零，这使得该递归算法总能终止。 $P$ 越小时算法终止越快，性能越好，计算结果随机误差越大；$P=1$ 时相当于原始思路，光线将会弹射无数次，递归算法无法终止。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/155209-191348.png" alt="image-20200917155206714"></p>
 <p>这一方法成功将截断误差消除在是否打出光线的随机性中，系统误差化为随机误差，从而得到了正确无偏的值。</p>
 <p>太妙了，总感觉这个思路将来可以用于解决其他问题。</p>
+<p><br></p>
 <h3 id="重要性采样的目的"><a href="#重要性采样的目的" class="headerlink" title="重要性采样的目的"></a>重要性采样的目的</h3><p>蒙特卡洛积分中，可以使用均匀采样和重要性采样。两种采样方式的积分结果期望是相同的，均随样本量的增加收敛于真实值，也就是说两种采样方式都是正确而无偏的。所以，重要性采样的目的在于，在同样的采样数下有效减少积分结果的方差，即积分结果更加收敛于真实值。</p>
-<h3 id="Lambert-Diffuse-BRDF-推导"><a href="#Lambert-Diffuse-BRDF-推导" class="headerlink" title="Lambert Diffuse BRDF 推导"></a>Lambert Diffuse BRDF 推导</h3><p>设BRDF为 $f_r(\omega_i, \omega_o)$<br>$$<br>f_r(\omega_i, \omega_o) = \frac {dL_o}{dE_i} = \frac {dL_o}{L_i\cos\theta_id\omega_i}<br>$$<br>则入射光 $L_i$ 在 $\omega_o$ 方向上的反射光为：<br>$$<br>dL_o = f_r(\omega_i, \omega_o)L_i\cos\theta_id\omega_i<br>$$<br>在半球面上反射的 $dE_o$ 为：<br>$$<br>dE_o = \int_\Omega dL_o\cos\theta_od\omega_o<br>\<br>=\int_\Omega(f_r(\omega_i, \omega_o)L_i\cos\theta_id\omega_i)\cos\theta_od\omega_o<br>\<br>=L_i\cos\theta_id\omega_i\int_\Omega f_r(\omega_i, \omega_o)\cos\theta_od\omega_o<br>$$<br>由能量守恒有：<br>$$<br>dE_o \le dE_i = L_i\cos\theta_id\omega_i<br>$$<br>即<br>$$<br>\int_\Omega f_r(\omega_i, \omega_o)\cos\theta_od\omega_o \le 1<br>$$<br>由于Lambert Diffuse的BDRF与方向无关，应为常数$C$，设反射率为 $\alpha\le1$，则有：<br>$$<br>\int_\Omega C\cos\theta_od\omega_o = \alpha<br>$$<br>计算球面积分，解得：<br>$$<br>C = \frac\alpha\pi<br>$$</p>
+<p><br></p>
+<h3 id="Lambert-Diffuse-BRDF-推导"><a href="#Lambert-Diffuse-BRDF-推导" class="headerlink" title="Lambert Diffuse BRDF 推导"></a>Lambert Diffuse BRDF 推导</h3><p>设BRDF为 $f_r(\omega_i, \omega_o)$<br>$$<br>f_r(\omega_i, \omega_o) = \frac {dL_o}{dE_i} = \frac {dL_o}{L_i\cos\theta_id\omega_i}<br>$$<br>则入射光 $L_i$ 在 $\omega_o$ 方向上的反射光为：<br>$$<br>dL_o = f_r(\omega_i, \omega_o)L_i\cos\theta_id\omega_i<br>$$<br>在半球面上反射的 $dE_o$ 为：<br>$$<br>dE_o = \int_\Omega dL_o\cos\theta_od\omega_o<br>\<br>=\int_\Omega(f_r(\omega_i, \omega_o)L_i\cos\theta_id\omega_i)\cos\theta_od\omega_o<br>\<br>=L_i\cos\theta_id\omega_i\int_\Omega f_r(\omega_i, \omega_o)\cos\theta_od\omega_o<br>$$<br>由能量守恒有：<br>$$<br>dE_o \le dE_i = L_i\cos\theta_id\omega_i<br>$$<br>即<br>$$<br>\int_\Omega f_r(\omega_i, \omega_o)\cos\theta_od\omega_o \le 1<br>$$<br>由于Lambert Diffuse的BDRF与方向无关，应为常数$C$，设反射率为 $\alpha\le1$，则有：<br>$$<br>\int_\Omega C\cos\theta_od\omega_o = \alpha<br>$$<br>计算球面积分，解得：<br>$$<br>f_r(\omega_i, \omega_o) = C = \frac\alpha\pi<br>$$</p>
+<p><br></p>
 
       
     </div>
