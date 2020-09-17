@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="Firstly, I would like to show you one figure with CRT gamma curve and gamma correction curve. 首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD">
+<meta name="description" content="首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD 显示器已经不再具有这个特性，但是生产厂商仍旧会加入模拟 Gamma 曲线的硬件功能。gamma correction 曲线则是为了色彩正确显示而提出的gamma校正曲线，在图像保存时，颜">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Simple Understanding of Gamma Space and Linear Space">
 <meta property="og:url" content="http://diarychris.info/blog/2020/08/18/A-simple-understanding-of-Gamma-space-&-linear-space/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="Firstly, I would like to show you one figure with CRT gamma curve and gamma correction curve. 首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD">
+<meta property="og:description" content="首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD 显示器已经不再具有这个特性，但是生产厂商仍旧会加入模拟 Gamma 曲线的硬件功能。gamma correction 曲线则是为了色彩正确显示而提出的gamma校正曲线，在图像保存时，颜">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/18/114654-494309.jpeg">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/19/131452-613153.png">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/20/120038-909013.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/20/120354-670520.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/20/120655-209615.png">
-<meta property="og:updated_time" content="2020-08-20T05:31:15.000Z">
+<meta property="og:updated_time" content="2020-09-17T14:02:23.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Simple Understanding of Gamma Space and Linear Space">
-<meta name="twitter:description" content="Firstly, I would like to show you one figure with CRT gamma curve and gamma correction curve. 首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD">
+<meta name="twitter:description" content="首先，我们来看一下这张图，其中 CRT gamma 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD 显示器已经不再具有这个特性，但是生产厂商仍旧会加入模拟 Gamma 曲线的硬件功能。gamma correction 曲线则是为了色彩正确显示而提出的gamma校正曲线，在图像保存时，颜">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/18/114654-494309.jpeg">
 
 
@@ -393,8 +393,7 @@
       
 
       
-        <p>Firstly, I would like to show you one figure with CRT gamma curve and gamma correction curve.</p>
-<p>首先，我们来看一下这张图，其中 <strong>CRT gamma</strong> 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD 显示器已经不再具有这个特性，但是生产厂商仍旧会加入模拟 Gamma 曲线的硬件功能。<strong>gamma correction</strong> 曲线则是为了色彩正确显示而提出的gamma校正曲线，在图像保存时，颜色通常经过一次gamma校正以保存为一个较大数值，当显示时，由于显示器特性，会正好转换回校正前的物理亮度显示。</p>
+        <p>首先，我们来看一下这张图，其中 <strong>CRT gamma</strong> 曲线表示了老式CRT显示器中电压与亮度的关系，其中2.2为1953年确定的电视编码标准中的gamma值，接近大多数CRT显示器的原生gamma值，而现代 LCD 显示器已经不再具有这个特性，但是生产厂商仍旧会加入模拟 Gamma 曲线的硬件功能。<strong>gamma correction</strong> 曲线则是为了色彩正确显示而提出的gamma校正曲线，在图像保存时，颜色通常经过一次gamma校正以保存为一个较大数值，当显示时，由于显示器特性，会正好转换回校正前的物理亮度显示。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora/202008/18/114654-494309.jpeg" alt="gamma curve"></p>
 <p>接下来，介绍一个重要的韦伯-费希纳定理（Weber-Fechner law），描述了物理刺激中的实际变化与感知变化之间的关系，即人眼对于亮度的感知是非线性的。</p>
 <p>如下图所示，人眼对于暗部的感知更加精细，所以暗部亮度应当使用更细的精度保存。</p>
@@ -450,6 +449,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/09/17/Notes on some difficult points in BRDF and ray tracing/" rel="prev" title="Notes on Some Difficult Points in BRDF and Ray Tracing">
+                Notes on Some Difficult Points in BRDF and Ray Tracing <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -522,7 +525,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
