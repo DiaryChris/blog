@@ -79,17 +79,26 @@
 
 
 
-<meta name="description" content="第一名：把门开（K)开(K)！第二名：哎，说（刷）对了！第三名：向后转，走！第四名：玩（wan）着！第五名：这题中考不考就找我来。第六名：喝一口，死不了！第七名：现在说闲话的，大声点，让我也听听！第八名：集（di）气瓶第九名：这个我们留到下节课讲~第十名：去！到教育局告我去！！第十一名：玉不琢不成器，大家都是和氏璧！！！！第十二名：对着呢错着呢错着呢对着呢~~　……　哎对着呢！第十三名：人不为己，">
+<meta name="description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="永远的四班——K40语录">
-<meta property="og:url" content="http://diarychris.info/blog/2009/03/24/永远的四班——K40语录/index.html">
+<meta property="og:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta property="og:url" content="http://diarychris.info/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="第一名：把门开（K)开(K)！第二名：哎，说（刷）对了！第三名：向后转，走！第四名：玩（wan）着！第五名：这题中考不考就找我来。第六名：喝一口，死不了！第七名：现在说闲话的，大声点，让我也听听！第八名：集（di）气瓶第九名：这个我们留到下节课讲~第十名：去！到教育局告我去！！第十一名：玉不琢不成器，大家都是和氏璧！！！！第十二名：对着呢错着呢错着呢对着呢~~　……　哎对着呢！第十三名：人不为己，">
+<meta property="og:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-08T04:22:30.686Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/010847-244787.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210258-83838.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002148-850948.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210316-842028.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png">
+<meta property="og:updated_time" content="2020-11-09T16:36:20.344Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="永远的四班——K40语录">
-<meta name="twitter:description" content="第一名：把门开（K)开(K)！第二名：哎，说（刷）对了！第三名：向后转，走！第四名：玩（wan）着！第五名：这题中考不考就找我来。第六名：喝一口，死不了！第七名：现在说闲话的，大声点，让我也听听！第八名：集（di）气瓶第九名：这个我们留到下节课讲~第十名：去！到教育局告我去！！第十一名：玉不琢不成器，大家都是和氏璧！！！！第十二名：对着呢错着呢错着呢对着呢~~　……　哎对着呢！第十三名：人不为己，">
+<meta name="twitter:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta name="twitter:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
 
 
 
@@ -119,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://diarychris.info/blog/2009/03/24/永远的四班——K40语录/">
+  <link rel="canonical" href="http://diarychris.info/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/">
 
 
 
 
 
-  <title>永远的四班——K40语录 | Diary's Blog</title>
+  <title>Translucency Shader in Ray Tracing Pipeline of UE4 | Diary's Blog</title>
   
 
 
@@ -294,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2009/03/24/永远的四班——K40语录/">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Diary">
@@ -311,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">永远的四班——K40语录</h1>
+          <h1 class="post-title" itemprop="name headline">Translucency Shader in Ray Tracing Pipeline of UE4</h1>
         
 
         <div class="post-meta">
@@ -323,8 +332,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2009-03-24T12:45:00+08:00">
-                2009-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-10T00:35:12+08:00">
+                2020-11-10
               </time>
             
 
@@ -342,8 +351,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2009/03/24/永远的四班——K40语录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2009/03/24/永远的四班——K40语录/" itemprop="commentCount"></span>
+                <a href="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -351,7 +360,7 @@
 
           
           
-             <span id="/blog/2009/03/24/永远的四班——K40语录/" class="leancloud_visitors" data-flag-title="永远的四班——K40语录">
+             <span id="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/" class="leancloud_visitors" data-flag-title="Translucency Shader in Ray Tracing Pipeline of UE4">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -382,7 +391,84 @@
       
 
       
-        <p>第一名：把门开（K)开(K)！<br>第二名：哎，说（刷）对了！<br>第三名：向后转，走！<br>第四名：玩（wan）着！<br>第五名：这题中考不考就找我来。<br>第六名：喝一口，死不了！<br>第七名：现在说闲话的，大声点，让我也听听！<br>第八名：集（di）气瓶<br>第九名：这个我们留到下节课讲~<br>第十名：去！到教育局告我去！！<br>第十一名：玉不琢不成器，大家都是和氏璧！！！！<br>第十二名：对着呢错着呢错着呢对着呢~~　……　哎对着呢！<br>第十三名：人不为己，天诛地灭<br>第十四名：损人不利己的事别做，损人利己的事做一点还是可以理解的~~<br>第十五名：各位，把练习本给我拿（拉）出来！<br>第十六名：蛾子也要学化学！<br>第十七名：来来来干撒起老？<br>第十八名：那人家是特级教师，我是个啥？？<br>第十九名：别听那些专家的，各位<br>第二十名：看来我得采取些武力措施！！   （答：校长好~）<br>第二十一名：啊！你说啥！？（学DFG的）<br>第二十二名：往出走！！！ </p>
+        <h3 id="Shader入口"><a href="#Shader入口" class="headerlink" title="Shader入口"></a>Shader入口</h3><p>首先，指定半透明物体shader文件的入口文件是：</p>
+<p><code>Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp</code></p>
+<p>其中这一语句指定了使用哪个Ray Generation Shader (RGS)：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, <span class="string">"/Engine/Private/RayTracing/RayTracingPrimaryRays.usf"</span>, <span class="string">"RayTracingPrimaryRaysRGS"</span>, SF_RayGen);</span><br></pre></td></tr></table></figure>
+<p>于是我们可以在以下路径找到此语句：</p>
+<p><code>Shaders/Private/RayTracing/RayTracingPrimaryRays.usf</code></p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">RAY_TRACING_ENTRY_RAYGEN(RayTracingPrimaryRaysRGS)</span><br></pre></td></tr></table></figure>
+<p>在<code>Shaders/Private/RayTracing/RayTracingCommon.ush</code>中找到这个宏定义：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#ifndef RAY_TRACING_ENTRY_RAYGEN</span></span><br><span class="line"><span class="meta">#define RAY_TRACING_ENTRY_RAYGEN(name)\</span></span><br><span class="line">[shader("raygeneration")] void name()</span><br><span class="line"><span class="meta">#endif // RAY_TRACING_ENTRY_RAYGEN</span></span><br></pre></td></tr></table></figure>
+<p>翻译过来也就是HLSL中将<code>RayTracingPrimaryRaysRGS</code>标记为一个RGS的语法：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">[shader("raygeneration")] void RayTracingPrimaryRaysRGS()</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="RGS主体框架"><a href="#RGS主体框架" class="headerlink" title="RGS主体框架"></a>RGS主体框架</h3><p>下面我们正式开始梳理这个RGS中的内容：</p>
+<p>首先是准备阶段，先拿到<code>DispatchThreadId</code>和发出光线的像素坐标：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">uint2 DispatchThreadId = DispatchRaysIndex().xy + View.ViewRectMin.xy;</span><br><span class="line">uint2 PixelCoord = GetPixelCoord(DispatchThreadId, UpscaleFactor);</span><br><span class="line"><span class="type">uint</span> LinearIndex = PixelCoord.y * View.BufferSizeAndInvSize.x + PixelCoord.x;</span><br></pre></td></tr></table></figure>
+<p>然后根据像素坐标初始化<code>Ray</code>和<code>RayCone</code>：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float2 InvBufferSize = View.BufferSizeAndInvSize.zw;</span><br><span class="line">float2 UV = (float2(PixelCoord) + <span class="number">0.5</span>) * InvBufferSize;</span><br></pre></td></tr></table></figure>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Trace rays from camera origin to (Gbuffer - epsilon) to only intersect translucent objects</span></span><br><span class="line">RayDesc Ray = CreatePrimaryRay(UV);</span><br><span class="line">FRayCone RayCone = (FRayCone)<span class="number">0</span>;</span><br><span class="line">RayCone.SpreadAngle = View.EyeToPixelSpreadAngle;</span><br></pre></td></tr></table></figure>
+<p>之后就将进入一个循环来进行主要的Ray Tracing计算，我们将在下一段详细分析：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终，经过循环计算之后，累加的<code>PathRadiance</code>作为最后的主要输出存入数组：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">PathRadiance = ClampToHalfFloatRange(PathRadiance);</span><br><span class="line">ColorOutput[DispatchThreadId] = float4(PathRadiance, FinalAlpha);</span><br><span class="line">RayHitDistanceOutput[DispatchThreadId] = HitDistance;</span><br></pre></td></tr></table></figure>
+<p>也可以从文件开头找到，<code>ColorOutput</code>正是可读写的<code>RWTexture2D</code>类型：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">RWTexture2D&lt;float4&gt; ColorOutput;</span><br><span class="line">RWTexture2D&lt;<span class="type">float</span>&gt; RayHitDistanceOutput;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="循环体分析"><a href="#循环体分析" class="headerlink" title="循环体分析"></a>循环体分析</h3><p>RayTracing是一个递归的过程，在每一个界面上进行分叉并进一步递归计算，我们将所有的折射写在左子树，反射写在右子树，形成一个二叉树状的结构。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png" alt="Refr "></p>
+<p>然而在GPU上运行的shader中函数并不能进行递归调用，此时可以自己使用栈来实现递归。</p>
+<p>但是，UE4中并没有在此实现递归，而是使用循环来代替递归，舍去了对最终结果影响较小的分支，仅实现了主要分支的计算，我猜测其目的是大幅缩减计算量，提高效率。</p>
+<p>首先将需要在循环中累加或者分发的数据进行初始化：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 PathRadiance = <span class="number">0.0</span>;</span><br><span class="line"><span class="type">float</span> PathThroughput = <span class="number">1.0</span>;</span><br></pre></td></tr></table></figure>
+<p>之后进入循环，我们可以对<code>PathRadiance</code>进行追踪，抽出循环的主干：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    FMaterialClosestHitPayload Payload = TraceRayAndAccumulateResults(..., PathVertexRadiance);</span><br><span class="line">    <span class="comment">// Handle no hit condition</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.IsMiss())</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * GetSkyRadiance(Ray.Direction, LastRoughness);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle surface lighting</span></span><br><span class="line">    PathRadiance += PathThroughput * PathVertexRadiance * vertexRadianceWeight;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle reflection tracing</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness)</span><br><span class="line">    &#123;</span><br><span class="line">        ReflectionPayload = TraceRayAndAccumulateResults(..., ReflectionRadiance)</span><br><span class="line">	    <span class="keyword">if</span> (ReflectionPayload.IsMiss())</span><br><span class="line">        &#123;</span><br><span class="line">            ReflectionRadiance = GetSkyRadiance(ReflectionRay.Direction, LastRoughness);</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Set refraction ray for next iteration</span></span><br><span class="line">    Ray.Origin = HitPoint;</span><br><span class="line">    Ray.TMin = <span class="number">0.01</span>;</span><br><span class="line">    Ray.TMax = NextMaxRayDistance;</span><br><span class="line">    Ray.Direction = RefractedDirection;</span><br><span class="line">    RayCone = PropagateRayCone(RayCone, SurfaceCurvature, Depth);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在一个RGS中，最关键的要点是<code>TraceRay</code>函数的调用，这里<code>TraceRay</code>被封装了几层在<code>TraceRayAndAccumulateResults</code>函数中，可以沿着<code>RayTracingLightingCommon.ush</code>和<code>RayTracingCommon.ush</code>这两个文件中找到最终还是调用了<code>TraceRay</code>。</p>
+<p>于是我们可以总结出如下图中的结构，其中第一个TraceRay是指从摄像机向场景中发射的第一条光线，每一笔高亮表示一轮循环中计算的内容。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/010847-244787.png" alt="image-20201109010846740"></p>
+<p><br></p>
+<h3 id="反射-透射分支补全"><a href="#反射-透射分支补全" class="headerlink" title="反射-透射分支补全"></a>反射-透射分支补全</h3><p>由上图可以看出，UE4中极大地省略了树右侧分支的递归，而仅仅追踪了最左路的透射部分内容。于是，由于右子树反射后续分支的内容的缺失，会出现下图中的错误，即对于一个半透明材质的镜子，第一次的反射光线遇到另一个半透明物体时不再进行后续的追踪，仅计算其本身的漫反射，导致显示为黑色。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210258-83838.png" alt="image-20201107210256821"></p>
+<p>那么如何修复这一问题呢？</p>
+<p>我们有两种方案：</p>
+<ol>
+<li>使用栈在GPU中实现递归，将整个树的内容全部实现。</li>
+<li>继续沿用UE4的思路，用循环中添加子循环来补充实现一部分的树。</li>
+</ol>
+<p>其中，方案1肯定更加接近真实世界结果，然而这却以效率作为代价，因为发出的光线数以指数级别增长。同时，有很多多次折射或反射的光线对最终结果贡献不大。由于实时光追对效率要求很严苛，所以我们最终选择做一个trade-off，使用方案2来节约计算量。</p>
+<p>对于半透明物体的在镜子中的渲染而言，现在最缺乏的分支其实是反射后的折射分支，以及之后的多次折射分支。</p>
+<p>于是我们在一个循环的内部添加一个函数<code>TraceRayForRecursiveRefractionFromFirstReflection</code>专门处理这些分支：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">TraceRayForRecursiveRefractionFromFirstReflection(ReflectionPayload, </span><br><span class="line">    ReflectionRay, </span><br><span class="line">    RandSequence, </span><br><span class="line">    PixelCoord, </span><br><span class="line">    RayCone, </span><br><span class="line">    AccumulatedOpacity, </span><br><span class="line">    PathThroughput * ReflectionThroughput,</span><br><span class="line">    PathRadiance);</span><br></pre></td></tr></table></figure>
+<p>函数接受反射分支的光线及其<code>Payload</code>，然后分别向反射方向和折射方向发出光线计算结果。函数中包含一个子循环，沿着折射方向不断递归计算下去直到指定次数。这样一来就实现了下图中的部分，其中红色为我们补充实现的部分，绿圈为函数调用处。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002148-850948.png" alt="image-20201110002141890"></p>
+<p><br></p>
+<h3 id="全反射BUG修复"><a href="#全反射BUG修复" class="headerlink" title="全反射BUG修复"></a>全反射BUG修复</h3><p>实现了以上的函数后，我们发现镜子里得到了正确的结果，而镜子外半透明物体的亮度明显过亮，这又是什么原因呢？</p>
+<p>经过排查后发现，这是UE4原有的另一个BUG导致的错误。</p>
+<p>不难注意到，UE4原有代码是在一个循环中计算表面漫反射与反射，然后在下一个循环才计算折射分支内容，然而在每轮循环末尾计算折射方向时有这么一段代码：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    RefractedDirection = T;</span><br><span class="line">    PathThroughput *= <span class="number">1.0</span> - Fr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Handle total internal reflection</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    RefractedDirection = <span class="built_in">reflect</span>(Ray.Direction, N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是在判断全反射，当发生全反射时<code>refract</code>函数会返回一个零向量，由于此时不发生折射，折射方向会修改为反射方向，即在下一个循环中进行全反射分支的计算。全反射的物理原理详见高中物理，而我们也可以理解为当发生全反射时，折射分量与反射分量能量合并，均流向了反射方向，全反射可以理解为一种特殊的折射。UE4这种将折射方向改为反射方向的写法并没有什么不妥，但是他们忽略了在当前循环已经计算过一遍反射分支，而下一轮循环中再计算全反射分支，会导致反射分支的能量被重复计算！这就是我们补全反射-透射分支后出现过亮现象的原因。</p>
+<p>可能有同学会问，为什么补全分支之前亮度看上去是正常的呢？很简单，这是因为UE4没有计算反射-透射分支导致的反射分支偏暗的BUG正好使得全反射时反射分支重复计算的BUG造成的影响很弱，等于两个BUG的影响相互抵消，正好得到了看似正确的结果。</p>
+<p>于是我们将全反射判断从循环末尾处提前到计算反射分支之前，如果发生了全反射，那么就不发射反射光线，避免重复计算。</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line"><span class="comment">//if total internal reflection happened, it should not dispatch reflection ray.</span></span><br><span class="line"><span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness &amp;&amp; <span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Trace reflection ray </span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>于是得到更加正确的结果：</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210316-842028.png" alt="image-20201107210316403"></p>
+<p><br></p>
+<h3 id="能量守恒分析"><a href="#能量守恒分析" class="headerlink" title="能量守恒分析"></a>能量守恒分析</h3><p>不难发现，在不断发射分支光线时，一定要保证能量守恒，才能得到正确的结果。UE4是怎么保证能量守恒的呢？</p>
+<p>这时我们就需要关注上文中循环前定义的<code>PathThroughput</code>变量，其主要通过计算菲涅尔现象中的菲涅尔系数<code>Fr</code>和表面不透明度<code>Opacity</code>来控制光追过程中的能量守恒。</p>
+<p>通过上文中的图可以看出，UE4中的实时光追将半透明表面上的能量分为三部分计算：表面漫反射分量、折射分量、反射分量（镜面反射），其中折射分量进行递归。当然这是一种近似方法，并不是完全正确的PathTracing方法，也是为了性能而做出的一种trade-off。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png" alt="image-20201110002303632"></p>
+<p>我们可以从代码中提取出对于<code>PathThroughput</code>的改变：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle surface lighting</span></span><br><span class="line">    PathRadiance += PathThroughput * PathVertexRadiance * vertexRadianceWeight;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle reflection tracing</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness)</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle refraction through the surface.</span></span><br><span class="line">    <span class="type">float</span> PathVertexTransmittance = Payload.BlendingMode == RAY_TRACING_BLEND_MODE_ADDITIVE ? <span class="number">1.0</span> : <span class="number">1.0</span> - Payload.Opacity;</span><br><span class="line">    PathThroughput *= PathVertexTransmittance;</span><br><span class="line">    <span class="keyword">if</span> (PathThroughput &lt;= <span class="number">0.0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (TranslucencyRefraction)</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="type">float</span> Fr = FresnelDielectric(Eta, NoV, NoT);</span><br><span class="line">        float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            RefractedDirection = T;</span><br><span class="line">            PathThroughput *= <span class="number">1.0</span> - Fr;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以发现对于<code>PathThroughput</code>的改变主要集中在循环末尾计算下一轮折射分支时，这是因为<code>PathThroughput</code>是每个循环的公用变量，而循环是在模拟折射方向的递归，所以不应让反射方向的计算改变<code>PathThroughput</code>的数值。计算反射方向的Throughput时，其实是单独计算了<code>ReflectionThroughput</code>并乘上<code>PathThroughput</code>而得到：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> NoV = saturate(<span class="built_in">dot</span>(-Ray.Direction, Payload.WorldNormal));</span><br><span class="line"><span class="keyword">const</span> float3 ReflectionThroughput = EnvBRDF(Payload.SpecularColor, Payload.Roughness, NoV);</span><br><span class="line"></span><br><span class="line">PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br></pre></td></tr></table></figure>
+<p>其中<code>EnvBRDF</code>函数跳进去其实是进行了菲涅尔相关的计算，约等于计算出了一个<code>Fr</code>。</p>
+<p>我们还可以发现，每次累加<code>PathRadiance</code>时都有一个<code>vertexRadianceWeight</code>参与计算，在代码中发现其实就是表面不透明度<code>Opacity</code>：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> vertexRadianceWeight = Payload.Opacity;</span><br></pre></td></tr></table></figure>
+<p>于是我们可以梳理出如下两张图，分别是<code>Fr</code>和<code>Opacity</code>对光线throughput的影响：</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png" alt="image-20201110002340482"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png" alt="image-20201110002413670"></p>
+<p>欢迎交流！</p>
 
       
     </div>
@@ -407,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2009/03/24/永远的四班——斌强语录/" rel="next" title="永远的四班——斌强语录">
-                <i class="fa fa-chevron-left"></i> 永远的四班——斌强语录
+              <a href="/blog/2020/09/24/我说，那就飞吧我的天马行空/" rel="next" title="我说，那就飞吧我的天马行空">
+                <i class="fa fa-chevron-left"></i> 我说，那就飞吧我的天马行空
               </a>
             
           </div>
@@ -416,10 +502,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2009/08/30/永远的四班——最难忘片段/" rel="prev" title="永远的四班——最难忘片段">
-                永远的四班——最难忘片段 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -474,8 +556,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -562,6 +653,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shader入口"><span class="nav-number">1.</span> <span class="nav-text">Shader入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGS主体框架"><span class="nav-number">2.</span> <span class="nav-text">RGS主体框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环体分析"><span class="nav-number">3.</span> <span class="nav-text">循环体分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射-透射分支补全"><span class="nav-number">4.</span> <span class="nav-text">反射-透射分支补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全反射BUG修复"><span class="nav-number">5.</span> <span class="nav-text">全反射BUG修复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能量守恒分析"><span class="nav-number">6.</span> <span class="nav-text">能量守恒分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
