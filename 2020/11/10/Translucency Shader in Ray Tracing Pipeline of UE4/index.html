@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
+<meta name="description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
 <meta property="og:url" content="http://diarychris.info/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
+<meta property="og:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/010847-244787.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png">
-<meta property="og:updated_time" content="2020-11-09T16:36:20.344Z">
+<meta property="og:updated_time" content="2020-11-15T17:24:34.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
-<meta name="twitter:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp 其中这一语句指定了使用哪个Ray Generation Shader (RGS)： IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, &quot;/Engine/Private/Ra">
+<meta name="twitter:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
 
 
@@ -392,8 +392,14 @@
 
       
         <h3 id="Shader入口"><a href="#Shader入口" class="headerlink" title="Shader入口"></a>Shader入口</h3><p>首先，指定半透明物体shader文件的入口文件是：</p>
+<p><code>Renderer/Private/RayTracing/RayTracingTranslucency.cpp</code></p>
+<p>其中<code>FDeferredShadingSceneRenderer::RenderRayTracingTranslucency</code>函数中实例化了一个<code>GraphBuilder</code>，并且在调用<code>RenderRayTracingPrimaryRaysView</code>函数之后调用了：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">GraphBuilder.Execute();</span><br><span class="line">ResolveSceneColor(RHICmdList);</span><br></pre></td></tr></table></figure>
+<p>于是分配Shader的逻辑应该在<code>RenderRayTracingPrimaryRaysView</code>函数中，于是我们进入所在文件：</p>
 <p><code>Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp</code></p>
-<p>其中这一语句指定了使用哪个Ray Generation Shader (RGS)：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> RayGenShader = View.ShaderMap-&gt;GetShader&lt;FRayTracingPrimaryRaysRGS&gt;(PermutationVector);</span><br><span class="line">···</span><br><span class="line">GraphBuilder.AddPass(···);</span><br></pre></td></tr></table></figure>
+<p>所以使用的Ray Generation Shader（RGS）是<code>FRayTracingPrimaryRaysRGS</code>。</p>
+<p>进一步，找到这一语句绑定了<code>FRayTracingPrimaryRaysRGS</code>使用哪个HLSL文件：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, <span class="string">"/Engine/Private/RayTracing/RayTracingPrimaryRays.usf"</span>, <span class="string">"RayTracingPrimaryRaysRGS"</span>, SF_RayGen);</span><br></pre></td></tr></table></figure>
 <p>于是我们可以在以下路径找到此语句：</p>
 <p><code>Shaders/Private/RayTracing/RayTracingPrimaryRays.usf</code></p>
@@ -402,6 +408,7 @@
 <figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#ifndef RAY_TRACING_ENTRY_RAYGEN</span></span><br><span class="line"><span class="meta">#define RAY_TRACING_ENTRY_RAYGEN(name)\</span></span><br><span class="line">[shader("raygeneration")] void name()</span><br><span class="line"><span class="meta">#endif // RAY_TRACING_ENTRY_RAYGEN</span></span><br></pre></td></tr></table></figure>
 <p>翻译过来也就是HLSL中将<code>RayTracingPrimaryRaysRGS</code>标记为一个RGS的语法：</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">[shader("raygeneration")] void RayTracingPrimaryRaysRGS()</span><br></pre></td></tr></table></figure>
+<p>于是可以确定<code>RayTracingPrimaryRaysRGS()</code>就是Shader入口。</p>
 <p><br></p>
 <h3 id="RGS主体框架"><a href="#RGS主体框架" class="headerlink" title="RGS主体框架"></a>RGS主体框架</h3><p>下面我们正式开始梳理这个RGS中的内容：</p>
 <p>首先是准备阶段，先拿到<code>DispatchThreadId</code>和发出光线的像素坐标：</p>
@@ -503,6 +510,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/2020/11/16/An Outline of the UE4 Deferred Shading Pipeline/" rel="prev" title="Translucency Shader in Ray Tracing Pipeline of UE4">
+                Translucency Shader in Ray Tracing Pipeline of UE4 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -583,7 +594,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
