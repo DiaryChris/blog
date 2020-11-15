@@ -81,14 +81,14 @@
 
 <meta name="description" content="这几天研究了UE4的延迟渲染管线，一直进度很慢，最终发现了一个很清晰的系列文章，所以依据这一系列文章的思路总结一篇UE4延迟渲染管线概览。 参考文章：https://medium.com/@lordned 此文章基于UE4的较老版本，所以本文会基于4.25版本的源码对于一些改动进行修改。   IntroductionUE4中存在三种主要的渲染管线，分别为deferred shading pipel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta property="og:title" content="An Outline of the UE4 Deferred Shading Pipeline">
 <meta property="og:url" content="http://diarychris.info/blog/2020/11/16/An Outline of the UE4 Deferred Shading Pipeline/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="这几天研究了UE4的延迟渲染管线，一直进度很慢，最终发现了一个很清晰的系列文章，所以依据这一系列文章的思路总结一篇UE4延迟渲染管线概览。 参考文章：https://medium.com/@lordned 此文章基于UE4的较老版本，所以本文会基于4.25版本的源码对于一些改动进行修改。   IntroductionUE4中存在三种主要的渲染管线，分别为deferred shading pipel">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-11-15T17:15:48.852Z">
+<meta property="og:updated_time" content="2020-11-15T17:29:47.409Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta name="twitter:title" content="An Outline of the UE4 Deferred Shading Pipeline">
 <meta name="twitter:description" content="这几天研究了UE4的延迟渲染管线，一直进度很慢，最终发现了一个很清晰的系列文章，所以依据这一系列文章的思路总结一篇UE4延迟渲染管线概览。 参考文章：https://medium.com/@lordned 此文章基于UE4的较老版本，所以本文会基于4.25版本的源码对于一些改动进行修改。   IntroductionUE4中存在三种主要的渲染管线，分别为deferred shading pipel">
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>Translucency Shader in Ray Tracing Pipeline of UE4 | Diary's Blog</title>
+  <title>An Outline of the UE4 Deferred Shading Pipeline | Diary's Blog</title>
   
 
 
@@ -311,7 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Translucency Shader in Ray Tracing Pipeline of UE4</h1>
+          <h1 class="post-title" itemprop="name headline">An Outline of the UE4 Deferred Shading Pipeline</h1>
         
 
         <div class="post-meta">
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/blog/2020/11/16/An Outline of the UE4 Deferred Shading Pipeline/" class="leancloud_visitors" data-flag-title="Translucency Shader in Ray Tracing Pipeline of UE4">
+             <span id="/blog/2020/11/16/An Outline of the UE4 Deferred Shading Pipeline/" class="leancloud_visitors" data-flag-title="An Outline of the UE4 Deferred Shading Pipeline">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
