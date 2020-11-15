@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="这几天研究了UE4的延迟渲染管线，一直进度很慢，最终发现了一个很清晰的系列文章，所以依据这一系列文章的思路总结一篇UE4延迟渲染管线概览。 参考文章：https://medium.com/@lordned 此文章基于UE4的较老版本，所以本文会基于4.25版本的源码对于一些改动进行修改。   IntroductionUE4中存在三种主要的渲染管线，分别为deferred shading pipel">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-11-15T17:29:47.409Z">
+<meta property="og:updated_time" content="2020-11-15T18:04:54.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="An Outline of the UE4 Deferred Shading Pipeline">
 <meta name="twitter:description" content="这几天研究了UE4的延迟渲染管线，一直进度很慢，最终发现了一个很清晰的系列文章，所以依据这一系列文章的思路总结一篇UE4延迟渲染管线概览。 参考文章：https://medium.com/@lordned 此文章基于UE4的较老版本，所以本文会基于4.25版本的源码对于一些改动进行修改。   IntroductionUE4中存在三种主要的渲染管线，分别为deferred shading pipel">
@@ -412,7 +412,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_VERTEX_FACTORY_TYPE(FactoryClass, ShaderFilename, bUsedWithmaterials, bSupportsStaticLighting, bSupportsDynamicLighting, bPrecisePrevWorldPos, bSupportsPositionOnly)</span><br></pre></td></tr></table></figure>
 <p>例如：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_VERTEX_FACTORY_TYPE(FLocalVertexFactory,”/Engine/Private/LocalVertexFactory.ush”,<span class="literal">true</span>,<span class="literal">true</span>,<span class="literal">true</span>,<span class="literal">true</span>,<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
-<p>之后，在使用这些顶点数据时，顶点着色器（VS）中均接受统一的<code>FVertexFactoryInput</code>结构体作为输入，而在各个<em>\</em>VertexFactory.ush<em>文件中，其对<code>FVertexFactoryInput</code>定义各不相同，UE4中通过<code>include</code>不同的</em>*VertexFactory.ush*来达成对VS的不同输入。</p>
+<p>之后，在使用这些顶点数据时，顶点着色器（VS）中均接受统一的<code>FVertexFactoryInput</code>结构体作为输入，而在各个<em>…VertexFactory.ush</em>文件中，其对<code>FVertexFactoryInput</code>定义各不相同，UE4中通过<code>include</code>不同的<em>…VertexFactory.ush</em>来达成对VS的不同输入。</p>
 <p><br></p>
 <hr>
 <h2 id="Rendering-Dependency-Graph"><a href="#Rendering-Dependency-Graph" class="headerlink" title="Rendering Dependency Graph"></a>Rendering Dependency Graph</h2><p>在原文中，UE4使用Drawing Policy来为绘制指定正确的着色器Permutation，使用Drawing Policy Factory来创建Drawing Policy并将其添加到适当的列表中。最后，通过一个很长的继承链<code>FDeferredShadingRenderer::Render</code>循环遍历各种列表并调用它们的绘制函数。</p>
@@ -427,11 +427,11 @@
 <p><br></p>
 <hr>
 <h2 id="The-Deferred-Shading-Pipeline"><a href="#The-Deferred-Shading-Pipeline" class="headerlink" title="The Deferred Shading Pipeline"></a>The Deferred Shading Pipeline</h2><h3 id="The-Deferred-Shading-Base-Pass"><a href="#The-Deferred-Shading-Base-Pass" class="headerlink" title="The Deferred Shading Base Pass"></a>The Deferred Shading Base Pass</h3><p>之后就是延迟渲染管线的重点GPU部分，首先是Base Pass，也就是渲染到GBuffer的部分。</p>
-<h4 id="Base-Pass-Vertex-Shader"><a href="#Base-Pass-Vertex-Shader" class="headerlink" title="Base Pass Vertex Shader"></a>Base Pass Vertex Shader</h4><p>UE4为减少代码量，使用同一个顶点着色器入口来处理多种不同的<code>FVertexFactoryInput</code>，此时，同时<code>include</code>多个<em>\</em>VertexFactory.ush*显然并不能达到想要的效果，于是UE4采用了动态指定的方式。</p>
+<h4 id="Base-Pass-Vertex-Shader"><a href="#Base-Pass-Vertex-Shader" class="headerlink" title="Base Pass Vertex Shader"></a>Base Pass Vertex Shader</h4><p>UE4为减少代码量，使用同一个顶点着色器入口来处理多种不同的<code>FVertexFactoryInput</code>，此时，同时<code>include</code>多个<em>…VertexFactory.ush</em>显然并不能达到想要的效果，于是UE4采用了动态指定的方式。</p>
 <p>在<em>BasePassVertexCommon.ush</em>中有一句：</p>
 <figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#include "/Engine/Generated/VertexFactory.ush"</span></span><br></pre></td></tr></table></figure>
 <p>当编译着色器时，会将其设置为正确的Vertex Factory，以使引擎知道要使用<code>FVertexFactoryInput</code>的哪种实现。</p>
-<p>然而对于不同的Vertex Factory，需要不同的VS进行处理，此时<em>BasePassVertexShader.usf</em> 中的处理方式是调用<code>GetVertexFactoryIntermediates</code>，<code>VertexFactoryGetWorldPosition</code>，<code>GetMaterialVertexParameters</code>这些分别在不同<em>\</em>VertexFactory.ush*中定义的方法，巧妙地解决了这一问题。</p>
+<p>然而对于不同的Vertex Factory，需要不同的VS进行处理，此时<em>BasePassVertexShader.usf</em> 中的处理方式是调用<code>GetVertexFactoryIntermediates</code>，<code>VertexFactoryGetWorldPosition</code>，<code>GetMaterialVertexParameters</code>这些分别在不同<em>…VertexFactory.ush</em>中定义的方法，巧妙地解决了这一问题。</p>
 <p>接下来对于VS的输出，由于管线中可能具有或不具有Tessellation阶段，所以需要不同的输出。在<em>BasePassVertexCommon.ush</em>中可以看到，UE4使用<code>#define</code>预编译时更改<code>FBasePassVSOutput</code>的含义，可以将其定义为简单的<code>FBasePassVSToPS</code>结构，也可以将其定义为<code>FBasePassVSToDS</code>供Tessellation阶段使用。</p>
 <p>这样一来，等于UE4将不同的VS集中在一起共用了同一个入口，即<em>BasePassVertexShader.usf</em> 中的<code>Main</code>函数。</p>
 <h4 id="Base-Pass-Pixel-Shader"><a href="#Base-Pass-Pixel-Shader" class="headerlink" title="Base Pass Pixel Shader"></a>Base Pass Pixel Shader</h4><p>在UE4中写自定义Shader通常是使用Material Graph连节点图，那么UE4内部需要首先将节点图翻译为HLSL代码。</p>

@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png">
-<meta property="og:updated_time" content="2020-11-15T17:24:34.453Z">
+<meta property="og:updated_time" content="2020-11-15T18:03:50.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
 <meta name="twitter:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
@@ -397,7 +397,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">GraphBuilder.Execute();</span><br><span class="line">ResolveSceneColor(RHICmdList);</span><br></pre></td></tr></table></figure>
 <p>于是分配Shader的逻辑应该在<code>RenderRayTracingPrimaryRaysView</code>函数中，于是我们进入所在文件：</p>
 <p><code>Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp</code></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> RayGenShader = View.ShaderMap-&gt;GetShader&lt;FRayTracingPrimaryRaysRGS&gt;(PermutationVector);</span><br><span class="line">···</span><br><span class="line">GraphBuilder.AddPass(···);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> RayGenShader = View.ShaderMap-&gt;GetShader&lt;FRayTracingPrimaryRaysRGS&gt;(PermutationVector);</span><br><span class="line">...</span><br><span class="line">GraphBuilder.AddPass(...);</span><br></pre></td></tr></table></figure>
 <p>所以使用的Ray Generation Shader（RGS）是<code>FRayTracingPrimaryRaysRGS</code>。</p>
 <p>进一步，找到这一语句绑定了<code>FRayTracingPrimaryRaysRGS</code>使用哪个HLSL文件：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, <span class="string">"/Engine/Private/RayTracing/RayTracingPrimaryRays.usf"</span>, <span class="string">"RayTracingPrimaryRaysRGS"</span>, SF_RayGen);</span><br></pre></td></tr></table></figure>
