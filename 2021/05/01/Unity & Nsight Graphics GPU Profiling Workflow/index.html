@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202105/01/215047-793179.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202105/01/222309-816954.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202105/01/215123-470394.png">
-<meta property="og:updated_time" content="2021-05-01T14:36:04.725Z">
+<meta property="og:updated_time" content="2021-05-01T14:40:18.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unity &amp; Nsight Graphics GPU Profiling Workflow">
 <meta name="twitter:description" content="Unity中的profiler用于CPU的性能优化时非常方便，但是用于GPU性能优化时无法提供足够多的信息，于是我们决定常识使用Nvidia Nsight Graphics进行GPU Profiling。   安装版本首先，安装Nsight Graphics 2021.2.0，注意 2021.2.0 以上版本才刚刚支持GPU Trace Analysis，可以为分析性能瓶颈提供一些参考。 GPU">
@@ -469,8 +469,8 @@
 <p>点开Shader Profiler，发现Top Stall不再是Long Scoreboard了。</p>
 <p>所以最终的优化结果就是将Hair Render阶段从0.16ms优化到了0.07ms，虽然这个数字很小，但是这是在RTX 2070 Super上的测试结果，相应在移动端节省的时间应该是比较多的。</p>
 <p><br></p>
-<h3 id="参考文献与扩展阅读汇总"><a href="#参考文献与扩展阅读汇总" class="headerlink" title="参考文献与扩展阅读汇总"></a>参考文献与扩展阅读汇总</h3><p>Nsight:</p>
-<p><a href="https://docs.nvidia.com/drive/drive_os_5.1.12.0L/nsight-graphics/user-interface-reference/index.html" target="_blank" rel="noopener">https://docs.nvidia.com/drive/drive_os_5.1.12.0L/nsight-graphics/user-interface-reference/index.html</a></p>
+<h3 id="参考文献与扩展阅读汇总"><a href="#参考文献与扩展阅读汇总" class="headerlink" title="参考文献与扩展阅读汇总"></a>参考文献与扩展阅读汇总</h3><p><br></p>
+<h5 id="Nsight"><a href="#Nsight" class="headerlink" title="Nsight:"></a>Nsight:</h5><p><a href="https://docs.nvidia.com/drive/drive_os_5.1.12.0L/nsight-graphics/user-interface-reference/index.html" target="_blank" rel="noopener">https://docs.nvidia.com/drive/drive_os_5.1.12.0L/nsight-graphics/user-interface-reference/index.html</a></p>
 <p><a href="https://developer.nvidia.com/blog/the-peak-performance-analysis-method-for-optimizing-any-gpu-workload/" target="_blank" rel="noopener">https://developer.nvidia.com/blog/the-peak-performance-analysis-method-for-optimizing-any-gpu-workload/</a></p>
 <p><a href="https://docs.nvidia.com/nsight-graphics/UserGuide/" target="_blank" rel="noopener">https://docs.nvidia.com/nsight-graphics/UserGuide/</a></p>
 <p><a href="https://docs.nvidia.com/cupti/Cupti/r_main.html#r_host_metrics_api" target="_blank" rel="noopener">https://docs.nvidia.com/cupti/Cupti/r_main.html#r_host_metrics_api</a></p>
@@ -478,11 +478,9 @@
 <p><a href="https://developer.nvidia.com/blog/optimizing-vk-vkr-and-dx12-dxr-applications-using-nsight-graphics-gpu-trace-advanced-mode-metrics/" target="_blank" rel="noopener">https://developer.nvidia.com/blog/optimizing-vk-vkr-and-dx12-dxr-applications-using-nsight-graphics-gpu-trace-advanced-mode-metrics/</a></p>
 <p><a href="https://docs.google.com/document/d/1yHARKE5NwOGmWKZY2z3EPwSz5V_ZxTDT8RnRl521iyE/edit#" target="_blank" rel="noopener">https://docs.google.com/document/d/1yHARKE5NwOGmWKZY2z3EPwSz5V_ZxTDT8RnRl521iyE/edit#</a></p>
 <p><a href="https://docs.nvidia.com/nsight-graphics/UserGuide/index.html#global_options_search_paths" target="_blank" rel="noopener">https://docs.nvidia.com/nsight-graphics/UserGuide/index.html#global_options_search_paths</a></p>
-<p>PIX:</p>
-<p><a href="https://devblogs.microsoft.com/pix/gpu-captures/" target="_blank" rel="noopener">https://devblogs.microsoft.com/pix/gpu-captures/</a></p>
+<h5 id="PIX"><a href="#PIX" class="headerlink" title="PIX:"></a>PIX:</h5><p><a href="https://devblogs.microsoft.com/pix/gpu-captures/" target="_blank" rel="noopener">https://devblogs.microsoft.com/pix/gpu-captures/</a></p>
 <p><a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/" target="_blank" rel="noopener">https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/</a></p>
-<p>DXIL:</p>
-<p><a href="https://github.com/microsoft/DirectXShaderCompiler/blob/master/docs/DXIL.rst" target="_blank" rel="noopener">https://github.com/microsoft/DirectXShaderCompiler/blob/master/docs/DXIL.rst</a></p>
+<h5 id="DXIL"><a href="#DXIL" class="headerlink" title="DXIL:"></a>DXIL:</h5><p><a href="https://github.com/microsoft/DirectXShaderCompiler/blob/master/docs/DXIL.rst" target="_blank" rel="noopener">https://github.com/microsoft/DirectXShaderCompiler/blob/master/docs/DXIL.rst</a></p>
 <p><a href="https://llvm.org/docs/LangRef.html" target="_blank" rel="noopener">https://llvm.org/docs/LangRef.html</a></p>
 <p><br></p>
 
@@ -679,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装版本"><span class="nav-number">1.</span> <span class="nav-text">安装版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与Unity连接"><span class="nav-number">2.</span> <span class="nav-text">与Unity连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用GPU-Trace和Range-Profiler进行性能分析"><span class="nav-number">3.</span> <span class="nav-text">使用GPU Trace和Range Profiler进行性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Shader-Profiler进行逐句分析"><span class="nav-number">4.</span> <span class="nav-text">使用Shader Profiler进行逐句分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析DXIL中间码"><span class="nav-number">5.</span> <span class="nav-text">分析DXIL中间码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例分享"><span class="nav-number">6.</span> <span class="nav-text">案例分享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献与扩展阅读汇总"><span class="nav-number">7.</span> <span class="nav-text">参考文献与扩展阅读汇总</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装版本"><span class="nav-number">1.</span> <span class="nav-text">安装版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与Unity连接"><span class="nav-number">2.</span> <span class="nav-text">与Unity连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用GPU-Trace和Range-Profiler进行性能分析"><span class="nav-number">3.</span> <span class="nav-text">使用GPU Trace和Range Profiler进行性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Shader-Profiler进行逐句分析"><span class="nav-number">4.</span> <span class="nav-text">使用Shader Profiler进行逐句分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析DXIL中间码"><span class="nav-number">5.</span> <span class="nav-text">分析DXIL中间码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例分享"><span class="nav-number">6.</span> <span class="nav-text">案例分享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献与扩展阅读汇总"><span class="nav-number">7.</span> <span class="nav-text">参考文献与扩展阅读汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Nsight"><span class="nav-number">7.0.1.</span> <span class="nav-text">Nsight:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PIX"><span class="nav-number">7.0.2.</span> <span class="nav-text">PIX:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DXIL"><span class="nav-number">7.0.3.</span> <span class="nav-text">DXIL:</span></a></li></ol></li></ol></div>
             
 
           </div>
