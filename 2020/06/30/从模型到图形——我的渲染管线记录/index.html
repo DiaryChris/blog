@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Diary&#39;s Blog">
 <meta property="og:description" content="在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。  主要模块 以下为我实现Soft Renderer时划分的主要模块  坐标变换MVP + 视口变换 Bresenham划线算法 Scanline-Zbuffer多边形填充 Phong光照模型 + Phong着色 纹理映射（透视校正插值）   管线流程 模型读取顶点的数据结构设定如下，其中pos，normal，texcoo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-03T17:41:19.432Z">
+<meta property="og:updated_time" content="2021-04-18T08:55:50.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从模型到图形——我的实时渲染管线记录">
 <meta name="twitter:description" content="在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。  主要模块 以下为我实现Soft Renderer时划分的主要模块  坐标变换MVP + 视口变换 Bresenham划线算法 Scanline-Zbuffer多边形填充 Phong光照模型 + Phong着色 纹理映射（透视校正插值）   管线流程 模型读取顶点的数据结构设定如下，其中pos，normal，texcoo">
@@ -400,7 +400,7 @@
 <p>三角面的数据结构如下：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Triangle</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Vertex v[<span class="number">3</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><br></p>
-<h3 id="坐标变换MVP-视口变换"><a href="#坐标变换MVP-视口变换" class="headerlink" title="坐标变换MVP + 视口变换"></a>坐标变换MVP + 视口变换</h3><p><em>本项目中采用的是Direct3D标准，即所有矩阵为行矩阵，乘法顺序为从左向右。</em></p>
+<h3 id="坐标变换MVP-视口变换"><a href="#坐标变换MVP-视口变换" class="headerlink" title="坐标变换MVP + 视口变换"></a>坐标变换MVP + 视口变换</h3><p><em>本项目中采用的是Direct3D标准，即所有向量为行向量，乘法顺序为从左向右。</em></p>
 <p><br></p>
 <h4 id="Model-Matrix"><a href="#Model-Matrix" class="headerlink" title="Model Matrix"></a>Model Matrix</h4><p>模型读取完成后，首先对模型本身的平移(Translate)、旋转(Rotate)、缩放(Scale)三种变换进行处理。</p>
 <p>TRS中，必须保证T要在最后相乘。<br>$$<br>Model Matrix = Scale \times Rotation \times Translate<br>$$</p>
@@ -589,7 +589,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -689,7 +689,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/09/175733-521194.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/09/181825-496602.png">
-<meta property="og:updated_time" content="2020-12-15T15:52:35.111Z">
+<meta property="og:updated_time" content="2021-01-13T12:26:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Subsurface Scattering in Ray Tracing Pipeline of UE4">
 <meta name="twitter:description" content="Ray Tracing管线与Rasterization管线的差异两种管线SSS实现的主要差异在于ScreenShadowMaskTexture的渲染方式不同，在Ray Tracing管线中，使用RayTracingShadowMaskTexture的内容写入到ScreenShadowMaskTexture中，具体语句在LightRendering.cpp 中的FDeferredShadingSce">
@@ -407,7 +407,7 @@
 <p>同时也需要扩展<code>FPackedMaterialClosestHitPayload</code>以及打包与解包的函数。</p>
 <p>当这些做完之后可能会发现，编译后UE4会出现不明原因Crash，而且再也打不开了，这是为什么呢？</p>
 <p>原因在于UE4其实在C++中指定了这个Payload的最大Size，当超过这个Size时，编译Shader，UE4就会直接Crash。</p>
-<p>此时在<em>Runtime/Renderer/Private/RayTracing/RayTracingAmbientOcclusion.cpp</em>、<em>Runtime/Renderer/Private/RayTracing/RayTracingMaterialHitShaders.cpp</em>、<em>Engine/Source/Runtime/Renderer/Private/RayTracing/RayTracingShadows.cpp</em>、<em>Runtime/Renderer/Private/RayTracing/RaytracingSkylight.cpp</em>这四个文件中将<code>// sizeof(FPackedMaterialClosestHitPayload)</code>注释处的<code>Initializer.MaxPayloadSizeInBytes</code>修改为所需的新大小，即可解决这一问题。</p>
+<p>此时在<em>Engine/Source/Runtime/Renderer/Private/RayTracing</em>文件夹下的<em>RayTracingAmbientOcclusion.cpp</em>、<em>RayTracingMaterialHitShaders.cpp</em>、<em>RayTracingShadows.cpp</em>、<em>RaytracingSkylight.cpp</em>这四个文件中将<code>// sizeof(FPackedMaterialClosestHitPayload)</code>注释处的<code>Initializer.MaxPayloadSizeInBytes</code>修改为所需的新大小，即可解决这一问题。</p>
 <p><strong>可以发现的很重要的一点是，UE4为不同需求使用了不同的<code>RayGenerationShader</code>(<code>RayTracingDebugMainRGS</code>/<code>OcclusionRGS</code>/<code>RayTracingPrimaryRaysRGS</code>)，但是对于不同材质其实都使用的是同一个<code>ClosestHitShader</code>，即<code>MaterialCHS</code>，同时也都使用同一个Payload，即<code>FPackedMaterialClosestHitPayload</code>。</strong></p>
 <p><br></p>
 <h4 id="在UE4-Ray-Tracing-Debug-View中显示InstanceID"><a href="#在UE4-Ray-Tracing-Debug-View中显示InstanceID" class="headerlink" title="在UE4 Ray Tracing Debug View中显示InstanceID"></a>在UE4 Ray Tracing Debug View中显示InstanceID</h4><p>为了验证UE4中每个物体的<code>InstanceID</code>不同，同时方便调试，我们先将<code>InstanceID</code>加入Ray Tracing Debug View。</p>
@@ -452,6 +452,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2021/05/01/Unity & Nsight Graphics GPU Profiling Workflow/" rel="prev" title="Unity & Nsight Graphics GPU Profiling Workflow">
+                Unity & Nsight Graphics GPU Profiling Workflow <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -533,7 +537,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -633,7 +637,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
