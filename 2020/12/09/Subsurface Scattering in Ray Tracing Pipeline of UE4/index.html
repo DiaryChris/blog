@@ -88,7 +88,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/09/175733-521194.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/09/181825-496602.png">
-<meta property="og:updated_time" content="2021-01-13T12:26:01.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202110/20/180844-88438.png">
+<meta property="og:updated_time" content="2021-10-20T10:09:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Subsurface Scattering in Ray Tracing Pipeline of UE4">
 <meta name="twitter:description" content="Ray Tracing管线与Rasterization管线的差异两种管线SSS实现的主要差异在于ScreenShadowMaskTexture的渲染方式不同，在Ray Tracing管线中，使用RayTracingShadowMaskTexture的内容写入到ScreenShadowMaskTexture中，具体语句在LightRendering.cpp 中的FDeferredShadingSce">
@@ -419,7 +420,10 @@
 <p>此时重新编译UE4，就可以从Ray Tracing Debug View中选择InstanceID，显示效果如下：</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/09/181825-496602.png" alt="img"></p>
 <p><br></p>
-<h3 id="关于降噪"><a href="#关于降噪" class="headerlink" title="关于降噪"></a>关于降噪</h3>
+<h3 id="关于降噪"><a href="#关于降噪" class="headerlink" title="关于降噪"></a>关于降噪</h3><p><br></p>
+<h3 id="厚度计算流程"><a href="#厚度计算流程" class="headerlink" title="厚度计算流程"></a>厚度计算流程</h3><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202110/20/180844-88438.png" alt="image-20211020180843810"></p>
+<p><br></p>
+
       
     </div>
     
@@ -617,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray-Tracing管线与Rasterization管线的差异"><span class="nav-number">1.</span> <span class="nav-text">Ray Tracing管线与Rasterization管线的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray-Tracing管线的修复"><span class="nav-number">2.</span> <span class="nav-text">Ray Tracing管线的修复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展Payload"><span class="nav-number">2.1.</span> <span class="nav-text">扩展Payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在UE4-Ray-Tracing-Debug-View中显示InstanceID"><span class="nav-number">2.2.</span> <span class="nav-text">在UE4 Ray Tracing Debug View中显示InstanceID</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于降噪"><span class="nav-number">3.</span> <span class="nav-text">关于降噪</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray-Tracing管线与Rasterization管线的差异"><span class="nav-number">1.</span> <span class="nav-text">Ray Tracing管线与Rasterization管线的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray-Tracing管线的修复"><span class="nav-number">2.</span> <span class="nav-text">Ray Tracing管线的修复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展Payload"><span class="nav-number">2.1.</span> <span class="nav-text">扩展Payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在UE4-Ray-Tracing-Debug-View中显示InstanceID"><span class="nav-number">2.2.</span> <span class="nav-text">在UE4 Ray Tracing Debug View中显示InstanceID</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于降噪"><span class="nav-number">3.</span> <span class="nav-text">关于降噪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#厚度计算流程"><span class="nav-number">4.</span> <span class="nav-text">厚度计算流程</span></a></li></ol></div>
             
 
           </div>
