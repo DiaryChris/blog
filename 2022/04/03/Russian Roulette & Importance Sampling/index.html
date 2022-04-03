@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202204/03/174540-824631.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202204/03/175533-88166.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202009/17/155209-191348.png">
-<meta property="og:updated_time" content="2022-04-03T09:56:16.651Z">
+<meta property="og:updated_time" content="2022-04-03T10:17:18.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Russian Roulette &amp; Importance Sampling">
 <meta name="twitter:description" content="对于Path Tracing中的最重要思想Russian Roulette &amp;amp; Importance Sampling，因为老是忘，所以这次尝试用更加简单无脑的语言总结一下。  Importance Sampling先来说蒙特卡洛积分 传统的思想是黎曼积分，把每个小面积加起来，然后无限细分就会逼近真实值：  在定义域上均匀采样，采采采，每次都算整个定义域的面积，然后平均一下，随着采样数的增">
@@ -436,7 +436,7 @@
 <p>没关系，我们想想，多次采样后，我们的结果肯定就是真实值的大约0.8倍啊（其实不是，应该是小于0.8的一个值），再把0.8给他除掉不就行了。</p>
 <p>仔细一想，明显不应该直接只在最后的结果上除，而是在每一步递归返回的结果上都要除，因为每一步都是0.8概率继续追踪。</p>
 <p>完美。</p>
-<p>对于一次采样的一次追踪而言，这样做明显是错的离谱，因为得到的要么是真实值的1 / 0.8 = 1.25倍，要么是0 / 0.8 = 0。但是对于大量采样，这样做的结果是1.25 <em> 0.8 + 0 </em> 0.2 = 1，绝了。</p>
+<p>对于一次采样的一次追踪而言，这样做明显是错的离谱，因为得到的要么是真实值的1 / 0.8 = 1.25倍，要么是0 / 0.8 = 0。但是对于大量采样，这样做的结果是1.25 * 0.8 + 0 * 0.2 = 1，绝了。</p>
 <p>世界上怎么会有这么聪明的人，我好嫉妒。</p>
 <p>学术点的说法是我以前写的：</p>
 <blockquote>
