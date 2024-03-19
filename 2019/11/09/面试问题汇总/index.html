@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Game, Web, Technology">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="图形学相关渲染管线顶点数据 &amp;#x3D;&amp;gt; 顶点着色器 &amp;#x3D;&amp;gt; 曲面细分 &amp;#x3D;&amp;gt; 几何着色器 &amp;#x3D;&amp;gt; 图元装配 &amp;#x3D;&amp;gt; 裁剪剔除 &amp;#x3D;&amp;gt; 光栅化 &amp;#x3D;&amp;gt; 片元着色器 &amp;#x3D;&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试问答汇总">
+<meta property="og:url" content="http://diarychris.info/blog/2019/11/09/面试问题汇总/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="图形学相关渲染管线顶点数据 &amp;#x3D;&amp;gt; 顶点着色器 &amp;#x3D;&amp;gt; 曲面细分 &amp;#x3D;&amp;gt; 几何着色器 &amp;#x3D;&amp;gt; 图元装配 &amp;#x3D;&amp;gt; 裁剪剔除 &amp;#x3D;&amp;gt; 光栅化 &amp;#x3D;&amp;gt; 片元着色器 &amp;#x3D;&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-03T17:16:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试问答汇总">
+<meta name="twitter:description" content="图形学相关渲染管线顶点数据 &amp;#x3D;&amp;gt; 顶点着色器 &amp;#x3D;&amp;gt; 曲面细分 &amp;#x3D;&amp;gt; 几何着色器 &amp;#x3D;&amp;gt; 图元装配 &amp;#x3D;&amp;gt; 裁剪剔除 &amp;#x3D;&amp;gt; 光栅化 &amp;#x3D;&amp;gt; 片元着色器 &amp;#x3D;&amp;gt; 测试混合 Unity轻量级渲染管线又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2019/11/09/面试问题汇总/">
+
+
+
+
+
+  <title>面试问答汇总 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-dgn">
+          <a href="/blog/DGN/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gamepad"></i> <br>
+            
+            DGN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/blog/works/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-profile">
+          <a href="/blog/profile/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            Profile
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2019/11/09/面试问题汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面试问答汇总</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-09T14:02:19+08:00">
+                2019-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/11/09/面试问题汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2019/11/09/面试问题汇总/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/2019/11/09/面试问题汇总/" class="leancloud_visitors" data-flag-title="面试问答汇总">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="图形学相关"><a href="#图形学相关" class="headerlink" title="图形学相关"></a>图形学相关</h4><h5 id="渲染管线"><a href="#渲染管线" class="headerlink" title="渲染管线"></a>渲染管线</h5><p>顶点数据 &#x3D;&gt; 顶点着色器 &#x3D;&gt; 曲面细分 &#x3D;&gt; 几何着色器 &#x3D;&gt; 图元装配 &#x3D;&gt; 裁剪剔除 &#x3D;&gt; 光栅化 &#x3D;&gt; 片元着色器 &#x3D;&gt; 测试混合</p>
+<h5 id="Unity轻量级渲染管线"><a href="#Unity轻量级渲染管线" class="headerlink" title="Unity轻量级渲染管线"></a>Unity轻量级渲染管线</h5><p>又称通用渲染管线，区别于Unity内置渲染管线，仅保留很小的C++内核，暴露出更多的接口来支持<strong>C#脚本自定义</strong>渲染管线。特点为注重性能，单通道前向渲染，Shader Graph支持。而Unity内置渲染管线则更加通用而功能强大。</p>
+<h5 id="渲染为什么以三角形为基础"><a href="#渲染为什么以三角形为基础" class="headerlink" title="渲染为什么以三角形为基础"></a>渲染为什么以三角形为基础</h5><ul>
+<li>任意三点必然共面。</li>
+<li>三角形是最简单的多边形。</li>
+<li>三角形经多种转换之后，仍然是三角形，对于仿射转换和透视转换成立。</li>
+<li>几乎所有商用图形加速硬件都是为三角形光栅化而设计的。</li>
+</ul>
+<h5 id="变换矩阵的存储方式"><a href="#变换矩阵的存储方式" class="headerlink" title="变换矩阵的存储方式"></a>变换矩阵的存储方式</h5><ul>
+<li>Direct3D：行优先存储(row-major)，变换时行向量右乘矩阵</li>
+<li>OpenGL：列优先存储(column-major)，变换时列向量左乘矩阵</li>
+<li>HLSL：列优先存储(column-major)</li>
+<li>GLSL：列优先存储(column-major)</li>
+</ul>
+<h5 id="人物阴影渲染"><a href="#人物阴影渲染" class="headerlink" title="人物阴影渲染"></a>人物阴影渲染</h5><h5 id="两个立方体之间的阴影渲染"><a href="#两个立方体之间的阴影渲染" class="headerlink" title="两个立方体之间的阴影渲染"></a>两个立方体之间的阴影渲染</h5><h5 id="Shadow-Map的基本原理"><a href="#Shadow-Map的基本原理" class="headerlink" title="Shadow Map的基本原理"></a>Shadow Map的基本原理</h5><p>先从光源位置观察渲染一遍深度信息保存，第二遍渲染时将物体的坐标转换至光源观察坐标，和之前记录的深度比较，判断物体是否在阴影内。</p>
+<h5 id="PBR主要参数"><a href="#PBR主要参数" class="headerlink" title="PBR主要参数"></a>PBR主要参数</h5><p>以Unity标准材质为例：</p>
+<ul>
+<li>Albedo 反射率（漫反射）</li>
+<li>Metallic 金属度</li>
+<li>specular 高光度（镜面反射）</li>
+<li>Smoothness 光滑度</li>
+<li>Occlusion 环境光遮蔽贴图</li>
+<li>Normal 法线贴图</li>
+<li>Emission 自发光贴图</li>
+</ul>
+<p>扩展链接：<a href="https://zhuanlan.zhihu.com/p/53086060" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/53086060</a></p>
+<h5 id="光栅化的几种方法"><a href="#光栅化的几种方法" class="headerlink" title="光栅化的几种方法"></a>光栅化的几种方法</h5><p>线段扫描转换：</p>
+<ul>
+<li>数字微分画线算法DDA</li>
+<li>Bresenham光栅化算法</li>
+</ul>
+<p>多边形填充：</p>
+<ul>
+<li>扫描线填充算法</li>
+</ul>
+<h5 id="BRDF的物理含义"><a href="#BRDF的物理含义" class="headerlink" title="BRDF的物理含义"></a>BRDF的物理含义</h5><p>双向反射分布函数：</p>
+<p><strong>双向</strong>：入射方向和观察方向（分别为BRDF的两个输入）</p>
+<p><strong>BRDF</strong>：描述了入射光线经过某个表面反射后如何在各个出射方向上分布</p>
+<p>想象你有一个不透明的桌面，一个激光发射器。你先让激光向下垂直地射在那个桌面上，这样你就可以在桌面上看到一个亮点，接着你从各个不同的方向来观察那个亮点，你会发现亮点的亮度随着观察方向的不同而发生了改变。然后你站着不动，改变激光发射方向和桌面的夹角，你又会发现亮点的亮度发生了改变。这就是说，一个表面对不同的光线入射角和反射角的组合，拥有不同的反射率。BRDF就是用来对这种反射性质进行定义的。</p>
+<p><a href="https://www.zhihu.com/question/20286038" target="_blank" rel="noopener">https://www.zhihu.com/question/20286038</a></p>
+<h5 id="mipmap的用途"><a href="#mipmap的用途" class="headerlink" title="mipmap的用途"></a>mipmap的用途</h5><p>Mipmapping是贴图渲染中常用技术，为了<strong>加快渲染速度</strong>和<strong>减少图像锯齿</strong>，贴图被处理成由一系列被预先计算和优化过的图片组成的文件，被称为mipmap。</p>
+<p>Mipmap中每一个层级的小图都是主图的一个特定比例的缩小细节的复制品，当贴图被缩小或者只需要从远距离观看时，mipmap就会转换到适当的层级。</p>
+<p>Mipmap的一个重要用途就是渲染远距离纹理时进行范围查找，即远距离物体渲染时，一个像素通常对应着Texture上的一个范围而不是一个像素，mipmap事先缩小纹理，方便查找到该像素所对应的颜色，通常使用双线性插值后再在两个等级的mipmap间线性插值的三线性插值（Trilinear interpolation）来确定最终颜色。</p>
+<p>Mipmap仅比原图多占用1&#x2F;3的空间。</p>
+<h4 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h4><h5 id="游戏引擎主要模块"><a href="#游戏引擎主要模块" class="headerlink" title="游戏引擎主要模块"></a>游戏引擎主要模块</h5><p>渲染、物理、动画、AI、输入、内存管理、资源管理、编辑器、网络、UI</p>
+<h5 id="可靠UDP的实现思路"><a href="#可靠UDP的实现思路" class="headerlink" title="可靠UDP的实现思路"></a>可靠UDP的实现思路</h5><p>最简单的方式是在应用层模仿传输层TCP的可靠性传输。</p>
+<ul>
+<li>1、添加TCP中的seq&#x2F;ack机制，确保数据发送到对端。</li>
+<li>2、添加发送和接收缓冲区，主要是用户超时重传。</li>
+<li>3、添加超时重传机制。</li>
+</ul>
+<p>详细说明：送端发送数据时，生成一个随机seq&#x3D;x，然后每一片按照数据大小分配seq。数据到达接收端后接收端放入缓存，并发送一个ack&#x3D;x的包，表示对方已经收到了数据。发送端收到了ack包后，删除缓冲区对应的数据。使用定时任务定时检查是否需要重传数据。</p>
+<p>目前有如下开源程序利用UDP实现了可靠的数据传输：分别为<strong>RUDP、RTP、UDT</strong>。</p>
+<h4 id="C-相关"><a href="#C-相关" class="headerlink" title="C#相关"></a>C#相关</h4><h5 id="C-拆装箱"><a href="#C-拆装箱" class="headerlink" title="C#拆装箱"></a>C#拆装箱</h5><p>装箱：值类型变量转变为引用类型Object存储在堆内存中</p>
+<p>拆箱：引用类型Object转变为值类型存储在线程栈中</p>
+<p><code>ArrayList</code>（每个元素为Object类型）中存取<code>Vector3</code>（值类型）时分别用到装拆箱操作。</p>
+<h5 id="C-结构体与类的区别"><a href="#C-结构体与类的区别" class="headerlink" title="C#结构体与类的区别"></a>C#结构体与类的区别</h5><ol>
+<li>结构体是值类型，类是引用类型</li>
+<li>结构体不能被继承，但是结构体能够继承接口</li>
+<li>结构体不能包含显式默认构造函数，没有析构函数；类有默认构造函数，有析构函数，可以使用abstract和sealed，有protected修饰符，必须使用new初始化。</li>
+</ol>
+<h5 id="委托与事件"><a href="#委托与事件" class="headerlink" title="委托与事件"></a>委托与事件</h5><p>（等我用到的时候再来写）</p>
+<h4 id="C-相关-1"><a href="#C-相关-1" class="headerlink" title="C++相关"></a>C++相关</h4><h5 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h5><p>*前面的是对被指向对象的修饰，*后面的是对指针本身的修饰。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p;      <span class="comment">// p 为整型常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* p;     <span class="comment">// p 为指向整型常量的指针</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span>* p;     <span class="comment">// p 为指向整型常量的指针</span></span><br><span class="line"><span class="keyword">int</span>* <span class="keyword">const</span> p;     <span class="comment">// p 为指向整型变量的指针常量</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><p>（暂留）</p>
+<h5 id="new的两个阶段"><a href="#new的两个阶段" class="headerlink" title="new的两个阶段"></a>new的两个阶段</h5><ol>
+<li>调用<code>operator new (sizeof(A))</code></li>
+<li>调用<code>A:A()</code></li>
+<li>返回指针</li>
+</ol>
+<p>事实上，分配内存这一操作就是由<code>operator new(size_t)</code>来完成的，如果类A重载了operator new，那么将调用<code>A::operator new(size_t )</code>，否则调用全局<code>::operator new(size_t )</code>，后者由C++默认提供。</p>
+<h5 id="动态链接库和静态链接库区别"><a href="#动态链接库和静态链接库区别" class="headerlink" title="动态链接库和静态链接库区别"></a>动态链接库和静态链接库区别</h5><p>二者的区别在于编译过程中的链接阶段。</p>
+<p>静态链接是指把调用的函数链接到可执行文件中，成为可执行文件的一部分。换句话说，函数代码就在程序的exe文件中，该文件包含了运行时所需的全部代码。当多个程序都调用相同函数时，内存中就会存在这个函数的多个拷贝，这样就浪费了宝贵的内存资源。</p>
+<p>动态链接所调用的函数代码并没有被拷贝到应用程序的可执行文件中去，而是仅仅在其中加入了所调用函数的描述信息。仅当应用程序被装入内存开始运行时，才在应用程序与相应的DLL之间建立链接关系。当要执行所调用DLL中的函数时，根据链接产生的重定位信息，才转去执行DLL中相应的函数。一般情况下，如果一个应用程序使用了动态链接库，系统保证内存中只有DLL的一份复制品。</p>
+<p>动态链接库和静态链接库的相同点是它们都实现了代码的共享。</p>
+<p>静态链接库lib文件将导出声明和实现都放在lib中。编译后所有代码都嵌入到宿主程序。该lib中不能再包含其他动态链接或者静态链接的库了。</p>
+<p>动态链接库lib文件相当于一个h文件，是对实现部分（dll文件）的导出声明。一个dll文件中可以包含其他动态链接库或者静态链接库。</p>
+<p><strong>静态库特点：</strong></p>
+<ol>
+<li>静态库对函数库的链接是放在编译时期完成的。</li>
+<li>程序在运行时与函数库再无瓜葛，移植方便。</li>
+<li>浪费空间和资源，因为所有相关的目标文件与牵涉到的函数库被链接合成一个可执行文件。</li>
+</ol>
+<p><strong>动态库特点：</strong></p>
+<ol>
+<li>动态库把对一些库函数的链接载入推迟到程序运行的时期。</li>
+<li>可以实现进程之间的资源共享。（因此也称为共享库）</li>
+<li>将一些程序升级变得简单。</li>
+<li>甚至可以真正做到链接载入完全由程序员在程序代码中控制（显式调用）。</li>
+</ol>
+<h4 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h4><p>（暂时不写）</p>
+<h4 id="项目相关"><a href="#项目相关" class="headerlink" title="项目相关"></a>项目相关</h4><h5 id="毛笔写字效果"><a href="#毛笔写字效果" class="headerlink" title="毛笔写字效果"></a>毛笔写字效果</h5><h5 id="夜视效果"><a href="#夜视效果" class="headerlink" title="夜视效果"></a>夜视效果</h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/10/24/25岁生日来不及写的文章/" rel="next" title="25岁生日来不及写的文章">
+                <i class="fa fa-chevron-left"></i> 25岁生日来不及写的文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/03/21/记心路历程/" rel="prev" title="记心路历程">
+                记心路历程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/uploads/avatar.png" alt="Diary">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description">WHAT A NICE DAY</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DiaryChris" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:383001400@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://diarychris.lofter.com" target="_blank" title="LOFTER">
+                      
+                        <i class="fa fa-fw fa-camera"></i>LOFTER</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/3999307" target="_blank" title="bilibili">
+                      
+                        <i class="fa fa-fw fa-play-circle"></i>bilibili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/cheng-da-rui/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-book"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#图形学相关"><span class="nav-number">1.</span> <span class="nav-text">图形学相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染管线"><span class="nav-number">1.1.</span> <span class="nav-text">渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Unity轻量级渲染管线"><span class="nav-number">1.2.</span> <span class="nav-text">Unity轻量级渲染管线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染为什么以三角形为基础"><span class="nav-number">1.3.</span> <span class="nav-text">渲染为什么以三角形为基础</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#变换矩阵的存储方式"><span class="nav-number">1.4.</span> <span class="nav-text">变换矩阵的存储方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#人物阴影渲染"><span class="nav-number">1.5.</span> <span class="nav-text">人物阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#两个立方体之间的阴影渲染"><span class="nav-number">1.6.</span> <span class="nav-text">两个立方体之间的阴影渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadow-Map的基本原理"><span class="nav-number">1.7.</span> <span class="nav-text">Shadow Map的基本原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PBR主要参数"><span class="nav-number">1.8.</span> <span class="nav-text">PBR主要参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光栅化的几种方法"><span class="nav-number">1.9.</span> <span class="nav-text">光栅化的几种方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BRDF的物理含义"><span class="nav-number">1.10.</span> <span class="nav-text">BRDF的物理含义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mipmap的用途"><span class="nav-number">1.11.</span> <span class="nav-text">mipmap的用途</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引擎相关"><span class="nav-number">2.</span> <span class="nav-text">引擎相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#游戏引擎主要模块"><span class="nav-number">2.1.</span> <span class="nav-text">游戏引擎主要模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可靠UDP的实现思路"><span class="nav-number">2.2.</span> <span class="nav-text">可靠UDP的实现思路</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关"><span class="nav-number">3.</span> <span class="nav-text">C#相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-拆装箱"><span class="nav-number">3.1.</span> <span class="nav-text">C#拆装箱</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#C-结构体与类的区别"><span class="nav-number">3.2.</span> <span class="nav-text">C#结构体与类的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#委托与事件"><span class="nav-number">3.3.</span> <span class="nav-text">委托与事件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-相关-1"><span class="nav-number">4.</span> <span class="nav-text">C++相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#指针常量和常量指针"><span class="nav-number">4.1.</span> <span class="nav-text">指针常量和常量指针</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#智能指针"><span class="nav-number">4.2.</span> <span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#new的两个阶段"><span class="nav-number">4.3.</span> <span class="nav-text">new的两个阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接库和静态链接库区别"><span class="nav-number">4.4.</span> <span class="nav-text">动态链接库和静态链接库区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法相关"><span class="nav-number">5.</span> <span class="nav-text">算法相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目相关"><span class="nav-number">6.</span> <span class="nav-text">项目相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#毛笔写字效果"><span class="nav-number">6.1.</span> <span class="nav-text">毛笔写字效果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#夜视效果"><span class="nav-number">6.2.</span> <span class="nav-text">夜视效果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz',
+        appKey: 'nKFgouAImYT6sFI9PvPix2hY',
+        placeholder: 'Leave your comments here',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz", "nKFgouAImYT6sFI9PvPix2hY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

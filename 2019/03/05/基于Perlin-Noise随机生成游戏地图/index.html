@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Game, Web, Technology">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摘要 程序化内容生成（PCG）在游戏中的应用是使用随机数或伪随机数来实现游戏内容的程序化生成，其导致游戏内容更加不可预测，为游戏增加更多的可能性，为玩家带来更加持续的新鲜感。同时，这种方法也为游戏开发人员带来了许多优势，例如减少了内存消耗，辅助开发者更加迅速地进行游戏设计，以及对于基于人工的游戏开发作为一种补充。电子游戏中，地形地貌是游戏内容的重要组成部分，也会对游戏的整体美术风格与玩家的游戏体验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Perlin Noise随机生成游戏地图">
+<meta property="og:url" content="http://diarychris.info/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="摘要 程序化内容生成（PCG）在游戏中的应用是使用随机数或伪随机数来实现游戏内容的程序化生成，其导致游戏内容更加不可预测，为游戏增加更多的可能性，为玩家带来更加持续的新鲜感。同时，这种方法也为游戏开发人员带来了许多优势，例如减少了内存消耗，辅助开发者更加迅速地进行游戏设计，以及对于基于人工的游戏开发作为一种补充。电子游戏中，地形地貌是游戏内容的重要组成部分，也会对游戏的整体美术风格与玩家的游戏体验">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-05T08:06:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Perlin Noise随机生成游戏地图">
+<meta name="twitter:description" content="摘要 程序化内容生成（PCG）在游戏中的应用是使用随机数或伪随机数来实现游戏内容的程序化生成，其导致游戏内容更加不可预测，为游戏增加更多的可能性，为玩家带来更加持续的新鲜感。同时，这种方法也为游戏开发人员带来了许多优势，例如减少了内存消耗，辅助开发者更加迅速地进行游戏设计，以及对于基于人工的游戏开发作为一种补充。电子游戏中，地形地貌是游戏内容的重要组成部分，也会对游戏的整体美术风格与玩家的游戏体验">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/">
+
+
+
+
+
+  <title>基于Perlin Noise随机生成游戏地图 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-dgn">
+          <a href="/blog/DGN/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gamepad"></i> <br>
+            
+            DGN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/blog/works/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-profile">
+          <a href="/blog/profile/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            Profile
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Perlin Noise随机生成游戏地图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-05T16:02:19+08:00">
+                2019-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/2019/03/05/基于Perlin-Noise随机生成游戏地图/" class="leancloud_visitors" data-flag-title="基于Perlin Noise随机生成游戏地图">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>摘要</strong></p>
+<p>程序化内容生成（PCG）在游戏中的应用是使用随机数或伪随机数来实现游戏内容的程序化生成，其导致游戏内容更加不可预测，为游戏增加更多的可能性，为玩家带来更加持续的新鲜感。同时，这种方法也为游戏开发人员带来了许多优势，例如减少了内存消耗，辅助开发者更加迅速地进行游戏设计，以及对于基于人工的游戏开发作为一种补充。电子游戏中，地形地貌是游戏内容的重要组成部分，也会对游戏的整体美术风格与玩家的游戏体验造成很大影响。本文旨在提供一种顶视角2D像素风格游戏中实时生成无限地形地貌的可实行方案，希望能够提供一套基于Perlin noise的算法，通过输入有限个伪随机数种子，最终计算出较为美观的顶视角2D像素风格户外地貌，并且提供较强的多样性，使玩家在探索游戏地图时收获新鲜感与乐趣。</p>
+<p><strong>关键词 :</strong> 程序化内容生成, perlin噪声, 像素游戏 </p>
+<p><strong>1.</strong> <strong>引言</strong></p>
+<p>电子游戏中，地形地貌是游戏内容的重要组成部分，也会对游戏的整体美术风格与玩家的游戏体验造成很大影响。在以往的游戏中，地形地貌多为游戏设计与游戏开发人员事先设计好的内容，游戏一旦发布就已经固定，不具备任何随机性，而且不具备随着玩家的游戏进程实时生成，实时延展且无限延展的特性。近十年来，一大批内含程序化地形地貌生成的游戏涌现出来，如《Minecraft》，《Terraria》，《Don’t Starve》，《Enter the Gungeon》，这些游戏中或多或少的用到了程序化内容生成的思想，使其游戏内容尤其是游戏地形地貌更加的丰富和随机，带给玩家更持久的新鲜感，继而提供了更大的重复可玩性。</p>
+<p>程序化内容生成（PCG）在游戏中的应用是使用随机数或伪随机数来实现游戏内容的程序化生成，其导致游戏内容更加不可预测，为游戏增加更多的可能性，为玩家带来更加持续的新鲜感。同时，这种方法也为游戏开发人员带来了许多优势，例如减少了内存消耗，辅助开发者更加迅速地进行游戏设计，以及对于基于人工的游戏开发作为一种补充[1]。PCG可以应用在影响游戏玩法的各种元素之上：地形，地图，图层，故事，对话，任务，角色，规则，变化或武器。PCG一种重要的应用就是生成无限的游戏内容，它可以用于实时生成具有足够变化性的内容。在1980年代，《Rogue》游戏为PCG开辟了一条新的道路，它创造了对后世影响深远的贡献，即游戏中的冒险是通过算法来生成的，每次游玩，就会创造一个全新的冒险[2]。后来很多游戏开发者模仿《Rogue》使用PCG来生成其游戏内容，以至于后来形成了一个新的roguelike游戏类型。Julian Togeliu等人提出了PCG在游戏创作中的三大目标和九大挑战，三大目标即多级多内容PCG，基于PCG的游戏设计和生成完整游戏，而九大挑战之中则包含非通用原创性内容生成这一挑战，其中提到了如今的roguelike游戏之中的地牢生成缺乏创意性[3]。Mark Hendrikx等人提出了程序化内容生成在游戏中应用的几个层次，自下而上分别为游戏比特层、游戏空间层、游戏系统层、游戏情节层、游戏设计层以及衍生内容层，其中，游戏地形地貌的程序化生成包含在游戏空间层，是基础而重要的一层[4]。</p>
+<p>然而，在顶视角2D像素风格游戏中，游戏地形地貌如何合理并且丰富地展现给玩家是一个重要的问题。目前的顶视角2D游戏中使用的程序化地图生成技术，多数为地牢游戏中地牢房间的随机生成，而户外地形地貌生成的现有实现方案多数缺乏美观性。如何在顶视角2D游戏中程序化生成有一定风格的户外地形地貌，是一个有待解决的问题。</p>
+<p>本文旨在提供一种顶视角2D像素风格游戏中实时生成无限地形地貌的可实行方案，希望能够提供一套算法，通过输入有限个伪随机数种子，最终计算出较为美观的顶视角2D像素风格户外地貌，并且提供较强的多样性，使玩家在探索游戏地图时收获新鲜感与乐趣。</p>
+<p>为了实现这些目标，本文选用Perlin噪声为主要的伪随机数生成算法[5]，实现一个二维Perlin噪声网格，并且在此基础上建立由数值到地形类型的映射关系。另外，本文将根据每个点计算出的Perlin噪声值来指定生成地图资源如树木石头的概率。最后，将在水域地形上创造碰撞体，在特定地形上设定摩擦系数，改变角色的移动速率。</p>
+<p><strong>2.</strong> <strong>相关工作</strong></p>
+<p>研究人员早已认识到程序化内容生成（PCG）在电子游戏创作中的重要性，之前有很多人从不同方面做出过相关的工作。在游戏开发中使用程序内容生成技术主要限于特定类型的游戏元素。PCG很少被用于生成整个游戏关卡，但是有一个值得注意的例外。地下城类型的游戏是一种在冒险和角色扮演游戏中经常遇到的游戏类型，其游戏关卡经常由PCG生成。由于其独特的游戏节奏，游戏玩法和游戏空间的组合，地牢关卡设计成为最适合展示PCG优势的地方。Roland van der Linden等人开展了关于生成地下城游戏关卡的程序方法的研究，他们总结了常见的做法，讨论了不同方法的优缺点，并确定了未来的一些有希望的挑战[6]。一般来说，当前的程序性地下城生成方法缺少的不是性能，而是更加强大的生成过程，以及对于生成过程更准确和更丰富的控制。这个领域仍然处于起步阶段，许多研究挑战仍然存在，例如，为设计师提高这些方法的直观性和可访问性。</p>
+<p>关于将程序化内容生成应用于其他类型游戏地图生成领域，之前有人做出过一些实现方案。Lara-Cabrera等人为即时战略游戏《Planet Wars》提供了一个平衡的程序化地图生成器。该生成器使用进化策略生成和演化地图，并使用锦标赛系统评估这些地图的平衡质量，他们进行了几次实验，获得了一组可玩并且平衡的游戏地图[7]。Lawrence Johnson等人利用元胞自动机算法实现了洞穴关卡的无限生成，他们将基于元胞自动机的简单算法在无限洞穴游戏中进行评估，生成可玩且设计良好的基于隧道的地图。该算法具有非常低的计算成本，允许实时内容生成，并且所提出的地图在关卡设计方面提供了足够的灵活性[8]。Miguel Frade等人使用基于遗传算法的遗传地形程序技术自动演化地形，以获得所需的有足够可访问性的游戏地图[9]。Jean-David G´enevaux等人提出了一个框架，允许使用受水文学启发的概念快速直观地建模地形[10]。Houssam Hnaidi等人介绍了一种从一组参数化曲线生成地形的扩散方法，该曲线描述了地形特征，如山脊线，河床或悬崖。他们的方法为用户提供了基于矢量的直观的面向特征的地形控制。 不同类型的约束（例如高程，倾斜角和粗糙度）可以附加到曲线上，以便定义地形的形状，通过使用有效的多重网格扩散算法从曲线表示生成地形。 该算法可以在GPU上有效地实现，这允许用户以交互方式创建各种各样的景观[11]。</p>
+<p>除了上述的地形地貌生成算法，还有许多研究者对于地图相关物的生成进行了一系列研究。Stefan Greuter提出了一种实时生成“伪无限”虚拟城市的方法。城市包含根据需要生成的几何变化的建筑物。建筑物生成参数由从建筑物位置导出的整数播种的伪随机数生成器创建。不同的建筑几何形状是从一组平面图中挑选出来。每个建筑物的楼层是通过在迭代过程中组合随机生成的多边形来创建的[12]。Soon Tee Teoh设计了一种算法模拟河流和海洋的侵蚀作用，来创建自然的河流、河流三角洲、沿海悬崖和海滩[13]。</p>
+<p>与之前的程序化地形地貌生成相比，本文的地形地貌生成方法的难点之一在于如何在顶视角2D像素风格地图上表现出立体感，给与玩家以较为拟真的体验。另一个难点在于如何丰富地形地貌的多样性，以使玩家保持长久的新鲜感与游戏趣味。</p>
+<p><strong>3.</strong> <strong>实现方法</strong></p>
+<p>3.1.Perlin noise</p>
+<p>Perlin噪声是一个非常强大的算法，经常用于程序生成随机内容，在游戏和其他像电影等多媒体领域广泛应用。算法发明者Ken Perlin也因此算法获得奥斯卡科技成果奖。在游戏开发领域，柏林噪声可以用于生成波形，起伏不平的材质或者纹理。例如，它能用于程序生成地形、火焰燃烧特效、水和云等等。柏林噪声绝大部分应用在二维，三维层面上，但某种意义上也能拓展到四维。一维柏林噪声可用于生成横版卷轴地形、模拟手绘线条等，在二维层面可以通过插值生成地形，而三维柏林噪声则可以模拟海平面上起伏的波浪。</p>
+<p>Perlin噪声算法可以用于生成更加连续而平滑的随机数，没有白噪声的毛刺感，所以是生成游戏中地形地貌的一个重要工具。</p>
+<p>3.2.计算噪声图</p>
+<p>要使用Perlin噪声生成游戏地形地貌，需要计算出一个二维Perlin噪声，具体的实现方式需要以下几步。第一步，本文先用一个伪随机数生成器生成一个伪随机数序列，这个伪随机数生成器可以使用经典的线性同余法。第二步，需要在游戏场景中创建一个二维网格，本文暂且把每个单元格的大小设置为100*100，这个大小可以按需调整。之后，本文给二维网格的每个点指定一个随机的二维梯度向量，这些随机向量两个维度的值都是从第一步中伪随机数序列中抽取得到，之后对这个向量进行单位化，这样就得到了一张每个网格点都对应一个指向某个随机方向的单位向量的二维网格。第三步，也是最重要的一步，开始计算场景中每个点的噪声值，即一个0到1之间的随机数。</p>
+<p>关于这个计算方法，本文将任取一个点举例说明。想要计算一个点的噪声值，首先，要先找到他所在的单元格，并且确定该单元格四个角的坐标点，这一操作可以通过整型变量除法得到。例如本文取坐标为（157，-233）的这个点，就可以得到其所在单元格的四个角的坐标分别为：（100，-300）、（100，-200）、（200，-300）、（200，-200）。然后通过两点位置矢量相减的方法分别得到这四个角指向待计算点的四个向量，将这四个向量分别与其所在的角的网格点对应的随机单位向量点乘，得到四个值，将这四个值根据待计算点在单元格内部的相对于左下角的uv值进行双线性插值。所谓uv值，即为相对于左下角的局部坐标系的坐标与单元格大小的比值，例如点（157，-233）局部坐标uv值即为（0.57,0.67），根据u值进行两次线性插值，再对结果根据v值进行一次线性插值，即为双线性插值。这样所得到的最终结果已与所需要的结果非常接近，但是可以发现，这样的计算结果的取值范围为（                                                  ）。于是最后将结果乘以   之后加1再除以2，即得到本文所需要的取值范围（0,1）的噪声值。</p>
+<p>3.3.配置地形数值映射表</p>
+<p>虽然计算平滑且一阶导数连续的噪声值是本文地形地貌生成算法的重要一步，但是仅仅得到游戏场景中每个点的噪声值还是不够的，还需要建立噪声值与地形地貌之间的映射关系，才可以指导在屏幕上渲染什么样式的地形地貌贴图。本文将（0,1）这个范围根据需要分为若干个小区间，每一个小区间映射到一种类型的地形地貌。例如（0.2,0.35）映射为草地，那么当某一点的噪声值落在（0.2,0.35）区间内的时候，即可以根据其草地的特性为其贴上相应的地砖或是绘制相应的颜色。除此以外，还可以给每一种地形设置摩擦系数，以限制玩家角色在其上的奔跑速度，或者设置游戏中资源如在此种地形之上的生成概率，以控制资源在不同地形上的分布。</p>
+<p><strong>4.</strong> <strong>结果与展望</strong></p>
+<p>本文在Unity引擎中利用引擎中的Tilemap系统实现了该算法，计算出一张足够大的二维Perlin噪声网格以键值对的形式保存在C#的字典结构中，然后根据这些噪声值在Tilemap系统中给各点贴上了地砖Tiles，并且根据设定的概率值添加了树木和石头等游戏中需要用到的资源，最后形成了比较好的效果。</p>
+<p>在这个基于Perlin Noise生成游戏地图的算法基础之上，还有很多可以改进的点，比如更好的美术效果，在地图上加入剧情引导等。如何用PCG技术随机生成更具风格化与可玩性的游戏地图，还有待之后的研究不断进行探索。</p>
+<p>参考文献</p>
+<p>[1]  Shaker N, Togelius J, Nelson M J. Procedural Content Generation in Games[M]. Cham: Springer International Publishing, 2016.</p>
+<p>[2]  Amato A. Procedural Content Generation in the Game Industry[A]. 见: O. Korn, N. Lee. Game Dynamics[M]. Cham: Springer International Publishing, 2017: 15–25.</p>
+<p>[3]  Togelius J, Champandard A J, Lanzi P L, et al. Procedural content generation: Goals, challenges and actionable steps[C]&#x2F;&#x2F;Dagstuhl Follow-Ups. Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik, 2013, 6.</p>
+<p>[4]  Hendrikx M, Meijer S, Van Der Velden J等. Procedural content generation for games: A survey[J]. ACM Transactions on Multimedia Computing, Communications, and Applications, 2013, 9(1): 1–22.</p>
+<p>[5]  Liu D, Yan S, Ji R-R等. Image retrieval with query-adaptive hashing[J]. ACM Transactions on Multimedia Computing, Communications, and Applications, 2013, 9(1): 1–16.</p>
+<p>[6]  van der Linden R, Lopes R, Bidarra R. Procedural Generation of Dungeons[J]. IEEE Transactions on Computational Intelligence and AI in Games, 2014, 6(1): 78–89.</p>
+<p>[7]  Lara-Cabrera R, Cotta C, Fernández-Leiva A J. Procedural map generation for a RTS game[C]&#x2F;&#x2F;13th International GAME-ON Conference on Intelligent Games and Simulation. 2012: 53-58.</p>
+<p>[8]  Johnson L, Yannakakis G N, Togelius J. Cellular automata for real-time generation of infinite cave levels[A]. Proceedings of the 2010 Workshop on Procedural Content Generation in Games - PCGames ’10[C]. Monterey, California: ACM Press, 2010: 1–4.</p>
+<p>[9]  Frade M, de Vega F F, Cotta C. Evolution of Artificial Terrains for Video Games Based on Accessibility[A]. 见: C. Di Chio, S. Cagnoni, C. Cotta等. Applications of Evolutionary Computation[M]. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010, 6024: 90–99.</p>
+<p>[10] Génevaux J-D, Galin É, Guérin E等. Terrain generation using procedural models based on hydrology[J]. ACM Transactions on Graphics, 2013, 32(4): 143.</p>
+<p>[11] Hnaidi H, Guérin E, Akkouche S等. Feature based terrain generation using diffusion equation[J]. Computer Graphics Forum, 2010, 29(7): 2179–2186.</p>
+<p>[12] Greuter S, Parker J, Stewart N, et al. Real-time procedural generation ofpseudo infinite’cities[C]&#x2F;&#x2F;Proceedings of the 1st international conference on Computer graphics and interactive techniques in Australasia and South East Asia. ACM, 2003: 87-ff.</p>
+<p>[13] Teoh S T. River and Coastal Action in Automatic Terrain Generation[C]&#x2F;&#x2F;CGVR. 2008: 3-9.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/12/26/怎样理解随机过程中的样本函数/" rel="next" title="怎样理解随机过程中的样本函数">
+                <i class="fa fa-chevron-left"></i> 怎样理解随机过程中的样本函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/03/05/腾讯游戏实习生面试总结/" rel="prev" title="腾讯游戏实习生面试总结">
+                腾讯游戏实习生面试总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/uploads/avatar.png" alt="Diary">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description">WHAT A NICE DAY</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DiaryChris" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:383001400@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://diarychris.lofter.com" target="_blank" title="LOFTER">
+                      
+                        <i class="fa fa-fw fa-camera"></i>LOFTER</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/3999307" target="_blank" title="bilibili">
+                      
+                        <i class="fa fa-fw fa-play-circle"></i>bilibili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/cheng-da-rui/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-book"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz',
+        appKey: 'nKFgouAImYT6sFI9PvPix2hY',
+        placeholder: 'Leave your comments here',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz", "nKFgouAImYT6sFI9PvPix2hY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

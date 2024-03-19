@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Game, Web, Technology">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta property="og:url" content="http://diarychris.info/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/010847-244787.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210258-83838.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002148-850948.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210316-842028.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png">
+<meta property="og:updated_time" content="2020-11-15T18:03:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Translucency Shader in Ray Tracing Pipeline of UE4">
+<meta name="twitter:description" content="Shader入口首先，指定半透明物体shader文件的入口文件是： Renderer/Private/RayTracing/RayTracingTranslucency.cpp 其中FDeferredShadingSceneRenderer::RenderRayTracingTranslucency函数中实例化了一个GraphBuilder，并且在调用RenderRayTracingPrimary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/">
+
+
+
+
+
+  <title>Translucency Shader in Ray Tracing Pipeline of UE4 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-dgn">
+          <a href="/blog/DGN/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gamepad"></i> <br>
+            
+            DGN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/blog/works/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-profile">
+          <a href="/blog/profile/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            Profile
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Translucency Shader in Ray Tracing Pipeline of UE4</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-10T00:35:12+08:00">
+                2020-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/2020/11/10/Translucency Shader in Ray Tracing Pipeline of UE4/" class="leancloud_visitors" data-flag-title="Translucency Shader in Ray Tracing Pipeline of UE4">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Shader入口"><a href="#Shader入口" class="headerlink" title="Shader入口"></a>Shader入口</h3><p>首先，指定半透明物体shader文件的入口文件是：</p>
+<p><code>Renderer/Private/RayTracing/RayTracingTranslucency.cpp</code></p>
+<p>其中<code>FDeferredShadingSceneRenderer::RenderRayTracingTranslucency</code>函数中实例化了一个<code>GraphBuilder</code>，并且在调用<code>RenderRayTracingPrimaryRaysView</code>函数之后调用了：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">GraphBuilder.Execute();</span><br><span class="line">ResolveSceneColor(RHICmdList);</span><br></pre></td></tr></table></figure>
+
+<p>于是分配Shader的逻辑应该在<code>RenderRayTracingPrimaryRaysView</code>函数中，于是我们进入所在文件：</p>
+<p><code>Renderer/Private/RayTracing/RayTracingPrimaryRays.cpp</code></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> RayGenShader = View.ShaderMap-&gt;GetShader&lt;FRayTracingPrimaryRaysRGS&gt;(PermutationVector);</span><br><span class="line">...</span><br><span class="line">GraphBuilder.AddPass(...);</span><br></pre></td></tr></table></figure>
+
+<p>所以使用的Ray Generation Shader（RGS）是<code>FRayTracingPrimaryRaysRGS</code>。</p>
+<p>进一步，找到这一语句绑定了<code>FRayTracingPrimaryRaysRGS</code>使用哪个HLSL文件：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">IMPLEMENT_GLOBAL_SHADER(FRayTracingPrimaryRaysRGS, <span class="string">"/Engine/Private/RayTracing/RayTracingPrimaryRays.usf"</span>, <span class="string">"RayTracingPrimaryRaysRGS"</span>, SF_RayGen);</span><br></pre></td></tr></table></figure>
+
+<p>于是我们可以在以下路径找到此语句：</p>
+<p><code>Shaders/Private/RayTracing/RayTracingPrimaryRays.usf</code></p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">RAY_TRACING_ENTRY_RAYGEN(RayTracingPrimaryRaysRGS)</span><br></pre></td></tr></table></figure>
+
+<p>在<code>Shaders/Private/RayTracing/RayTracingCommon.ush</code>中找到这个宏定义：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#ifndef RAY_TRACING_ENTRY_RAYGEN</span></span><br><span class="line"><span class="meta">#define RAY_TRACING_ENTRY_RAYGEN(name)\</span></span><br><span class="line">[shader("raygeneration")] void name()</span><br><span class="line"><span class="meta">#endif // RAY_TRACING_ENTRY_RAYGEN</span></span><br></pre></td></tr></table></figure>
+
+<p>翻译过来也就是HLSL中将<code>RayTracingPrimaryRaysRGS</code>标记为一个RGS的语法：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">[shader("raygeneration")] void RayTracingPrimaryRaysRGS()</span><br></pre></td></tr></table></figure>
+
+<p>于是可以确定<code>RayTracingPrimaryRaysRGS()</code>就是Shader入口。</p>
+<br>
+
+<h3 id="RGS主体框架"><a href="#RGS主体框架" class="headerlink" title="RGS主体框架"></a>RGS主体框架</h3><p>下面我们正式开始梳理这个RGS中的内容：</p>
+<p>首先是准备阶段，先拿到<code>DispatchThreadId</code>和发出光线的像素坐标：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">uint2 DispatchThreadId = DispatchRaysIndex().xy + View.ViewRectMin.xy;</span><br><span class="line">uint2 PixelCoord = GetPixelCoord(DispatchThreadId, UpscaleFactor);</span><br><span class="line"><span class="type">uint</span> LinearIndex = PixelCoord.y * View.BufferSizeAndInvSize.x + PixelCoord.x;</span><br></pre></td></tr></table></figure>
+
+<p>然后根据像素坐标初始化<code>Ray</code>和<code>RayCone</code>：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float2 InvBufferSize = View.BufferSizeAndInvSize.zw;</span><br><span class="line">float2 UV = (float2(PixelCoord) + <span class="number">0.5</span>) * InvBufferSize;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Trace rays from camera origin to (Gbuffer - epsilon) to only intersect translucent objects</span></span><br><span class="line">RayDesc Ray = CreatePrimaryRay(UV);</span><br><span class="line">FRayCone RayCone = (FRayCone)<span class="number">0</span>;</span><br><span class="line">RayCone.SpreadAngle = View.EyeToPixelSpreadAngle;</span><br></pre></td></tr></table></figure>
+
+<p>之后就将进入一个循环来进行主要的Ray Tracing计算，我们将在下一段详细分析：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终，经过循环计算之后，累加的<code>PathRadiance</code>作为最后的主要输出存入数组：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">PathRadiance = ClampToHalfFloatRange(PathRadiance);</span><br><span class="line">ColorOutput[DispatchThreadId] = float4(PathRadiance, FinalAlpha);</span><br><span class="line">RayHitDistanceOutput[DispatchThreadId] = HitDistance;</span><br></pre></td></tr></table></figure>
+
+<p>也可以从文件开头找到，<code>ColorOutput</code>正是可读写的<code>RWTexture2D</code>类型：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">RWTexture2D&lt;float4&gt; ColorOutput;</span><br><span class="line">RWTexture2D&lt;<span class="type">float</span>&gt; RayHitDistanceOutput;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="循环体分析"><a href="#循环体分析" class="headerlink" title="循环体分析"></a>循环体分析</h3><p>RayTracing是一个递归的过程，在每一个界面上进行分叉并进一步递归计算，我们将所有的折射写在左子树，反射写在右子树，形成一个二叉树状的结构。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/005739-3830.png" alt="Refr "></p>
+<p>然而在GPU上运行的shader中函数并不能进行递归调用，此时可以自己使用栈来实现递归。</p>
+<p>但是，UE4中并没有在此实现递归，而是使用循环来代替递归，舍去了对最终结果影响较小的分支，仅实现了主要分支的计算，我猜测其目的是大幅缩减计算量，提高效率。</p>
+<p>首先将需要在循环中累加或者分发的数据进行初始化：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 PathRadiance = <span class="number">0.0</span>;</span><br><span class="line"><span class="type">float</span> PathThroughput = <span class="number">1.0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>之后进入循环，我们可以对<code>PathRadiance</code>进行追踪，抽出循环的主干：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    FMaterialClosestHitPayload Payload = TraceRayAndAccumulateResults(..., PathVertexRadiance);</span><br><span class="line">    <span class="comment">// Handle no hit condition</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.IsMiss())</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * GetSkyRadiance(Ray.Direction, LastRoughness);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle surface lighting</span></span><br><span class="line">    PathRadiance += PathThroughput * PathVertexRadiance * vertexRadianceWeight;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle reflection tracing</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness)</span><br><span class="line">    &#123;</span><br><span class="line">        ReflectionPayload = TraceRayAndAccumulateResults(..., ReflectionRadiance)</span><br><span class="line">	    <span class="keyword">if</span> (ReflectionPayload.IsMiss())</span><br><span class="line">        &#123;</span><br><span class="line">            ReflectionRadiance = GetSkyRadiance(ReflectionRay.Direction, LastRoughness);</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Set refraction ray for next iteration</span></span><br><span class="line">    Ray.Origin = HitPoint;</span><br><span class="line">    Ray.TMin = <span class="number">0.01</span>;</span><br><span class="line">    Ray.TMax = NextMaxRayDistance;</span><br><span class="line">    Ray.Direction = RefractedDirection;</span><br><span class="line">    RayCone = PropagateRayCone(RayCone, SurfaceCurvature, Depth);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在一个RGS中，最关键的要点是<code>TraceRay</code>函数的调用，这里<code>TraceRay</code>被封装了几层在<code>TraceRayAndAccumulateResults</code>函数中，可以沿着<code>RayTracingLightingCommon.ush</code>和<code>RayTracingCommon.ush</code>这两个文件中找到最终还是调用了<code>TraceRay</code>。</p>
+<p>于是我们可以总结出如下图中的结构，其中第一个TraceRay是指从摄像机向场景中发射的第一条光线，每一笔高亮表示一轮循环中计算的内容。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/09/010847-244787.png" alt="image-20201109010846740"></p>
+<br>
+
+<h3 id="反射-透射分支补全"><a href="#反射-透射分支补全" class="headerlink" title="反射-透射分支补全"></a>反射-透射分支补全</h3><p>由上图可以看出，UE4中极大地省略了树右侧分支的递归，而仅仅追踪了最左路的透射部分内容。于是，由于右子树反射后续分支的内容的缺失，会出现下图中的错误，即对于一个半透明材质的镜子，第一次的反射光线遇到另一个半透明物体时不再进行后续的追踪，仅计算其本身的漫反射，导致显示为黑色。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210258-83838.png" alt="image-20201107210256821"></p>
+<p>那么如何修复这一问题呢？</p>
+<p>我们有两种方案：</p>
+<ol>
+<li>使用栈在GPU中实现递归，将整个树的内容全部实现。</li>
+<li>继续沿用UE4的思路，用循环中添加子循环来补充实现一部分的树。</li>
+</ol>
+<p>其中，方案1肯定更加接近真实世界结果，然而这却以效率作为代价，因为发出的光线数以指数级别增长。同时，有很多多次折射或反射的光线对最终结果贡献不大。由于实时光追对效率要求很严苛，所以我们最终选择做一个trade-off，使用方案2来节约计算量。</p>
+<p>对于半透明物体的在镜子中的渲染而言，现在最缺乏的分支其实是反射后的折射分支，以及之后的多次折射分支。</p>
+<p>于是我们在一个循环的内部添加一个函数<code>TraceRayForRecursiveRefractionFromFirstReflection</code>专门处理这些分支：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">TraceRayForRecursiveRefractionFromFirstReflection(ReflectionPayload, </span><br><span class="line">    ReflectionRay, </span><br><span class="line">    RandSequence, </span><br><span class="line">    PixelCoord, </span><br><span class="line">    RayCone, </span><br><span class="line">    AccumulatedOpacity, </span><br><span class="line">    PathThroughput * ReflectionThroughput,</span><br><span class="line">    PathRadiance);</span><br></pre></td></tr></table></figure>
+
+<p>函数接受反射分支的光线及其<code>Payload</code>，然后分别向反射方向和折射方向发出光线计算结果。函数中包含一个子循环，沿着折射方向不断递归计算下去直到指定次数。这样一来就实现了下图中的部分，其中红色为我们补充实现的部分，绿圈为函数调用处。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002148-850948.png" alt="image-20201110002141890"></p>
+<br>
+
+<h3 id="全反射BUG修复"><a href="#全反射BUG修复" class="headerlink" title="全反射BUG修复"></a>全反射BUG修复</h3><p>实现了以上的函数后，我们发现镜子里得到了正确的结果，而镜子外半透明物体的亮度明显过亮，这又是什么原因呢？</p>
+<p>经过排查后发现，这是UE4原有的另一个BUG导致的错误。</p>
+<p>不难注意到，UE4原有代码是在一个循环中计算表面漫反射与反射，然后在下一个循环才计算折射分支内容，然而在每轮循环末尾计算折射方向时有这么一段代码：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    RefractedDirection = T;</span><br><span class="line">    PathThroughput *= <span class="number">1.0</span> - Fr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Handle total internal reflection</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    RefractedDirection = <span class="built_in">reflect</span>(Ray.Direction, N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是在判断全反射，当发生全反射时<code>refract</code>函数会返回一个零向量，由于此时不发生折射，折射方向会修改为反射方向，即在下一个循环中进行全反射分支的计算。全反射的物理原理详见高中物理，而我们也可以理解为当发生全反射时，折射分量与反射分量能量合并，均流向了反射方向，全反射可以理解为一种特殊的折射。UE4这种将折射方向改为反射方向的写法并没有什么不妥，但是他们忽略了在当前循环已经计算过一遍反射分支，而下一轮循环中再计算全反射分支，会导致反射分支的能量被重复计算！这就是我们补全反射-透射分支后出现过亮现象的原因。</p>
+<p>可能有同学会问，为什么补全分支之前亮度看上去是正常的呢？很简单，这是因为UE4没有计算反射-透射分支导致的反射分支偏暗的BUG正好使得全反射时反射分支重复计算的BUG造成的影响很弱，等于两个BUG的影响相互抵消，正好得到了看似正确的结果。</p>
+<p>于是我们将全反射判断从循环末尾处提前到计算反射分支之前，如果发生了全反射，那么就不发射反射光线，避免重复计算。</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line"><span class="comment">//if total internal reflection happened, it should not dispatch reflection ray.</span></span><br><span class="line"><span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness &amp;&amp; <span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Trace reflection ray </span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>于是得到更加正确的结果：</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/07/210316-842028.png" alt="image-20201107210316403"></p>
+<br>
+
+<h3 id="能量守恒分析"><a href="#能量守恒分析" class="headerlink" title="能量守恒分析"></a>能量守恒分析</h3><p>不难发现，在不断发射分支光线时，一定要保证能量守恒，才能得到正确的结果。UE4是怎么保证能量守恒的呢？</p>
+<p>这时我们就需要关注上文中循环前定义的<code>PathThroughput</code>变量，其主要通过计算菲涅尔现象中的菲涅尔系数<code>Fr</code>和表面不透明度<code>Opacity</code>来控制光追过程中的能量守恒。</p>
+<p>通过上文中的图可以看出，UE4中的实时光追将半透明表面上的能量分为三部分计算：表面漫反射分量、折射分量、反射分量（镜面反射），其中折射分量进行递归。当然这是一种近似方法，并不是完全正确的PathTracing方法，也是为了性能而做出的一种trade-off。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002304-521734.png" alt="image-20201110002303632"></p>
+<p>我们可以从代码中提取出对于<code>PathThroughput</code>的改变：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">uint</span> RefractionRayIndex = <span class="number">0</span>; RefractionRayIndex &lt; MaxRefractionRays; ++RefractionRayIndex)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle surface lighting</span></span><br><span class="line">    PathRadiance += PathThroughput * PathVertexRadiance * vertexRadianceWeight;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle reflection tracing</span></span><br><span class="line">    <span class="keyword">if</span> (Payload.Roughness &lt; TranslucencyMaxRoughness)</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Handle refraction through the surface.</span></span><br><span class="line">    <span class="type">float</span> PathVertexTransmittance = Payload.BlendingMode == RAY_TRACING_BLEND_MODE_ADDITIVE ? <span class="number">1.0</span> : <span class="number">1.0</span> - Payload.Opacity;</span><br><span class="line">    PathThroughput *= PathVertexTransmittance;</span><br><span class="line">    <span class="keyword">if</span> (PathThroughput &lt;= <span class="number">0.0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (TranslucencyRefraction)</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="type">float</span> Fr = FresnelDielectric(Eta, NoV, NoT);</span><br><span class="line">        float3 T = <span class="built_in">refract</span>(Ray.Direction, N, Eta);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">any</span>(T) &gt; <span class="number">0.0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            RefractedDirection = T;</span><br><span class="line">            PathThroughput *= <span class="number">1.0</span> - Fr;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现对于<code>PathThroughput</code>的改变主要集中在循环末尾计算下一轮折射分支时，这是因为<code>PathThroughput</code>是每个循环的公用变量，而循环是在模拟折射方向的递归，所以不应让反射方向的计算改变<code>PathThroughput</code>的数值。计算反射方向的Throughput时，其实是单独计算了<code>ReflectionThroughput</code>并乘上<code>PathThroughput</code>而得到：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> NoV = saturate(<span class="built_in">dot</span>(-Ray.Direction, Payload.WorldNormal));</span><br><span class="line"><span class="keyword">const</span> float3 ReflectionThroughput = EnvBRDF(Payload.SpecularColor, Payload.Roughness, NoV);</span><br><span class="line"></span><br><span class="line">PathRadiance += PathThroughput * ReflectionThroughput * ReflectionRadiance * vertexRadianceWeight;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>EnvBRDF</code>函数跳进去其实是进行了菲涅尔相关的计算，约等于计算出了一个<code>Fr</code>。</p>
+<p>我们还可以发现，每次累加<code>PathRadiance</code>时都有一个<code>vertexRadianceWeight</code>参与计算，在代码中发现其实就是表面不透明度<code>Opacity</code>：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> vertexRadianceWeight = Payload.Opacity;</span><br></pre></td></tr></table></figure>
+
+<p>于是我们可以梳理出如下两张图，分别是<code>Fr</code>和<code>Opacity</code>对光线throughput的影响：</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002341-192556.png" alt="image-20201110002340482"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202011/10/002414-872720.png" alt="image-20201110002413670"></p>
+<p>欢迎交流！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/09/24/我说，那就飞吧我的天马行空/" rel="next" title="我说，那就飞吧我的天马行空">
+                <i class="fa fa-chevron-left"></i> 我说，那就飞吧我的天马行空
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/11/16/An Outline of the UE4 Deferred Shading Pipeline/" rel="prev" title="An Outline of the UE4 Deferred Shading Pipeline">
+                An Outline of the UE4 Deferred Shading Pipeline <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/uploads/avatar.png" alt="Diary">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description">WHAT A NICE DAY</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DiaryChris" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:383001400@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://diarychris.lofter.com" target="_blank" title="LOFTER">
+                      
+                        <i class="fa fa-fw fa-camera"></i>LOFTER</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/3999307" target="_blank" title="bilibili">
+                      
+                        <i class="fa fa-fw fa-play-circle"></i>bilibili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/cheng-da-rui/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-book"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shader入口"><span class="nav-number">1.</span> <span class="nav-text">Shader入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGS主体框架"><span class="nav-number">2.</span> <span class="nav-text">RGS主体框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环体分析"><span class="nav-number">3.</span> <span class="nav-text">循环体分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射-透射分支补全"><span class="nav-number">4.</span> <span class="nav-text">反射-透射分支补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全反射BUG修复"><span class="nav-number">5.</span> <span class="nav-text">全反射BUG修复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能量守恒分析"><span class="nav-number">6.</span> <span class="nav-text">能量守恒分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz',
+        appKey: 'nKFgouAImYT6sFI9PvPix2hY',
+        placeholder: 'Leave your comments here',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz", "nKFgouAImYT6sFI9PvPix2hY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

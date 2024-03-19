@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Game, Web, Technology">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。   主要模块 以下为我实现Soft Renderer时划分的主要模块  坐标变换MVP + 视口变换 Bresenham划线算法 Scanline-Zbuffer多边形填充 Phong光照模型 + Phong着色 纹理映射（透视校正插值）    管线流程 模型读取顶点的数据结构设定如下，其中pos，normal，texc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从模型到图形——我的实时渲染管线记录">
+<meta property="og:url" content="http://diarychris.info/blog/2020/06/30/从模型到图形——我的渲染管线记录/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。   主要模块 以下为我实现Soft Renderer时划分的主要模块  坐标变换MVP + 视口变换 Bresenham划线算法 Scanline-Zbuffer多边形填充 Phong光照模型 + Phong着色 纹理映射（透视校正插值）    管线流程 模型读取顶点的数据结构设定如下，其中pos，normal，texc">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-11-12T07:05:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从模型到图形——我的实时渲染管线记录">
+<meta name="twitter:description" content="在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。   主要模块 以下为我实现Soft Renderer时划分的主要模块  坐标变换MVP + 视口变换 Bresenham划线算法 Scanline-Zbuffer多边形填充 Phong光照模型 + Phong着色 纹理映射（透视校正插值）    管线流程 模型读取顶点的数据结构设定如下，其中pos，normal，texc">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2020/06/30/从模型到图形——我的渲染管线记录/">
+
+
+
+
+
+  <title>从模型到图形——我的实时渲染管线记录 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-dgn">
+          <a href="/blog/DGN/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gamepad"></i> <br>
+            
+            DGN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/blog/works/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-profile">
+          <a href="/blog/profile/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            Profile
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2020/06/30/从模型到图形——我的渲染管线记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从模型到图形——我的实时渲染管线记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-30T13:09:52+08:00">
+                2020-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/06/30/从模型到图形——我的渲染管线记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/06/30/从模型到图形——我的渲染管线记录/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/2020/06/30/从模型到图形——我的渲染管线记录/" class="leancloud_visitors" data-flag-title="从模型到图形——我的实时渲染管线记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在此回顾记录2019年12月实习期间编写Soft Renderer时的思考。</p>
+<br>
+
+<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><hr>
+<p>以下为我实现Soft Renderer时划分的主要模块</p>
+<ul>
+<li>坐标变换MVP + 视口变换</li>
+<li>Bresenham划线算法</li>
+<li>Scanline-Zbuffer多边形填充</li>
+<li>Phong光照模型 + Phong着色</li>
+<li>纹理映射（透视校正插值）</li>
+</ul>
+<br>
+
+<h2 id="管线流程"><a href="#管线流程" class="headerlink" title="管线流程"></a>管线流程</h2><hr>
+<h3 id="模型读取"><a href="#模型读取" class="headerlink" title="模型读取"></a>模型读取</h3><p>顶点的数据结构设定如下，其中<code>pos</code>，<code>normal</code>，<code>texcoord</code>从<code>.obj</code>文件中读取：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vertex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Vector3 pos;</span><br><span class="line">	Vector3 wPos;</span><br><span class="line">	Vector3 normal;</span><br><span class="line">	TexCoord texcoord;</span><br><span class="line">	COLORREF color;</span><br><span class="line">	<span class="keyword">float</span> rhw;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>三角面的数据结构如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Triangle</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Vertex v[<span class="number">3</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="坐标变换MVP-视口变换"><a href="#坐标变换MVP-视口变换" class="headerlink" title="坐标变换MVP + 视口变换"></a>坐标变换MVP + 视口变换</h3><p><em>本项目中采用的是Direct3D标准，即所有向量为行向量，乘法顺序为从左向右。</em></p>
+<br>
+
+<h4 id="Model-Matrix"><a href="#Model-Matrix" class="headerlink" title="Model Matrix"></a>Model Matrix</h4><p>模型读取完成后，首先对模型本身的平移(Translate)、旋转(Rotate)、缩放(Scale)三种变换进行处理。</p>
+<p>TRS中，必须保证T要在最后相乘。<br>$$<br>Model Matrix &#x3D; Scale \times Rotation \times Translate<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::UpdateModelMatrix</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	modelMatrix = scale * rotation * translate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="Scale"><a href="#Scale" class="headerlink" title="Scale"></a>Scale</h5><p>Scale矩阵的设置为：<br>$$<br>\left[<br>\begin{matrix}<br>scaleX &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; scaleY &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; scaleZ &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::SetScale</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y, <span class="keyword">float</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Matrix44 s = Matrix44::Identity();</span><br><span class="line">	s.m[<span class="number">0</span>][<span class="number">0</span>] = x;</span><br><span class="line">	s.m[<span class="number">1</span>][<span class="number">1</span>] = y;</span><br><span class="line">	s.m[<span class="number">2</span>][<span class="number">2</span>] = z;</span><br><span class="line">	scale = s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="Rotation"><a href="#Rotation" class="headerlink" title="Rotation"></a>Rotation</h5><p>欧拉旋转的顺序参照Unity标准，即ZXY。<br>$$<br>Rotation &#x3D; Rz \times Rx \times Ry<br>$$<br>其中绕不同轴的Rotation矩阵的设置为：<br>$$<br>Rx &#x3D;<br>\left[<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 &amp; 0\\<br>0 &amp; \cos x &amp; \sin x &amp; 0\\<br>0 &amp; -\sin x &amp; \cos x &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>Ry &#x3D;<br>\left[<br>\begin{matrix}<br>\cos y &amp; 0 &amp; -\sin y &amp; 0 \\<br>0 &amp; 1 &amp; 0 &amp; 0 \\<br>\sin y &amp; 0 &amp; \cos y &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>Rz &#x3D;<br>\left[<br>\begin{matrix}<br>\cos z &amp; \sin z &amp; 0 &amp; 0 \\<br>-\sin z &amp; \cos z &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::SetRotation</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y, <span class="keyword">float</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Matrix44 rx = Matrix44::Identity();</span><br><span class="line">	Matrix44 ry = Matrix44::Identity();</span><br><span class="line">	Matrix44 rz = Matrix44::Identity();</span><br><span class="line"></span><br><span class="line">	rx.m[<span class="number">1</span>][<span class="number">1</span>] = cosf(D2R(x));</span><br><span class="line">	rx.m[<span class="number">2</span>][<span class="number">2</span>] = cosf(D2R(x));</span><br><span class="line">	rx.m[<span class="number">2</span>][<span class="number">1</span>] = -sinf(D2R(x));</span><br><span class="line">	rx.m[<span class="number">1</span>][<span class="number">2</span>] = sinf(D2R(x));</span><br><span class="line"></span><br><span class="line">	ry.m[<span class="number">2</span>][<span class="number">2</span>] = cosf(D2R(y));</span><br><span class="line">	ry.m[<span class="number">0</span>][<span class="number">0</span>] = cosf(D2R(y));</span><br><span class="line">	ry.m[<span class="number">0</span>][<span class="number">2</span>] = -sinf(D2R(y));</span><br><span class="line">	ry.m[<span class="number">2</span>][<span class="number">0</span>] = sinf(D2R(y));</span><br><span class="line"></span><br><span class="line">	rz.m[<span class="number">0</span>][<span class="number">0</span>] = cosf(D2R(z));</span><br><span class="line">	rz.m[<span class="number">1</span>][<span class="number">1</span>] = cosf(D2R(z));</span><br><span class="line">	rz.m[<span class="number">1</span>][<span class="number">0</span>] = -sinf(D2R(z));</span><br><span class="line">	rz.m[<span class="number">0</span>][<span class="number">1</span>] = sinf(D2R(z));</span><br><span class="line"></span><br><span class="line">	rotation = rz * rx * ry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>D2R</code>函数含义为Degree to Radian</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> PI = <span class="number">3.14159265358f</span>;</span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">float</span> <span class="title">D2R</span><span class="params">(<span class="keyword">float</span> deg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> deg * PI / <span class="number">180</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Rotation矩阵必然正交</strong>，原理为：<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>\text {（原坐标轴）}<br>\times R &#x3D;<br>R\text {（新坐标轴）}<br>$$<br>经旋转后的新坐标轴必然保持正交。</p>
+<br>
+
+<h5 id="Translate"><a href="#Translate" class="headerlink" title="Translate"></a>Translate</h5><p>Translate矩阵的设置为：<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>TranslateX &amp; TranslateY &amp; TranslateZ &amp; 1<br>\end{matrix}<br>\right]<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::SetTranslate</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y, <span class="keyword">float</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Matrix44 t = Matrix44::Identity();</span><br><span class="line">	t.m[<span class="number">3</span>][<span class="number">0</span>] = x;</span><br><span class="line">	t.m[<span class="number">3</span>][<span class="number">1</span>] = y;</span><br><span class="line">	t.m[<span class="number">3</span>][<span class="number">2</span>] = z;</span><br><span class="line">	translate = t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="View-Matrix"><a href="#View-Matrix" class="headerlink" title="View Matrix"></a>View Matrix</h4><p>接下来，需要将顶点由World Space转入View Space，思路为：<br>$$<br>任一点  \xrightarrow{Follow} 相机 \xrightarrow{Translate} 原点 \xrightarrow{Rotate} 将uvw旋转至与xyz重合<br>$$<br>相机的数据结构为：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Vector3 pos;</span><br><span class="line">	Vector3 lookAt;</span><br><span class="line">	Vector3 up;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>求出View Space的坐标向量uvw：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Vector3 forward = (camera.lookAt - camera.pos).Normalize();</span><br><span class="line">Vector3 right = (camera.up ^ forward).Normalize();</span><br><span class="line">Vector3 up = (forward ^ right).Normalize();</span><br></pre></td></tr></table></figure>
+
+<p>$$<br>u &#x3D; right \\v &#x3D; up \\w &#x3D; forward<br>$$</p>
+<p>接下来的目标是将View Space的坐标轴uvw乘以View Matrix变换至与World Space的坐标轴xyz重合，即：<br>$$<br>u \rightarrow x \\v \rightarrow y \\w \rightarrow z<br>$$<br>而由上述思路可知：<br>$$<br>Matrix_{view} &#x3D; M_T \times M_R<br>$$<br>首先易知：<br>$$<br>M_T &#x3D;\left[\begin{matrix}1 &amp; 0 &amp; 0 &amp; 0 \\0 &amp; 1 &amp; 0 &amp; 0 \\0 &amp; 0 &amp; 1 &amp; 0 \\-Camera_{posX} &amp; -Camera_{posY} &amp; -Camera_{posZ} &amp; 1\end{matrix}\right]<br>$$<br>乘以$M_T$后，此时两坐标系原点已重合，然后考虑 $M_R$，首先考虑其逆过程$xyz \rightarrow uvw $：</p>
+<p><em>（uvw为方向向量，不会因上一步的平移而改变）</em><br>$$<br>[1, 0, 0] \times R &#x3D; [u_x, u_y, u_z] \\ [0, 1, 0] \times R &#x3D; [v_x, v_y, v_z] \\ [0, 0, 1] \times R &#x3D; [w_x, w_y, w_z]<br>$$<br>则对于$uvw \rightarrow xyz $<br>$$<br>M_R &#x3D; R^{-1}<br>$$<br>由<strong>旋转矩阵必正交</strong>可得：<br>$$<br>R^{-1} &#x3D; R^T<br>$$<br>则<br>$$<br>M_R &#x3D; R^T &#x3D;\left[\begin{matrix}u_x &amp; v_x &amp; w_x &amp; 0 \\u_y &amp; v_y &amp; w_y &amp; 0 \\u_z &amp; v_z &amp; w_z &amp; 0 \\0 &amp; 0 &amp; 0 &amp; 1\end{matrix}\right]<br>$$<br>最终代码为：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Matrix44 t = Matrix44::Identity();</span><br><span class="line">t.m[<span class="number">3</span>][<span class="number">0</span>] = -camera.pos.x;</span><br><span class="line">t.m[<span class="number">3</span>][<span class="number">1</span>] = -camera.pos.y;</span><br><span class="line">t.m[<span class="number">3</span>][<span class="number">2</span>] = -camera.pos.z;</span><br><span class="line"></span><br><span class="line">Matrix44 r = Matrix44::Identity();</span><br><span class="line">r.m[<span class="number">0</span>][<span class="number">0</span>] = right.x;</span><br><span class="line">r.m[<span class="number">1</span>][<span class="number">0</span>] = right.y;</span><br><span class="line">r.m[<span class="number">2</span>][<span class="number">0</span>] = right.z;</span><br><span class="line">r.m[<span class="number">0</span>][<span class="number">1</span>] = up.x;</span><br><span class="line">r.m[<span class="number">1</span>][<span class="number">1</span>] = up.y;</span><br><span class="line">r.m[<span class="number">2</span>][<span class="number">1</span>] = up.z;</span><br><span class="line">r.m[<span class="number">0</span>][<span class="number">2</span>] = forward.x;</span><br><span class="line">r.m[<span class="number">1</span>][<span class="number">2</span>] = forward.y;</span><br><span class="line">r.m[<span class="number">2</span>][<span class="number">2</span>] = forward.z;</span><br><span class="line"></span><br><span class="line">viewMatrix = t * r;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="Projection-Matrix"><a href="#Projection-Matrix" class="headerlink" title="Projection Matrix"></a>Projection Matrix</h4><p>接下来进行透视变换，透视变换的过程为：<br>$$<br>视锥体 \xrightarrow{透视矩阵} Clip Space  \xrightarrow{透视除法} NDC<br>$$<br>其中，Direct3D的NDC(Normalized Device Coordinate)范围为 $[-1, 1] [-1, 1] [0, 1]$</p>
+<p>定义屏幕宽高比为<code>aspect</code>，Y方向的视场角为<code>fovy</code>，相机到近平面与远平面的距离分别为$ N $和$ F $</p>
+<p>现在，我们试图将视锥体内的顶点线性映射至NDC空间，可得：<br>$$<br>x’ &#x3D; x \frac {1}{z\tan \frac{fovx}{2}} \\<br>y’ &#x3D; y \frac {1}{z\tan \frac{fovy}{2}} \\<br>z’ &#x3D; \frac{z - N}{F - N}<br>$$<br>想要将以上形式写成矩阵乘法形式非常困难，主要原因是$x’$和$y’$之中多出一个$\frac1z$，而且$z’$中的$z$无法提出为因式，于是这里我们需要使用一个<strong>十分重要的trick</strong>：</p>
+<p>由于z值的最终用途是比较顶点深度，并不需要精确映射，仅需满足在$(N, 0)$点到$(F, 1)$点之间保持单调即可。同时，我们先从$x’$和$y’$中提出公因子$\frac1z$，等到矩阵乘法之后再做处理，于是我们可以先将投影矩阵写为：<br>$$<br>\left[<br>\begin{matrix}<br>\cot(fovx&#x2F;2) &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; \cot(fovy&#x2F;2) &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; a &amp; 1 \\<br>0 &amp; 0 &amp; b &amp; 0<br>\end{matrix}<br>\right]<br>$$<br>其中$a$和$b$为待求未知数，而<strong>其中的1巧妙地将变换前的$z$保存在变换后的$w’$中</strong>，此时：<br>$$<br>x’ &#x3D; x \cot (fovx&#x2F;2) \\<br>y’ &#x3D; y \cot (fovy&#x2F;2) \\<br>z’ &#x3D; az + b \\<br>w’ &#x3D; z<br>$$<br>此时进行透视除法(Perspective provider)，即除以$w’$，得到如下结果：<br>$$<br>x’ &#x3D; \frac 1z x \cot (fovx&#x2F;2) \\<br>y’ &#x3D; \frac 1z y \cot (fovy&#x2F;2) \\<br>z’ &#x3D; \frac {az + b}{z} \\<br>w’ &#x3D; 1<br>$$<br>其中$x’$和$y’$完全符合要求，$z’ &#x3D; \frac {az + b}{z}$ 为反比例函数，在$[N, F]$区间内必然单调，符合要求。</p>
+<p>将$(N, 0)$和$(F, 1)$点代入该式，得：<br>$$<br>\begin{cases}<br>\frac {aN + b}{N} &#x3D; 0 \\<br>\frac {aF + b}{F} &#x3D; 1<br>\end{cases}<br>$$<br>解得：<br>$$<br>\begin{cases}<br>a &#x3D; \frac {F}{F - N} \\<br>b &#x3D; \frac {-NF}{F - N}<br>\end{cases}<br>$$<br>设$Q &#x3D; \frac {F}{F - N}$，则最终：<br>$$<br>\left[<br>\begin{matrix}<br>\cot(fovx&#x2F;2) &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; \cot(fovy&#x2F;2) &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; Q &amp; 1 \\<br>0 &amp; 0 &amp; -NQ &amp; 0<br>\end{matrix}<br>\right]<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::SetprojectionMatrix</span><span class="params">(<span class="keyword">float</span> fovy, <span class="keyword">float</span> w, <span class="keyword">float</span> h, <span class="keyword">float</span> zn, <span class="keyword">float</span> zf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> aspect = w / h;</span><br><span class="line">	<span class="keyword">float</span> cot = <span class="number">1</span> / tanf(fovy * <span class="number">0.5f</span>);</span><br><span class="line">	<span class="keyword">float</span> Q = zf / (zf - zn);</span><br><span class="line"></span><br><span class="line">	Matrix44 p;</span><br><span class="line">	p.m[<span class="number">0</span>][<span class="number">0</span>] = cot / aspect;</span><br><span class="line">	p.m[<span class="number">1</span>][<span class="number">1</span>] = cot;</span><br><span class="line">	p.m[<span class="number">2</span>][<span class="number">2</span>] = Q;</span><br><span class="line">	p.m[<span class="number">3</span>][<span class="number">2</span>] = -Q * zn;</span><br><span class="line">	p.m[<span class="number">2</span>][<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">	projectionMatrix = p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，这一步中<strong>最终深度信息z并非线性映射</strong>，其函数二阶导小于0，即z经映射后更接近于远平面。</p>
+<br>
+
+<h4 id="Viewport-Matrix"><a href="#Viewport-Matrix" class="headerlink" title="Viewport Matrix"></a>Viewport Matrix</h4><p>最后一步，视口变换本质上是将顶点从NDC空间映射至视口空间，即为：<br>$$<br>NDC \rightarrow Viewport \\<br>x: [-1, 1] \rightarrow [x_0, x_0 + width] \\<br>y: [-1, 1] \rightarrow [y_0, y_0 + height] \\<br>z: [0, 1] \rightarrow [z_{min}, z_{max}]<br>$$<br>首先进行区间缩放，缩放矩阵如下，其中Viewport坐标系Y轴竖直向下，需要与之前取反：<br>$$<br>\left[<br>\begin{matrix}<br>\frac{width}2 &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; -\frac{height}2 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; z_{max} - z_{min} &amp; 0 \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>缩放后的区间为：<br>$$<br>x: [-1, 1] \rightarrow [-\frac{width}2, \frac{width}2] \\<br>y: [-1, 1] \rightarrow [-\frac{height}2, \frac{height}2] \\<br>z: [0, 1] \rightarrow [0, z_{max} - z_{min}]<br>$$<br>之后我们需要平移矩阵与Viewport区间进行对齐：<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>x_0 + \frac{width}2 &amp; y_0 + \frac{height}2 &amp; z_{min} &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>两矩阵相乘则得到Viewport Matrix如下：<br>$$<br>\left[<br>\begin{matrix}<br>\frac{width}2 &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; -\frac{height}2 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; z_{max} - z_{min} &amp; 0 \\<br>x_0 + \frac{width}2 &amp; y_0 + \frac{height}2 &amp; z_{min} &amp; 1<br>\end{matrix}<br>\right]<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::SetViewportMatrix</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y, <span class="keyword">float</span> w, <span class="keyword">float</span> h, <span class="keyword">float</span> zmin = <span class="number">0</span>, <span class="keyword">float</span> zmax = <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Matrix44 vp = Matrix44::Identity();</span><br><span class="line">	vp.m[<span class="number">0</span>][<span class="number">0</span>] = w * <span class="number">0.5f</span>;</span><br><span class="line">	vp.m[<span class="number">3</span>][<span class="number">0</span>] = x + w * <span class="number">0.5f</span>;</span><br><span class="line">	vp.m[<span class="number">1</span>][<span class="number">1</span>] = -h * <span class="number">0.5f</span>;</span><br><span class="line">	vp.m[<span class="number">3</span>][<span class="number">1</span>] = y + h * <span class="number">0.5f</span>;</span><br><span class="line">	vp.m[<span class="number">2</span>][<span class="number">2</span>] = zmax - zmin;</span><br><span class="line">	vp.m[<span class="number">3</span>][<span class="number">2</span>] = zmin;</span><br><span class="line">	viewportMatrix = vp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="Bresenham划线算法"><a href="#Bresenham划线算法" class="headerlink" title="Bresenham划线算法"></a>Bresenham划线算法</h3><p>该算法主要用于模型的线框显示，主要思路是通过增量绘制而减少乘除，同时通过乘2的方式避免浮点数出现，最终提高绘制效率。</p>
+<p>具体算法细节暂略。</p>
+<br>
+
+<h3 id="Scanline-Zbuffer多边形填充"><a href="#Scanline-Zbuffer多边形填充" class="headerlink" title="Scanline-Zbuffer多边形填充"></a>Scanline-Zbuffer多边形填充</h3><p>该阶段主要进行三角面内部颜色的填充。</p>
+<p>首先根据y值对顶点进行排序为v0, v1, v2。</p>
+<p>然后分别计算三条线段上x线性插值系数随y增加而累加的步长</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">float</span> step01 = (v1.pos.y - v0.pos.y) == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span> / (v1.pos.y - v0.pos.y);</span><br><span class="line"><span class="keyword">float</span> step02 = (v2.pos.y - v0.pos.y) == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span> / (v2.pos.y - v0.pos.y);</span><br><span class="line"><span class="keyword">float</span> step12 = (v2.pos.y - v1.pos.y) == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span> / (v2.pos.y - v1.pos.y);</span><br></pre></td></tr></table></figure>
+
+<p>第一段，从v0出发，对线段v0v1和v0v2之间区域进行水平扫描线填充：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> scanlineY = (<span class="keyword">int</span>)v0.pos.y;</span><br><span class="line"><span class="keyword">for</span> (; scanlineY &lt; v1.pos.y; scanlineY++)</span><br><span class="line">&#123;</span><br><span class="line">	ScanLine(scanlineY, x01, x02, Vertex::Lerp(v0, v1, k01), Vertex::Lerp(v0, v2, k02));</span><br><span class="line"></span><br><span class="line">	k01 += step01;</span><br><span class="line">	k02 += step02;</span><br><span class="line"></span><br><span class="line">	x01 = (<span class="keyword">int</span>)LerpFloat(v0.pos.x, v1.pos.x, k01);</span><br><span class="line">	x02 = (<span class="keyword">int</span>)LerpFloat(v0.pos.x, v2.pos.x, k02);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二段，从v1处继续，对线段v1v2和v0v2之间区域进行水平扫描线填充：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (; scanlineY &lt;= v2.pos.y; scanlineY++)</span><br><span class="line">&#123;</span><br><span class="line">	ScanLine(scanlineY, x12, x02, Vertex::Lerp(v1, v2, k12), Vertex::Lerp(v0, v2, k02));</span><br><span class="line"></span><br><span class="line">	k12 += step12;</span><br><span class="line">	k02 += step02;</span><br><span class="line">		</span><br><span class="line">	x12 = (<span class="keyword">int</span>)LerpFloat(v1.pos.x, v2.pos.x, k12);</span><br><span class="line">	x02 = (<span class="keyword">int</span>)LerpFloat(v0.pos.x, v2.pos.x, k02);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中填充像素时，需要将待绘制像素的z值与zBuffer中z值比较：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RenderBuffer::FillPixel</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">float</span> z, COLORREF c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (y &gt;= height || y &lt; <span class="number">0</span> || x &gt;= width || x &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (z &gt;= <span class="number">0</span> &amp;&amp; z &lt; zBuffer[x + y * width])</span><br><span class="line">	&#123;</span><br><span class="line">		zBuffer[x + y * width] = z;</span><br><span class="line">		frameBuffer[x + y * width] = c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="Phong光照模型-Phong着色"><a href="#Phong光照模型-Phong着色" class="headerlink" title="Phong光照模型 + Phong着色"></a>Phong光照模型 + Phong着色</h3><p>下面采用Phong光照模型为物体添加光照，以正确显示其在Directional Light下的颜色。</p>
+<p>Phong着色与Gourand着色对应，指的是在片元着色器阶段而不是在顶点着色器阶段计算光照。</p>
+<p>Directional Light的数据结构为：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DirectionalLight</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Vector3 direction;</span><br><span class="line">	Vector3 color;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Phong光照模型中<br>$$<br>Phong &#x3D; Ambient + Diffuse + Specular<br>$$<br>其中与Directional Light无关的环境光Ambient非常简单：<br>$$<br>Ambient &#x3D; AmbientColor \times AmbientStrength<br>$$<br>漫反射Diffuse和镜面反射Specular则需要分别计算其因子，然后与光照颜色和片元颜色相乘：<br>$$<br>Diffuse &#x3D; LightColor \times Fragment Color \times DiffuseFactor \\<br>Specular &#x3D; LightColor \times Fragment Color \times SpecularFactor<br>$$<br>漫反射因子公式为：<br>$$<br>DiffuseFactor &#x3D; L \cdot N<br>$$<br>其中，入射光方向$L$为<code>-DirectionalLight.direction</code>，法向量方向$N$的计算稍后讲解。</p>
+<p>镜面反射因子公式为，其中$shininess$越大，高光部分越密集：<br>$$<br>SpecularFactor &#x3D; (R \cdot V)^{shininess}<br>$$<br>其中，画图计算易得反射光方向R与视线方向V：<br>$$<br>R &#x3D; 2N(L \cdot N) - L \\<br>V &#x3D; CameraPos - FragmentWorldPos<br>$$<br>以上代码如下，注意颜色相乘时需要使用哈达玛积(Hadamard Product)使对应分量相乘：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Vector3 <span class="title">DirectionalLight::Apply</span><span class="params">(Vertex v, Camera camera)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	direction = direction.Normalize();</span><br><span class="line">	<span class="keyword">float</span> diffuseFactor = max(-direction * v.normal, <span class="number">0</span>);</span><br><span class="line">	Vector3 diffuse = Vector3::HadamardProduct(ColorToVector3(v.color), color) * diffuseFactor;</span><br><span class="line"></span><br><span class="line">	Vector3 reflect = Vector3::Reflect(-direction, v.normal).Normalize();</span><br><span class="line">	<span class="keyword">float</span> specularFactor = <span class="built_in">pow</span>(max(reflect * (camera.pos - v.wPos).Normalize(), <span class="number">0</span>), shininess);</span><br><span class="line">	Vector3 specular = Vector3::HadamardProduct(ColorToVector3(v.color), color) * specularFactor;</span><br><span class="line"></span><br><span class="line">	Vector3 result = diffuse + specular;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>于是，光照计算中最重要的难点就是<strong>法向量变换</strong>，由于我们是在WorldSpace下进行光照计算，所以需要通过一个NormalMatrix将模型的法向量信息从LocalSpace变换到WorldSpace。</p>
+<p>首先考虑切向量$T$的变换，取三角面两顶点$V1$，$V2$，则有：<br>$$<br>T &#x3D; V1 - V2<br>$$<br>记ModelMatrix为$M$，则变换后的切向量：<br>$$<br>T’ &#x3D; V1M - V2M &#x3D; (V1 - V2)M &#x3D; TM<br>$$<br>即<strong>切向量的变换矩阵与顶点完全相同</strong>。</p>
+<p>而法向量与切向量必然始终垂直，记NormalMatrix为$M_N$则有：<br>$$<br>N \cdot T &#x3D; 0 \\<br>N’ \cdot T’ &#x3D; NM_N(TM)^T &#x3D; NM_NM^TT^T &#x3D; 0<br>$$<br>可得：<br>$$<br>M_NM^T &#x3D; I<br>$$<br>即：<br>$$<br>M_N &#x3D; (M^T)^{-1}<br>$$<br>由之前的顶点变换矩阵公式，且缩放矩阵$S^T &#x3D; S$，旋转矩阵正交，法向量<strong>平移无效</strong>，可知：<br>$$<br>M &#x3D; SRT \\<br>M_N &#x3D; (T^TR^TS^T)^{-1} &#x3D; S^{-1}R<br>$$<br>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Transform::UpdateNormalMatrix</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	normalMatrix = scale.InverseDiagonal() * rotation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Matrix44 <span class="title">Matrix44::InverseDiagonal</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Matrix44 mt = *<span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		mt.m[i][i] = mt.m[i][i] == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span> / mt.m[i][i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> mt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="纹理映射（透视校正插值）"><a href="#纹理映射（透视校正插值）" class="headerlink" title="纹理映射（透视校正插值）"></a>纹理映射（透视校正插值）</h3><p>之前在模型读取时，我们读取了三角形顶点所对应的纹理坐标<code>texcoord</code>，然而在求三角形内部纹理坐标时，如果直接在屏幕坐标系内对三角形内部的点进行重心插值<em>（或双线性插值，结果相同）</em>，则会得到不正确的结果，这主要由之前的透视变换造成，需要进行透视校正插值(Perspective-Correct Interpolation)。</p>
+<p>画出一条线段$A(x_0, z_0)B(x_1, z_1)$透视投影在距离相机$d$的近平面上线段$a(u_0, d)b(u_1, d)$的图，其中待插值点$C(x, z)$投影在点$c(u, d)$，易得：<br>$$<br>\frac {x_0}{z_0} &#x3D; \frac {u_0}{d} \\<br>\frac {x_1}{z_1} &#x3D; \frac {u_1}{d} \\<br>\frac {x}{z} &#x3D; \frac {u}{d}<br>$$<br>设线段$ab$上线性插值系数为$s$，线段$AB$上线性插值系数为$t$，则有：<br>$$<br>u &#x3D; u_0 + s(u_1 - u_0) \\<br>x &#x3D; x_0 + t(x_1 - x_0) \\<br>z &#x3D; z_0 + t(z_1 - z_0)<br>$$<br>我们已知系数$s$，需要求正确的插值系数$t$，解得：<br>$$<br>t &#x3D; \frac{sz_0}{sz_0 + (1 - s)z_1}<br>$$<br>进一步得：<br>$$<br>\frac 1z &#x3D; (1 - s) \frac 1{z_0} + s \frac 1{z_1}<br>$$<br>若$AB$两点分别有属性$I_0I_1$，则插值后得到$C$点属性为：<br>$$<br>\frac Iz &#x3D; (1 - s) \frac {I_0}{z_0} + s \frac {I_1}{z_1}<br>$$<br>接下来问题的关键是，如何<strong>正确获取顶点在ViewSpace中的$z$值</strong>，此处不能直接使用透视除法后的顶点$z$值，因为其仅代表非线性映射后的深度值（我在这个问题上掉坑并找了三天BUG）。前文透视投影部分中提到，变换前的$z$保存在变换后的$w’$中，所以在进行透视除法之前，一定要注意保存一份RHW(Reciprocal of Homogeneous W, $\frac 1{w’}$)值备用。</p>
+<p>此时，纹理坐标即为一个需要透视校正插值的属性$I$，于是代码如下，此处$\frac 1z$即等于RHW：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">float</span> z = <span class="number">1</span> / LerpFloat(v0.rhw, v1.rhw, k);</span><br><span class="line">r.rhw = <span class="number">1</span> / z;</span><br><span class="line"></span><br><span class="line">r.texcoord.x = z * LerpFloat(v0.texcoord.x * v0.rhw, v1.texcoord.x * v1.rhw, k);</span><br><span class="line">r.texcoord.y = z * LerpFloat(v0.texcoord.y * v0.rhw, v1.texcoord.y * v1.rhw, k);</span><br><span class="line"><span class="keyword">return</span> r;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+
+
+<p>全文完，由纸质实习笔记整理而成。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/06/02/Dijkstra和A-算法异同/" rel="next" title="Dijkstra和A*算法异同">
+                <i class="fa fa-chevron-left"></i> Dijkstra和A*算法异同
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/07/24/工作细节笔记/" rel="prev" title="工作细节笔记">
+                工作细节笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/uploads/avatar.png" alt="Diary">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description">WHAT A NICE DAY</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DiaryChris" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:383001400@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://diarychris.lofter.com" target="_blank" title="LOFTER">
+                      
+                        <i class="fa fa-fw fa-camera"></i>LOFTER</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/3999307" target="_blank" title="bilibili">
+                      
+                        <i class="fa fa-fw fa-play-circle"></i>bilibili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/cheng-da-rui/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-book"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要模块"><span class="nav-number">1.</span> <span class="nav-text">主要模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管线流程"><span class="nav-number">2.</span> <span class="nav-text">管线流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型读取"><span class="nav-number">2.1.</span> <span class="nav-text">模型读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坐标变换MVP-视口变换"><span class="nav-number">2.2.</span> <span class="nav-text">坐标变换MVP + 视口变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Model-Matrix"><span class="nav-number">2.2.1.</span> <span class="nav-text">Model Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Scale"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">Scale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Rotation"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Rotation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Translate"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">Translate</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View-Matrix"><span class="nav-number">2.2.2.</span> <span class="nav-text">View Matrix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Projection-Matrix"><span class="nav-number">2.2.3.</span> <span class="nav-text">Projection Matrix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Viewport-Matrix"><span class="nav-number">2.2.4.</span> <span class="nav-text">Viewport Matrix</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bresenham划线算法"><span class="nav-number">2.3.</span> <span class="nav-text">Bresenham划线算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scanline-Zbuffer多边形填充"><span class="nav-number">2.4.</span> <span class="nav-text">Scanline-Zbuffer多边形填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Phong光照模型-Phong着色"><span class="nav-number">2.5.</span> <span class="nav-text">Phong光照模型 + Phong着色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纹理映射（透视校正插值）"><span class="nav-number">2.6.</span> <span class="nav-text">纹理映射（透视校正插值）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz',
+        appKey: 'nKFgouAImYT6sFI9PvPix2hY',
+        placeholder: 'Leave your comments here',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz", "nKFgouAImYT6sFI9PvPix2hY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

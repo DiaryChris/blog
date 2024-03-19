@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Game, Web, Technology">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="你好，三角形添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形#include &quot;pch.h&quot;#include &amp;lt;iostream&amp;gt;#include &amp;lt;GL/glew.h&amp;gt;#include &amp;lt;GLFW/glfw3.h&amp;gt;// Function prototypesvoid key_callback(GLFWwindow* window">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LearnOpenGL练习">
+<meta property="og:url" content="http://diarychris.info/blog/2019/03/12/LearnOpenGL练习/index.html">
+<meta property="og:site_name" content="Diary&#39;s Blog">
+<meta property="og:description" content="你好，三角形添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形#include &quot;pch.h&quot;#include &amp;lt;iostream&amp;gt;#include &amp;lt;GL/glew.h&amp;gt;#include &amp;lt;GLFW/glfw3.h&amp;gt;// Function prototypesvoid key_callback(GLFWwindow* window">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-04-09T03:05:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LearnOpenGL练习">
+<meta name="twitter:description" content="你好，三角形添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形#include &quot;pch.h&quot;#include &amp;lt;iostream&amp;gt;#include &amp;lt;GL/glew.h&amp;gt;#include &amp;lt;GLFW/glfw3.h&amp;gt;// Function prototypesvoid key_callback(GLFWwindow* window">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://diarychris.info/blog/2019/03/12/LearnOpenGL练习/">
+
+
+
+
+
+  <title>LearnOpenGL练习 | Diary's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Diary's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-dgn">
+          <a href="/blog/DGN/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gamepad"></i> <br>
+            
+            DGN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/blog/works/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-profile">
+          <a href="/blog/profile/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            Profile
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://diarychris.info/blog/blog/2019/03/12/LearnOpenGL练习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Diary">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Diary's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LearnOpenGL练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T20:05:59+08:00">
+                2019-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/03/12/LearnOpenGL练习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2019/03/12/LearnOpenGL练习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/2019/03/12/LearnOpenGL练习/" class="leancloud_visitors" data-flag-title="LearnOpenGL练习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="你好，三角形"><a href="#你好，三角形" class="headerlink" title="你好，三角形"></a>你好，三角形</h4><h5 id="添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形"><a href="#添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形" class="headerlink" title="添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形"></a>添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Function prototypes</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Window dimensions</span></span><br><span class="line"><span class="keyword">const</span> GLuint WIDTH = <span class="number">800</span>, HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shaders</span></span><br><span class="line"><span class="keyword">const</span> GLchar* vertexShaderSource = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"layout (location = 0) in vec3 position;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"</span></span><br><span class="line"><span class="string">"&#125;\0"</span>;</span><br><span class="line"><span class="keyword">const</span> GLchar* fragmentShaderSource = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"out vec4 color;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"color = vec4(1.0f, 0.7f, 0.3f, 0.8f);\n"</span></span><br><span class="line"><span class="string">"&#125;\n\0"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The MAIN function, from here we start the application and run the game loop</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Starting GLFW context, OpenGL 3.3"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// Init GLFW</span></span><br><span class="line">	glfwInit();</span><br><span class="line">	<span class="comment">// Set all the required options for GLFW</span></span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a GLFWwindow object that we can use for GLFW's functions</span></span><br><span class="line">	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, <span class="string">"LearnOpenGL"</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">	glfwMakeContextCurrent(window);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set the required callback functions</span></span><br><span class="line">	glfwSetKeyCallback(window, key_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions</span></span><br><span class="line">	glewExperimental = GL_TRUE;</span><br><span class="line">	<span class="comment">// Initialize GLEW to setup the OpenGL Function pointers</span></span><br><span class="line">	glewInit();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Define the viewport dimensions</span></span><br><span class="line">	<span class="keyword">int</span> width, height;</span><br><span class="line">	glfwGetFramebufferSize(window, &amp;width, &amp;height);</span><br><span class="line">	glViewport(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Build and compile our shader program</span></span><br><span class="line">	<span class="comment">// Vertex shader</span></span><br><span class="line">	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);</span><br><span class="line">	glShaderSource(vertexShader, <span class="number">1</span>, &amp;vertexShaderSource, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(vertexShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	GLint success;</span><br><span class="line">	GLchar infoLog[<span class="number">512</span>];</span><br><span class="line">	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(vertexShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Fragment shader</span></span><br><span class="line">	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);</span><br><span class="line">	glShaderSource(fragmentShader, <span class="number">1</span>, &amp;fragmentShaderSource, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(fragmentShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(fragmentShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Link shaders</span></span><br><span class="line">	GLuint shaderProgram = glCreateProgram();</span><br><span class="line">	glAttachShader(shaderProgram, vertexShader);</span><br><span class="line">	glAttachShader(shaderProgram, fragmentShader);</span><br><span class="line">	glLinkProgram(shaderProgram);</span><br><span class="line">	<span class="comment">// Check for linking errors</span></span><br><span class="line">	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success) &#123;</span><br><span class="line">		glGetProgramInfoLog(shaderProgram, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::PROGRAM::LINKING_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	glDeleteShader(vertexShader);</span><br><span class="line">	glDeleteShader(fragmentShader);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set up vertex data (and buffer(s)) and attribute pointers</span></span><br><span class="line">	<span class="comment">//GLfloat vertices[] = &#123;</span></span><br><span class="line">	<span class="comment">//  // First triangle</span></span><br><span class="line">	<span class="comment">//   0.5f,  0.5f,  // Top Right</span></span><br><span class="line">	<span class="comment">//   0.5f, -0.5f,  // Bottom Right</span></span><br><span class="line">	<span class="comment">//  -0.5f,  0.5f,  // Top Left </span></span><br><span class="line">	<span class="comment">//  // Second triangle</span></span><br><span class="line">	<span class="comment">//   0.5f, -0.5f,  // Bottom Right</span></span><br><span class="line">	<span class="comment">//  -0.5f, -0.5f,  // Bottom Left</span></span><br><span class="line">	<span class="comment">//  -0.5f,  0.5f   // Top Left</span></span><br><span class="line">	<span class="comment">//&#125;; </span></span><br><span class="line">	GLfloat vertices[] = &#123;</span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Top Right</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>   <span class="comment">// Top Left </span></span><br><span class="line">	&#125;;</span><br><span class="line">	GLuint indices[] = &#123;  <span class="comment">// Note that we start from 0!</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// First Triangle</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>   <span class="comment">// Second Triangle</span></span><br><span class="line">	&#125;;</span><br><span class="line">	GLuint VBO, VAO, EBO;</span><br><span class="line">	glGenVertexArrays(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	glGenBuffers(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	glGenBuffers(<span class="number">1</span>, &amp;EBO);</span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);</span><br><span class="line">	glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(indices), indices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="keyword">sizeof</span>(GLfloat), (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind</span></span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Uncommenting this call will result in wireframe polygons.</span></span><br><span class="line">	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Game loop</span></span><br><span class="line">	<span class="keyword">while</span> (!glfwWindowShouldClose(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions</span></span><br><span class="line">		glfwPollEvents();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Render</span></span><br><span class="line">		<span class="comment">// Clear the colorbuffer</span></span><br><span class="line">		glClearColor(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Draw our first triangle</span></span><br><span class="line">		glUseProgram(shaderProgram);</span><br><span class="line">		glBindVertexArray(VAO);</span><br><span class="line">		<span class="comment">//glDrawArrays(GL_TRIANGLES, 0, 6);</span></span><br><span class="line">		glDrawElements(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line">		glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Swap the screen buffers</span></span><br><span class="line">		glfwSwapBuffers(window);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Properly de-allocate all resources once they've outlived their purpose</span></span><br><span class="line">	glDeleteVertexArrays(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	glDeleteBuffers(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	glDeleteBuffers(<span class="number">1</span>, &amp;EBO);</span><br><span class="line">	<span class="comment">// Terminate GLFW, clearing any resources allocated by GLFW.</span></span><br><span class="line">	glfwTerminate();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is called whenever a key is pressed/released via GLFW</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (key == GLFW_KEY_ESCAPE &amp;&amp; action == GLFW_PRESS)</span><br><span class="line">		glfwSetWindowShouldClose(window, GL_TRUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO"><a href="#创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO" class="headerlink" title="创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO"></a>创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Function prototypes</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Window dimensions</span></span><br><span class="line"><span class="keyword">const</span> GLuint WIDTH = <span class="number">800</span>, HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shaders</span></span><br><span class="line"><span class="keyword">const</span> GLchar* vertexShaderSource = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"layout (location = 0) in vec3 position;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"</span></span><br><span class="line"><span class="string">"&#125;\0"</span>;</span><br><span class="line"><span class="keyword">const</span> GLchar* fragmentShaderSource = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"out vec4 color;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"color = vec4(1.0f, 0.7f, 0.3f, 0.8f);\n"</span></span><br><span class="line"><span class="string">"&#125;\n\0"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The MAIN function, from here we start the application and run the game loop</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Starting GLFW context, OpenGL 3.3"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// Init GLFW</span></span><br><span class="line">	glfwInit();</span><br><span class="line">	<span class="comment">// Set all the required options for GLFW</span></span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a GLFWwindow object that we can use for GLFW's functions</span></span><br><span class="line">	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, <span class="string">"LearnOpenGL"</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">	glfwMakeContextCurrent(window);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set the required callback functions</span></span><br><span class="line">	glfwSetKeyCallback(window, key_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions</span></span><br><span class="line">	glewExperimental = GL_TRUE;</span><br><span class="line">	<span class="comment">// Initialize GLEW to setup the OpenGL Function pointers</span></span><br><span class="line">	glewInit();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Define the viewport dimensions</span></span><br><span class="line">	<span class="keyword">int</span> width, height;</span><br><span class="line">	glfwGetFramebufferSize(window, &amp;width, &amp;height);</span><br><span class="line">	glViewport(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Build and compile our shader program</span></span><br><span class="line">	<span class="comment">// Vertex shader</span></span><br><span class="line">	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);</span><br><span class="line">	glShaderSource(vertexShader, <span class="number">1</span>, &amp;vertexShaderSource, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(vertexShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	GLint success;</span><br><span class="line">	GLchar infoLog[<span class="number">512</span>];</span><br><span class="line">	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(vertexShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Fragment shader</span></span><br><span class="line">	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);</span><br><span class="line">	glShaderSource(fragmentShader, <span class="number">1</span>, &amp;fragmentShaderSource, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(fragmentShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(fragmentShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Link shaders</span></span><br><span class="line">	GLuint shaderProgram = glCreateProgram();</span><br><span class="line">	glAttachShader(shaderProgram, vertexShader);</span><br><span class="line">	glAttachShader(shaderProgram, fragmentShader);</span><br><span class="line">	glLinkProgram(shaderProgram);</span><br><span class="line">	<span class="comment">// Check for linking errors</span></span><br><span class="line">	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success) &#123;</span><br><span class="line">		glGetProgramInfoLog(shaderProgram, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::PROGRAM::LINKING_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	glDeleteShader(vertexShader);</span><br><span class="line">	glDeleteShader(fragmentShader);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set up vertex data (and buffer(s)) and attribute pointers</span></span><br><span class="line">	</span><br><span class="line">	GLfloat rect0[] = &#123;</span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Top Right</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>   <span class="comment">// Top Left </span></span><br><span class="line">	&#125;;</span><br><span class="line">	GLfloat rect1[] = &#123;</span><br><span class="line">		<span class="number">1.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Top Right</span></span><br><span class="line">		<span class="number">1.0f</span>, <span class="number">-1.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-1.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>   <span class="comment">// Top Left </span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint indices0[] = &#123;  <span class="comment">// Note that we start from 0!</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// First Triangle</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>   <span class="comment">// Second Triangle</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint indices1[] = &#123;  <span class="comment">// Note that we start from 0!</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// First Triangle</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>   <span class="comment">// Second Triangle</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint VBO[<span class="number">2</span>], VAO[<span class="number">2</span>], EBO[<span class="number">2</span>];</span><br><span class="line">	glGenVertexArrays(<span class="number">2</span>, VAO);</span><br><span class="line">	glGenBuffers(<span class="number">2</span>, VBO);</span><br><span class="line">	glGenBuffers(<span class="number">2</span>, EBO);</span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO[<span class="number">0</span>]);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(rect0), rect0, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[<span class="number">0</span>]);</span><br><span class="line">	glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(indices0), indices0, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind</span></span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO</span></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO[<span class="number">1</span>]);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(rect1), rect1, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[<span class="number">1</span>]);</span><br><span class="line">	glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(indices1), indices1, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind</span></span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO</span></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Uncommenting this call will result in wireframe polygons.</span></span><br><span class="line">	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Game loop</span></span><br><span class="line">	<span class="keyword">while</span> (!glfwWindowShouldClose(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions</span></span><br><span class="line">		glfwPollEvents();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Render</span></span><br><span class="line">		<span class="comment">// Clear the colorbuffer</span></span><br><span class="line">		glClearColor(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Draw our first triangle</span></span><br><span class="line">		glUseProgram(shaderProgram);</span><br><span class="line">		glBindVertexArray(VAO[<span class="number">0</span>]);</span><br><span class="line">		<span class="comment">//glDrawArrays(GL_TRIANGLES, 0, 6);</span></span><br><span class="line">		glDrawElements(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line">		glBindVertexArray(VAO[<span class="number">1</span>]);</span><br><span class="line">		glDrawElements(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line">		glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Swap the screen buffers</span></span><br><span class="line">		glfwSwapBuffers(window);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Properly de-allocate all resources once they've outlived their purpose</span></span><br><span class="line">	glDeleteVertexArrays(<span class="number">2</span>, VAO);</span><br><span class="line">	glDeleteBuffers(<span class="number">2</span>, VBO);</span><br><span class="line">	glDeleteBuffers(<span class="number">2</span>, EBO);</span><br><span class="line">	<span class="comment">// Terminate GLFW, clearing any resources allocated by GLFW.</span></span><br><span class="line">	glfwTerminate();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is called whenever a key is pressed/released via GLFW</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (key == GLFW_KEY_ESCAPE &amp;&amp; action == GLFW_PRESS)</span><br><span class="line">		glfwSetWindowShouldClose(window, GL_TRUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色"><a href="#创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色" class="headerlink" title="创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色"></a>创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Function prototypes</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Window dimensions</span></span><br><span class="line"><span class="keyword">const</span> GLuint WIDTH = <span class="number">800</span>, HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shaders</span></span><br><span class="line"><span class="keyword">const</span> GLchar* vertexShaderSource = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"layout (location = 0) in vec3 position;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"</span></span><br><span class="line"><span class="string">"&#125;\0"</span>;</span><br><span class="line"><span class="keyword">const</span> GLchar* fragmentShaderSourceY = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"out vec4 color;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"color = vec4(1.0f, 0.7f, 0.3f, 0.8f);\n"</span></span><br><span class="line"><span class="string">"&#125;\n\0"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> GLchar* fragmentShaderSourceG = <span class="string">"#version 330 core\n"</span></span><br><span class="line"><span class="string">"out vec4 color;\n"</span></span><br><span class="line"><span class="string">"void main()\n"</span></span><br><span class="line"><span class="string">"&#123;\n"</span></span><br><span class="line"><span class="string">"color = vec4(0.2f, 0.8f, 0.6f, 0.8f);\n"</span></span><br><span class="line"><span class="string">"&#125;\n\0"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The MAIN function, from here we start the application and run the game loop</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Starting GLFW context, OpenGL 3.3"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// Init GLFW</span></span><br><span class="line">	glfwInit();</span><br><span class="line">	<span class="comment">// Set all the required options for GLFW</span></span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a GLFWwindow object that we can use for GLFW's functions</span></span><br><span class="line">	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, <span class="string">"LearnOpenGL"</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">	glfwMakeContextCurrent(window);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set the required callback functions</span></span><br><span class="line">	glfwSetKeyCallback(window, key_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions</span></span><br><span class="line">	glewExperimental = GL_TRUE;</span><br><span class="line">	<span class="comment">// Initialize GLEW to setup the OpenGL Function pointers</span></span><br><span class="line">	glewInit();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Define the viewport dimensions</span></span><br><span class="line">	<span class="keyword">int</span> width, height;</span><br><span class="line">	glfwGetFramebufferSize(window, &amp;width, &amp;height);</span><br><span class="line">	glViewport(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Build and compile our shader program</span></span><br><span class="line">	<span class="comment">// Vertex shader</span></span><br><span class="line">	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);</span><br><span class="line">	glShaderSource(vertexShader, <span class="number">1</span>, &amp;vertexShaderSource, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(vertexShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	GLint success;</span><br><span class="line">	GLchar infoLog[<span class="number">512</span>];</span><br><span class="line">	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(vertexShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Fragment shader Y</span></span><br><span class="line">	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);</span><br><span class="line">	glShaderSource(fragmentShader, <span class="number">1</span>, &amp;fragmentShaderSourceY, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(fragmentShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(fragmentShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Link shaders Y</span></span><br><span class="line">	GLuint shaderProgramY = glCreateProgram();</span><br><span class="line">	glAttachShader(shaderProgramY, vertexShader);</span><br><span class="line">	glAttachShader(shaderProgramY, fragmentShader);</span><br><span class="line">	glLinkProgram(shaderProgramY);</span><br><span class="line">	<span class="comment">// Check for linking errors</span></span><br><span class="line">	glGetProgramiv(shaderProgramY, GL_LINK_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success) &#123;</span><br><span class="line">		glGetProgramInfoLog(shaderProgramY, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::PROGRAM::LINKING_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Fragment shader G</span></span><br><span class="line">	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);</span><br><span class="line">	glShaderSource(fragmentShader, <span class="number">1</span>, &amp;fragmentShaderSourceG, <span class="literal">NULL</span>);</span><br><span class="line">	glCompileShader(fragmentShader);</span><br><span class="line">	<span class="comment">// Check for compile time errors</span></span><br><span class="line">	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success)</span><br><span class="line">	&#123;</span><br><span class="line">		glGetShaderInfoLog(fragmentShader, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Link shaders G</span></span><br><span class="line">	GLuint shaderProgramG = glCreateProgram();</span><br><span class="line">	glAttachShader(shaderProgramG, vertexShader);</span><br><span class="line">	glAttachShader(shaderProgramG, fragmentShader);</span><br><span class="line">	glLinkProgram(shaderProgramG);</span><br><span class="line">	<span class="comment">// Check for linking errors</span></span><br><span class="line">	glGetProgramiv(shaderProgramG, GL_LINK_STATUS, &amp;success);</span><br><span class="line">	<span class="keyword">if</span> (!success) &#123;</span><br><span class="line">		glGetProgramInfoLog(shaderProgramG, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::PROGRAM::LINKING_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	glDeleteShader(vertexShader);</span><br><span class="line">	glDeleteShader(fragmentShader);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set up vertex data (and buffer(s)) and attribute pointers</span></span><br><span class="line">	GLfloat rect0[] = &#123;</span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Top Right</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>   <span class="comment">// Top Left </span></span><br><span class="line">	&#125;;</span><br><span class="line">	GLfloat rect1[] = &#123;</span><br><span class="line">		<span class="number">1.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Top Right</span></span><br><span class="line">		<span class="number">1.0f</span>, <span class="number">-1.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-1.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>   <span class="comment">// Top Left </span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint indices0[] = &#123;  <span class="comment">// Note that we start from 0!</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// First Triangle</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>   <span class="comment">// Second Triangle</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint indices1[] = &#123;  <span class="comment">// Note that we start from 0!</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// First Triangle</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>   <span class="comment">// Second Triangle</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	GLuint VBO[<span class="number">2</span>], VAO[<span class="number">2</span>], EBO[<span class="number">2</span>];</span><br><span class="line">	glGenVertexArrays(<span class="number">2</span>, VAO);</span><br><span class="line">	glGenBuffers(<span class="number">2</span>, VBO);</span><br><span class="line">	glGenBuffers(<span class="number">2</span>, EBO);</span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO[<span class="number">0</span>]);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(rect0), rect0, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[<span class="number">0</span>]);</span><br><span class="line">	glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(indices0), indices0, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind</span></span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO</span></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO[<span class="number">1</span>]);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(rect1), rect1, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[<span class="number">1</span>]);</span><br><span class="line">	glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(indices1), indices1, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind</span></span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO</span></span><br><span class="line">	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Uncommenting this call will result in wireframe polygons.</span></span><br><span class="line">	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Game loop</span></span><br><span class="line">	<span class="keyword">while</span> (!glfwWindowShouldClose(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions</span></span><br><span class="line">		glfwPollEvents();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Render</span></span><br><span class="line">		<span class="comment">// Clear the colorbuffer</span></span><br><span class="line">		glClearColor(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Draw our first rect</span></span><br><span class="line">		glUseProgram(shaderProgramY);</span><br><span class="line">		glBindVertexArray(VAO[<span class="number">0</span>]);</span><br><span class="line">		<span class="comment">//glDrawArrays(GL_TRIANGLES, 0, 6);</span></span><br><span class="line">		glDrawElements(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Draw our second rect</span></span><br><span class="line">		glUseProgram(shaderProgramG);</span><br><span class="line">		glBindVertexArray(VAO[<span class="number">1</span>]);</span><br><span class="line">		glDrawElements(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line">		glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Swap the screen buffers</span></span><br><span class="line">		glfwSwapBuffers(window);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Properly de-allocate all resources once they've outlived their purpose</span></span><br><span class="line">	glDeleteVertexArrays(<span class="number">2</span>, VAO);</span><br><span class="line">	glDeleteBuffers(<span class="number">2</span>, VBO);</span><br><span class="line">	glDeleteBuffers(<span class="number">2</span>, EBO);</span><br><span class="line">	<span class="comment">// Terminate GLFW, clearing any resources allocated by GLFW.</span></span><br><span class="line">	glfwTerminate();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is called whenever a key is pressed/released via GLFW</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (key == GLFW_KEY_ESCAPE &amp;&amp; action == GLFW_PRESS)</span><br><span class="line">		glfwSetWindowShouldClose(window, GL_TRUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="着色器"><a href="#着色器" class="headerlink" title="着色器"></a>着色器</h4><h5 id="使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧"><a href="#使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧" class="headerlink" title="使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧"></a>使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧</h5><p><em>xOffsetShader.cpp</em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Other includes</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Shader.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Function prototypes</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Window dimensions</span></span><br><span class="line"><span class="keyword">const</span> GLuint WIDTH = <span class="number">800</span>, HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The MAIN function, from here we start the application and run the game loop</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// Init GLFW</span></span><br><span class="line">	glfwInit();</span><br><span class="line">	<span class="comment">// Set all the required options for GLFW</span></span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a GLFWwindow object that we can use for GLFW's functions</span></span><br><span class="line">	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, <span class="string">"LearnOpenGL"</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">	glfwMakeContextCurrent(window);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set the required callback functions</span></span><br><span class="line">	glfwSetKeyCallback(window, key_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions</span></span><br><span class="line">	glewExperimental = GL_TRUE;</span><br><span class="line">	<span class="comment">// Initialize GLEW to setup the OpenGL Function pointers</span></span><br><span class="line">	glewInit();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Define the viewport dimensions</span></span><br><span class="line">	glViewport(<span class="number">0</span>, <span class="number">0</span>, WIDTH, HEIGHT);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Build and compile our shader program</span></span><br><span class="line">	<span class="function">Shader <span class="title">ourShader</span><span class="params">(<span class="string">"../shaders/xOffset.vs"</span>, <span class="string">"../shaders/default.frag"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set up vertex data (and buffer(s)) and attribute pointers</span></span><br><span class="line">	GLfloat vertices[] = &#123;</span><br><span class="line">		<span class="comment">// Positions         // Colors</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Right</span></span><br><span class="line">	    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,  <span class="comment">// Bottom Left</span></span><br><span class="line">		<span class="number">0.0f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,   <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>   <span class="comment">// Top </span></span><br><span class="line">	&#125;;</span><br><span class="line">	GLuint VBO, VAO;</span><br><span class="line">	glGenVertexArrays(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	glGenBuffers(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	<span class="comment">// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).</span></span><br><span class="line">	glBindVertexArray(VAO);</span><br><span class="line"></span><br><span class="line">	glBindBuffer(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Position attribute</span></span><br><span class="line">	glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">6</span> * <span class="keyword">sizeof</span>(GLfloat), (GLvoid*)<span class="number">0</span>);</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line">	<span class="comment">// Color attribute</span></span><br><span class="line">	glVertexAttribPointer(<span class="number">1</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">6</span> * <span class="keyword">sizeof</span>(GLfloat), (GLvoid*)(<span class="number">3</span> * <span class="keyword">sizeof</span>(GLfloat)));</span><br><span class="line">	glEnableVertexAttribArray(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	glBindVertexArray(<span class="number">0</span>); <span class="comment">// Unbind VAO</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> xOffset = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Game loop</span></span><br><span class="line">	<span class="keyword">while</span> (!glfwWindowShouldClose(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions</span></span><br><span class="line">		glfwPollEvents();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Render</span></span><br><span class="line">		<span class="comment">// Clear the colorbuffer</span></span><br><span class="line">		glClearColor(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">		xOffset += <span class="number">0.0001</span>;</span><br><span class="line">		ourShader.SetUniformFloat(<span class="string">"xOffset"</span>, xOffset);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Draw the triangle</span></span><br><span class="line">		ourShader.Use();</span><br><span class="line">		glBindVertexArray(VAO);</span><br><span class="line">		glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">		glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Swap the screen buffers</span></span><br><span class="line">		glfwSwapBuffers(window);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Properly de-allocate all resources once they've outlived their purpose</span></span><br><span class="line">	glDeleteVertexArrays(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	glDeleteBuffers(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	<span class="comment">// Terminate GLFW, clearing any resources allocated by GLFW.</span></span><br><span class="line">	glfwTerminate();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is called whenever a key is pressed/released via GLFW</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_callback</span><span class="params">(GLFWwindow* window, <span class="keyword">int</span> key, <span class="keyword">int</span> scancode, <span class="keyword">int</span> action, <span class="keyword">int</span> mode)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (key == GLFW_KEY_ESCAPE &amp;&amp; action == GLFW_PRESS)</span><br><span class="line">		glfwSetWindowShouldClose(window, GL_TRUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>xOffset.vs</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#version 330 core</span><br><span class="line">layout (location = 0) in vec3 position;</span><br><span class="line">layout (location = 1) in vec3 color;</span><br><span class="line"></span><br><span class="line">out vec3 ourColor;</span><br><span class="line"></span><br><span class="line">uniform float xOffset;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">    gl_Position = vec4(position.x + xOffset, position.yz, 1.0f);</span><br><span class="line">    ourColor = color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>default.frag</em></p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> ourColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> color;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    color = <span class="type">vec4</span>(ourColor, <span class="number">1.0</span>f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>shader.h</em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SHADER_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHADER_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shader</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	GLuint Program;</span><br><span class="line">	<span class="comment">// Constructor generates the shader on the fly</span></span><br><span class="line">	Shader(<span class="keyword">const</span> GLchar* vertexPath, <span class="keyword">const</span> GLchar* fragmentPath)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 1. Retrieve the vertex/fragment source code from filePath</span></span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">string</span> vertexCode;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">string</span> fragmentCode;</span><br><span class="line">		<span class="built_in">std</span>::ifstream vShaderFile;</span><br><span class="line">		<span class="built_in">std</span>::ifstream fShaderFile;</span><br><span class="line">		<span class="comment">// ensures ifstream objects can throw exceptions:</span></span><br><span class="line">		vShaderFile.exceptions(<span class="built_in">std</span>::ifstream::badbit);</span><br><span class="line">		fShaderFile.exceptions(<span class="built_in">std</span>::ifstream::badbit);</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// Open files</span></span><br><span class="line">			vShaderFile.open(vertexPath);</span><br><span class="line">			fShaderFile.open(fragmentPath);</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">stringstream</span> vShaderStream, fShaderStream;</span><br><span class="line">			<span class="comment">// Read file's buffer contents into streams</span></span><br><span class="line">			vShaderStream &lt;&lt; vShaderFile.rdbuf();</span><br><span class="line">			fShaderStream &lt;&lt; fShaderFile.rdbuf();</span><br><span class="line">			<span class="comment">// close file handlers</span></span><br><span class="line">			vShaderFile.close();</span><br><span class="line">			fShaderFile.close();</span><br><span class="line">			<span class="comment">// Convert stream into string</span></span><br><span class="line">			vertexCode = vShaderStream.str();</span><br><span class="line">			fragmentCode = fShaderStream.str();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (<span class="built_in">std</span>::ifstream::failure e)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">const</span> GLchar* vShaderCode = vertexCode.c_str();</span><br><span class="line">		<span class="keyword">const</span> GLchar * fShaderCode = fragmentCode.c_str();</span><br><span class="line">		<span class="comment">// 2. Compile shaders</span></span><br><span class="line">		GLuint vertex, fragment;</span><br><span class="line">		GLint success;</span><br><span class="line">		GLchar infoLog[<span class="number">512</span>];</span><br><span class="line">		<span class="comment">// Vertex Shader</span></span><br><span class="line">		vertex = glCreateShader(GL_VERTEX_SHADER);</span><br><span class="line">		glShaderSource(vertex, <span class="number">1</span>, &amp;vShaderCode, <span class="literal">NULL</span>);</span><br><span class="line">		glCompileShader(vertex);</span><br><span class="line">		<span class="comment">// Print compile errors if any</span></span><br><span class="line">		glGetShaderiv(vertex, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">		<span class="keyword">if</span> (!success)</span><br><span class="line">		&#123;</span><br><span class="line">			glGetShaderInfoLog(vertex, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Fragment Shader</span></span><br><span class="line">		fragment = glCreateShader(GL_FRAGMENT_SHADER);</span><br><span class="line">		glShaderSource(fragment, <span class="number">1</span>, &amp;fShaderCode, <span class="literal">NULL</span>);</span><br><span class="line">		glCompileShader(fragment);</span><br><span class="line">		<span class="comment">// Print compile errors if any</span></span><br><span class="line">		glGetShaderiv(fragment, GL_COMPILE_STATUS, &amp;success);</span><br><span class="line">		<span class="keyword">if</span> (!success)</span><br><span class="line">		&#123;</span><br><span class="line">			glGetShaderInfoLog(fragment, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Shader Program</span></span><br><span class="line">		<span class="keyword">this</span>-&gt;Program = glCreateProgram();</span><br><span class="line">		glAttachShader(<span class="keyword">this</span>-&gt;Program, vertex);</span><br><span class="line">		glAttachShader(<span class="keyword">this</span>-&gt;Program, fragment);</span><br><span class="line">		glLinkProgram(<span class="keyword">this</span>-&gt;Program);</span><br><span class="line">		<span class="comment">// Print linking errors if any</span></span><br><span class="line">		glGetProgramiv(<span class="keyword">this</span>-&gt;Program, GL_LINK_STATUS, &amp;success);</span><br><span class="line">		<span class="keyword">if</span> (!success)</span><br><span class="line">		&#123;</span><br><span class="line">			glGetProgramInfoLog(<span class="keyword">this</span>-&gt;Program, <span class="number">512</span>, <span class="literal">NULL</span>, infoLog);</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR::SHADER::PROGRAM::LINKING_FAILED\n"</span> &lt;&lt; infoLog &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Delete the shaders as they're linked into our program now and no longer necessery</span></span><br><span class="line">		glDeleteShader(vertex);</span><br><span class="line">		glDeleteShader(fragment);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Uses the current shader</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Use</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		glUseProgram(<span class="keyword">this</span>-&gt;Program);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">SetUniformFloat</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* name, <span class="keyword">float</span> value)</span> </span>&#123;</span><br><span class="line">		GLint uniformLocation = glGetUniformLocation(Program, name);</span><br><span class="line">		glUseProgram(Program);</span><br><span class="line">		glUniform1f(uniformLocation, value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/03/11/LeetCode算法练习/" rel="next" title="LeetCode算法练习">
+                <i class="fa fa-chevron-left"></i> LeetCode算法练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/04/09/Unity构造单例模式/" rel="prev" title="Unity构造单例模式">
+                Unity构造单例模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/uploads/avatar.png" alt="Diary">
+            
+              <p class="site-author-name" itemprop="name">Diary</p>
+              <p class="site-description motion-element" itemprop="description">WHAT A NICE DAY</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DiaryChris" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:383001400@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://diarychris.lofter.com" target="_blank" title="LOFTER">
+                      
+                        <i class="fa fa-fw fa-camera"></i>LOFTER</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/3999307" target="_blank" title="bilibili">
+                      
+                        <i class="fa fa-fw fa-play-circle"></i>bilibili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/cheng-da-rui/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-book"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#你好，三角形"><span class="nav-number">1.</span> <span class="nav-text">你好，三角形</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形"><span class="nav-number">1.1.</span> <span class="nav-text">添加更多顶点到数据中，使用glDrawArrays，尝试绘制两个彼此相连的三角形</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO"><span class="nav-number">1.2.</span> <span class="nav-text">创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色"><span class="nav-number">1.3.</span> <span class="nav-text">创建两个着色器程序，第二个程序使用与第一个不同的片段着色器，输出黄色；再次绘制这两个三角形，其中一个输出为黄色</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#着色器"><span class="nav-number">2.</span> <span class="nav-text">着色器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧"><span class="nav-number">2.1.</span> <span class="nav-text">使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Diary</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz',
+        appKey: 'nKFgouAImYT6sFI9PvPix2hY',
+        placeholder: 'Leave your comments here',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("WggS0UMm88k6Xtw1RxjFR9cg-gzGzoHsz", "nKFgouAImYT6sFI9PvPix2hY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
