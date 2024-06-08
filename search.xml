@@ -4543,4 +4543,237 @@ mysql &gt; quit;
         <category>生日</category>
       </categories>
   </entry>
+  <entry>
+    <title>Unity vs UE4 Ray Tracing Comparison</title>
+    <url>/blog/2020/12/15/Unity%20vs%20UE4%20Ray%20Tracing%20Comparison%20x/</url>
+    <content><![CDATA[<p>其中<strong>粗体部分</strong>为基本正确部分，<em>斜体部分</em>有需要修改的问题。</p>
+<br>
+
+<table>
+<thead>
+<tr>
+<th align="left">Unity HDRP 10.2.1</th>
+<th>UE4.26</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160251-417180.png" alt="img">  <br>Cornell Box</td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160249-991665.png" alt="img">  <br>Cornell Box</td>
+</tr>
+<tr>
+<td align="left"><strong>软阴影和半透明阴影</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160608-235490.png" alt="img"> <br><strong>Directional light + Opaque(Recursive Rendering Unchecked)</strong></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160254-45345.png" alt="img">  <br><strong>Directional light + Opaque</strong></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160306-548768.png" alt="img">  <br><em>Directional light + Opaque(Recursive  Rendering Checked)</em>  <br>材质一旦勾选Recursive  Rendering，其表面的软阴影就会消失，同时出现多余的反射，GI也会消失。</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160339-406876.png" alt="img">  <br><em>Directional light + Opaque + Reflection(Recursive Rendering  Unchecked)</em> <br>反射后软阴影不对</td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160335-57888.png" alt="img">  <br><em>Directional light + Opaque + Reflection</em>  <br>反射后软阴影降噪不对，同时关闭GI后有多余GI</td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160439-325526.png" alt="img">  <br><em>Directional light + Opaque + Reflection(Recursive Rendering  Checked)</em>  <br>错误同上</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160445-211125.png" alt="img">  <br><strong>Point light + Opaque</strong></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160442-325689.png" alt="img">  <br><strong>Point light + Opaque</strong></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160452-289195.png" alt="img">  <br><em>Point light + Opaque +  Reflection(Recursive Rendering Unchecked)</em>  <br>反射后软阴影消失，GI消失</td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160447-933863.png" alt="img">  <br><em>Point light + Opaque + Reflection</em>  <br>反射后软阴影降噪不对，同时关闭GI后有多余GI</td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160455-668698.png" alt="img"> <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160623-654764.png" alt="img"> <br> <img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160629-665039.png" alt="img"> <br><em>Directional light + Transparent+ Reflection(Recursive  Rendering Unchecked)</em>  <br>反射中缺少半透明阴影和颜色（折射中同样错误）</td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160500-797137.png" alt="img">  <img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160504-682347.png" alt="img">  <br><em>Directional light + Transparent+ Reflection</em> <br>没有半透明阴影，反射中半透明物体错误。</td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160636-533608.png" alt="img"> <br><em>Point light + Transparent+  Reflection(Recursive Rendering Unchecked)</em>  <br>反射中缺少半透明阴影和颜色，本体阴影缺少颜色</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>全局光照</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160241-464411.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160650-16561.png" alt="img">  <br><strong>有效果</strong></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160244-131465.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160644-756981.png" alt="img">  <br><strong>有效果</strong></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160659-485621.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160705-828410.png" alt="img">  <br><em>反射中GI与Skylight消失，折射中同样错误。</em></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160648-397188.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160707-806436.png" alt="img"> <br> <em>反射中GI消失，Skylight错误保留，折射中同样错误。</em></td>
+</tr>
+<tr>
+<td align="left"><strong>次表面散射</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160713-666296.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160723-877974.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160730-966447.png" alt="img">  <br><em>有效果，但是折射和反射中是错的，且点光源下不支持。</em></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160715-862596.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160720-853111.png" alt="img">  <br><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160728-952950.png" alt="img">  <br><em>有效果，但是折射和反射中是错的。  而且SSS光追算法还有改进空间。</em></td>
+</tr>
+<tr>
+<td align="left"><strong>DoF</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>Procedural Mesh</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>Hair</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>其他问题</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160748-136254.png" alt="img">  <br><em>阴影有漏光现象，降噪范围越大越明显，关闭降噪后消失。</em></td>
+<td><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/15/160752-301289.png" alt="img">  <br><strong>无此问题，但是降噪后噪点较多。</strong></td>
+</tr>
+</tbody></table>
+]]></content>
+  </entry>
+  <entry>
+    <title>渲染管线流程总结</title>
+    <url>/blog/2024/06/08/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h4 id="渲染管线总流程"><a href="#渲染管线总流程" class="headerlink" title="渲染管线总流程"></a>渲染管线总流程</h4><p>应用程序阶段 &#x3D;&gt; 顶点数据 &#x3D;&gt; 顶点着色器 &#x3D;&gt; 曲面细分着色器 &#x3D;&gt; 几何着色器 &#x3D;&gt; 图元装配 &#x3D;&gt; 裁剪&amp;剔除 &#x3D;&gt; 光栅化 &#x3D;&gt; 片元着色器 &#x3D;&gt; 测试&amp;混合</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/191856-799212.png" alt="image-20240608191854538"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/191522-81668.png" alt=" "></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/194832-403756.png" alt="image-20240608194829543"></p>
+<br>
+
+
+
+<h4 id="应用程序阶段"><a href="#应用程序阶段" class="headerlink" title="应用程序阶段"></a>应用程序阶段</h4><h5 id="剔除-Culling"><a href="#剔除-Culling" class="headerlink" title="剔除 Culling"></a>剔除 Culling</h5><p>渲染对象层面的剔除，多使用AABB包围盒进行，包括视锥体剔除&#x2F;遮挡剔除&#x2F;LayerMask剔除</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/192829-210122.png" alt="image-20240608192828840"></p>
+<br>
+
+
+
+<h5 id="排序-Sorting"><a href="#排序-Sorting" class="headerlink" title="排序 Sorting"></a>排序 Sorting</h5><p>确定渲染对象的渲染顺序，通过RenderQueue确定，先画不透明再画半透明</p>
+<p>当RenderQueue相同时：</p>
+<p>不透明物体（RenderQueue &lt;&#x3D; 2500）<strong>从前到后</strong>排序（优化性能，节省DrawCall）</p>
+<p>半透明物体（RenderQueue &gt; 2500）<strong>从后到前</strong>排序（确保AlphaBlend结果正确）</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/193949-976373.png" alt="image-20240608193947570"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/192048-34494.png" alt="image-20240608192047863"></p>
+<br>
+
+
+
+<h5 id="打包数据-Batch"><a href="#打包数据-Batch" class="headerlink" title="打包数据 Batch"></a>打包数据 Batch</h5><p>打包模型信息和材质参数</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/194305-893469.png" alt="image-20240608194303759"></p>
+<br>
+
+
+
+<h5 id="绘制调用-DrawCall"><a href="#绘制调用-DrawCall" class="headerlink" title="绘制调用 DrawCall"></a>绘制调用 DrawCall</h5><p>SetPass Call 和 Draw Call</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/194523-285129.png" alt="image-20240608194523236"></p>
+<br>
+
+
+
+<h4 id="顶点着色器-几何着色器"><a href="#顶点着色器-几何着色器" class="headerlink" title="顶点着色器 &amp; 几何着色器"></a>顶点着色器 &amp; 几何着色器</h4><p>这几个阶段最重要的是需要将顶点的位置从<strong>模型空间</strong>转换到<strong>裁剪空间</strong>（只要确保数据传入<strong>图元装配及光栅化</strong>阶段之前变换到裁剪空间即可，不限VS or GS）</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/195151-160354.png"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/203141-637902.png"></p>
+<h5 id="顶点着色器"><a href="#顶点着色器" class="headerlink" title="顶点着色器"></a>顶点着色器</h5><p>最简单的顶点着色器示例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">appdata</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    float4 vertex : POSITION;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">v2f</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    float4 vertex : SV_POSITION;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">v2f <span class="title">vert</span><span class="params">(appdata v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    v2f o;</span><br><span class="line">    o.vertex = UnityObjectToClipPos(v.vertex);</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+
+
+<h5 id="曲面细分着色器"><a href="#曲面细分着色器" class="headerlink" title="曲面细分着色器"></a>曲面细分着色器</h5><p>由曲面细分控制着色器(Hull Shader)、镶嵌器(Tessellator)和曲面细分求解着色器(Domain Shader)三个阶段构成</p>
+<br>
+
+
+
+<h5 id="几何着色器"><a href="#几何着色器" class="headerlink" title="几何着色器"></a>几何着色器</h5><p>最简单的几何着色器示例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">[maxvertexcount(<span class="number">4</span>)]</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">geom</span><span class="params">(in point v2f IN[<span class="number">1</span>], inout TriangleStream&lt;v2f&gt; outputStream)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>[maxvertexcount(n)]</code>是一个属性，用来指定几何着色器可能会输出的最大顶点数。</p>
+<p>这个属性是必需的，你必须在几何着色器函数前声明它。编译器和图形硬件会使用这个信息来预先分配足够的内存空间来存储几何着色器输出的顶点。</p>
+<p><code>point</code>是一个图元类型，表示一个点。在几何着色器中，你可以指定输入图元的类型，它可以是 <code>point</code>、<code>line</code> 或 <code>triangle</code>。</p>
+<p><code>TriangleStream</code>是一个几何着色器的输出类型，用于从几何着色器中输出三角形。几何着色器的输出类型决定了输出图元的种类，可以是点（<code>PointStream</code>）、线（<code>LineStream</code>）或者三角形（<code>TriangleStream</code>）。</p>
+<br>
+
+
+
+<h4 id="图元装配-光栅化"><a href="#图元装配-光栅化" class="headerlink" title="图元装配 &amp; 光栅化"></a>图元装配 &amp; 光栅化</h4><p>因为由硬件控制，又称“硬件操作阶段“</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/202101-739768.png"></p>
+<p>上图中图元装配位置错误，应该位于裁剪操作之前</p>
+<p>所以最终顺序为：</p>
+<p>图元装配 &#x3D;&gt; 裁剪&amp;剔除 &#x3D;&gt; 光栅化 </p>
+<br>
+
+
+
+<h5 id="图元装配"><a href="#图元装配" class="headerlink" title="图元装配"></a>图元装配</h5><p>在图元装配阶段，渲染管线会根据索引缓冲（IndexBuffer）把顶点数据组合成指定的图元（Primitive）。</p>
+<p>（如果曲面细分着色器或几何着色器存在，会有一个有限形式的预图元装配阶段在这些着色器之前进行，以传给他们需要的数据）</p>
+<br>
+
+
+
+<h5 id="裁剪-Clipping"><a href="#裁剪-Clipping" class="headerlink" title="裁剪 Clipping"></a>裁剪 Clipping</h5><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/205626-704698.png"></p>
+<p>裁剪操作发生在裁剪空间中，在图元装配阶段之后，透视除法之前。</p>
+<p>任何完全在视椎体内的图元会被保留下来；完全在视椎体外的图元会被完全丢弃；部分在视椎体内部分在视椎体外的图元则会被裁剪，只保留在视椎体内的部分，可能会在裁剪处生成新的顶点。</p>
+<br>
+
+<h5 id="背面剔除-Back-face-Culling"><a href="#背面剔除-Back-face-Culling" class="headerlink" title="背面剔除 Back-face Culling"></a>背面剔除 Back-face Culling</h5><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/205643-570038.png"></p>
+<p>背面剔除发生在透视除法之后，光栅化之前。</p>
+<p>与之前CPU中对象层面的剔除不同，这是图元层面上的剔除。</p>
+<p>通过检查三角形的顶点顺序（winding order），可以判断三角形是<strong>正面朝向（逆时针）</strong>还是<strong>背面朝向（顺时针）</strong>。如果一个三角形是背面朝向，那么它就会被剔除。</p>
+<p>从上图可以看到，我们可以使用行列式（determinant）来确定投影后的2D三角形到底是CW还是CCW顺序。</p>
+<br>
+
+
+
+<h5 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h5><br>
+
+
+
+<h4 id="片元着色器"><a href="#片元着色器" class="headerlink" title="片元着色器"></a>片元着色器</h4><h5 id="纹理技术"><a href="#纹理技术" class="headerlink" title="纹理技术"></a>纹理技术</h5><p>注意：Mipmap三线性插值总共采样$2^3$一共8次</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/210335-446509.png" alt="image-20240608210334056"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/210832-40094.png" alt="image-20240608210831315"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/210903-449277.png" alt="image-20240608210902050"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/210359-95696.png" alt="image-20240608210358377"></p>
+<h5 id="光照计算"><a href="#光照计算" class="headerlink" title="光照计算"></a>光照计算</h5><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/211254-574216.png" alt="image-20240608211252749"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/211644-454952.png" alt="image-20240608211633600"></p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/211425-51907.png" alt="image-20240608211424104"></p>
+<br>
+
+
+
+<h4 id="测试-混合"><a href="#测试-混合" class="headerlink" title="测试&amp;混合"></a>测试&amp;混合</h4><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/211909-584309.png" alt="image-20240608211908652"></p>
+<h5 id="Alpha-Test"><a href="#Alpha-Test" class="headerlink" title="Alpha Test"></a>Alpha Test</h5><p>根据透明度的Threshold来丢弃一些像素</p>
+<h5 id="Stencil-Test"><a href="#Stencil-Test" class="headerlink" title="Stencil Test"></a>Stencil Test</h5><p>根据一个叫做模板缓冲（Stencil Buffer）的缓冲区来控制哪些像素应该被绘制，哪些像素应该被丢弃。你可以在模板缓冲中为每个像素定义一个值，然后在模板测试中设置条件，只有满足这个条件的像素才会被渲染。</p>
+<h5 id="Depth-Test"><a href="#Depth-Test" class="headerlink" title="Depth Test"></a>Depth Test</h5><p>深度测试也叫Z-Test，根据像素在场景中的深度值来确定哪些像素是可见的，哪些是被其他物体遮挡的。</p>
+<p>深度测试会将每个新像素的深度值与深度缓冲区中对应位置的值进行比较，只有深度值小于z-buffer中的值时，才会更新颜色缓冲区。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/213053-129508.png" alt="image-20240608213039041"></p>
+<h5 id="Alpha-Blend"><a href="#Alpha-Blend" class="headerlink" title="Alpha Blend"></a>Alpha Blend</h5><p>虽然之前CPU中排序可以确定对象间的渲染顺序，但是Alpha Blend此时无法确定片元的前后顺序，所以无法保证从后到前混合，可能会引入错误。</p>
+<p>如果需要保证从后向前混合，则需要引入顺序无关的透明（OIT）技术，如深度剥离和逐像素链表。</p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/08/212430-583252.png" alt="image-20240608212428593"></p>
+<p>参考文献：</p>
+<p><a href="https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview" target="_blank" rel="noopener">https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview</a></p>
+<p><a href="https://www.bilibili.com/video/BV1Q54y1G7v3" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1Q54y1G7v3</a></p>
+<p><a href="https://positiveczp.github.io/%E7%BB%86%E8%AF%B4%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF.html" target="_blank" rel="noopener">https://positiveczp.github.io/%E7%BB%86%E8%AF%B4%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF.html</a></p>
+]]></content>
+  </entry>
 </search>
