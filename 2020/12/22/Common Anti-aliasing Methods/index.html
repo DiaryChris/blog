@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering     TAA(Te">
+<meta name="description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering MSAA在光栅化阶段">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Common Anti-aliasing Methods">
 <meta property="og:url" content="http://diarychris.info/blog/2020/12/22/Common Anti-aliasing Methods/index.html">
 <meta property="og:site_name" content="Diary&#39;s Blog">
-<meta property="og:description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering     TAA(Te">
+<meta property="og:description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering MSAA在光栅化阶段">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/144828-613609.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/144848-187865.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/145154-498261.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/145213-382489.png">
-<meta property="og:updated_time" content="2024-06-08T10:12:59.808Z">
+<meta property="og:updated_time" content="2024-06-08T14:33:26.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Common Anti-aliasing Methods">
-<meta name="twitter:description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering     TAA(Te">
+<meta name="twitter:description" content="SSAA(Super-Sample Anti-Aliasing)最简单的抗锯齿方法，在更高的分辨率下进行采样，然后缩小到目标分辨率。    MSAA(Multi-Sample Anti-Aliasing)与SSAA同样是超采样，但是提前进行深度&amp;#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering MSAA在光栅化阶段">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/144828-613609.png">
 
 
@@ -392,6 +392,8 @@
 <br>
 
 <h3 id="MSAA-Multi-Sample-Anti-Aliasing"><a href="#MSAA-Multi-Sample-Anti-Aliasing" class="headerlink" title="MSAA(Multi-Sample Anti-Aliasing)"></a>MSAA(Multi-Sample Anti-Aliasing)</h3><p>与SSAA同样是超采样，但是提前进行深度&#x2F;模板测试，省下大量pixel shader的运行时间。由于几何信息无法平均，所以只适用于Forward rendering</p>
+<p>MSAA在光栅化阶段进行，在光栅化过程中，渲染管线会为每个像素生成多个采样点（取决于你选择的MSAA级别，例如2x、4x、8x等）。然后，对于每一个采样点，渲染管线会检查它是否落在当前的图元内部。这样的话就可以只在边缘处执行多重采样。由于不在图元内部多重采样，所以不能处理某些类型的锯齿（如纹理锯齿或shader aliasing），而且对于透明物体的处理也往往不理想。而SSAA不仅可以处理几何锯齿（即由物体边缘造成的锯齿），也可以处理纹理锯齿（即由纹理映射引起的锯齿）。</p>
+<p>SSAA可以用于延迟渲染，而MSAA不行。原因是SSAA可以直接采用更高分辨率的G-Buffer，然后等最终光照计算结果出来后再平均，而MSAA不会渲染到更大的G-Buffer上，需要在光栅化渲染G-Buffer时就取平均，而很多G-Buffer几何信息无法平均。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/144848-187865.png" alt="image-20201222144845114"></p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202012/22/145154-498261.png" alt="image-20201222145153327"></p>
 <br>
