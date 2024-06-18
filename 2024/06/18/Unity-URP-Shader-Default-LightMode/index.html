@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/192021-338809.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/183025-776993.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/191414-852069.png">
-<meta property="og:updated_time" content="2024-06-18T11:32:16.380Z">
+<meta property="og:updated_time" content="2024-06-18T12:04:05.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unity URP Shader Default LightMode Tag">
 <meta name="twitter:description" content="不同于Unity Built-in Render Pipeline，Unity URP中并不支持直接在ShaderLab中直接编写多Pass Shader，而是会仅执行第一个Pass； 但是当给另一个Pass加入Tags{&amp;quot;LightMode&amp;quot; = &amp;quot;UniversalForward&amp;quot;}时，则不仅会先执行第一个无LightMode Tag的Pass，其后还会">
@@ -394,18 +394,26 @@
 <p>但是当给另一个Pass加入<code>Tags{&quot;LightMode&quot; = &quot;UniversalForward&quot;}</code>时，则不仅会先执行第一个无LightMode Tag的Pass，其后还会执行LightMode为UniversalForward的这一个Pass。（注意：这里最多执行两个Pass，且执行顺序为第一个无LightMode Pass &#x3D;&gt; 第一个UniversalForward Pass）</p>
 <br>
 
+
+
 <p>这是什么原因呢？看了URP的代码和文档之后，我大致梳理出了其中的运行原理。</p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/182411-717781.png" alt="image-20240618182409983"></p>
 <p>从文档中可以得知URP使用<code>LightMode</code>这个Tag作为依据来决定执行哪个Pass，且无<code>LightMode</code>的Pass会被默认标记为<code>SRPDefaultUnlit</code></p>
 <br>
 
+
+
 <p>那么我们从代码中看下</p>
 <p>主要涉及的文件有<code>UniversalRenderer.cs</code>&#x2F;<code>UniversalRendererRenderGraph.cs</code>&#x2F;<code>DrawObjectsPass.cs</code></p>
 <br>
 
+
+
 <p>其中<code>UniversalRenderer.cs</code>&#x2F;<code>UniversalRendererRenderGraph.cs</code>中管控了URP中默认的渲染逻辑</p>
 <p>从中我们可以找到：</p>
 <br>
+
+
 
 <p><code>UniversalRenderer.cs</code></p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/183816-622747.png" alt="image-20240618183816195"></p>
@@ -417,11 +425,15 @@
 <p>并且在管线中的<code>OnMainRendering</code>函数中调用<code>DrawObjectsPass</code>的<code>Render</code>函数。</p>
 <br>
 
+
+
 <p><code>DrawObjectsPass.cs</code></p>
 <p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202406/18/183025-776993.png" alt="image-20240618183024583"></p>
 <p>而在<code>DrawObjectsPass</code>的构造函数中，我们可以看到如果没有指定，默认的<code>ShaderTagId</code>为：</p>
 <p><code>SRPDefaultUnlit</code>&#x2F;<code>UniversalForward</code>&#x2F;<code>UniversalForwardOnly</code></p>
 <br>
+
+
 
 <p>于是我们可以知道在URP的默认渲染流程中，会有如下操作：</p>
 <ol>
