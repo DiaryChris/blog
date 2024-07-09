@@ -4843,4 +4843,40 @@ mysql &gt; quit;
         <category>生日</category>
       </categories>
   </entry>
+  <entry>
+    <title>毛发渲染中根据指定密度优化导发顶点个数</title>
+    <url>/blog/2024/07/09/%E6%AF%9B%E5%8F%91%E6%B8%B2%E6%9F%93%E4%B8%AD%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%AF%86%E5%BA%A6%E4%BC%98%E5%8C%96%E5%AF%BC%E5%8F%91%E9%A1%B6%E7%82%B9%E4%B8%AA%E6%95%B0/</url>
+    <content><![CDATA[<p>在现行的毛发渲染技术中，一组用于计算物理模拟的曲线叫做导发，真正的毛发在导发间插值得到。当导发上的顶点过多时，会显著影响毛发渲染的性能，所以按需减少导发上的顶点数量可以优化毛发渲染的速度，是一项很必要的技术需求。</p>
+<p>本方案目的是使艺术家能够指定导发上各段的密度，按需减少导发上的顶点数量，最终优化毛发渲染的速度。实现原理是将艺术家指定的毛发分段密度转换为一个分段密度函数，利用分段密度函数的积分来筛选各顶点的保留情况。</p>
+<br>
+
+<h4 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h4><ol>
+<li>从编辑器界面中得到艺术家指定的分段密度。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202407/09/183329-485585.png" alt="img">  </p>
+<ol start="2">
+<li>根据分段密度画出分段密度函数</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202407/09/183401-727138.png" alt="img">  </p>
+<ol start="3">
+<li><p>计算分段密度函数在0到1上的定积分，其实就是折线函数下方梯形的面积总和。  </p>
+</li>
+<li><p>根据分段密度函数的积分确定新的毛发的总顶点数。  </p>
+</li>
+<li><p>以原毛发线段数的倒数为步长，计算每段在密度函数下的面积，得到一个面积数组。  </p>
+</li>
+<li><p>以(密度函数下面积总和&#x2F;新毛发线段数)为新毛发一个线段的目标面积。  </p>
+</li>
+<li><p>从0开始累加第5步中得到的原毛发线段面积数组，每当超过一次目标面积时，根据(超过的面积&#x2F;当前原毛发线段面积)在当前原毛发线段的两个顶点间进行线性插值得到新顶点位置。之后减去一个目标面积，继续进行累加。</p>
+</li>
+</ol>
+<br>
+
+<h4 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h4><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202407/09/183415-628560.png" alt="img"> </p>
+<br>
+
+<h4 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h4><p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202407/09/183711-988520.png" alt="img">  </p>
+<p><img src="https://raw.githubusercontent.com/DiaryChris/typora-image/master/typora202407/09/183718-968752.png" alt="img">  </p>
+]]></content>
+  </entry>
 </search>
